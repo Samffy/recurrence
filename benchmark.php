@@ -4,7 +4,7 @@ define('ITERATION', 40);
 define('INCREMENT', 1);
 
 require 'vendor/autoload.php';
-require 'src/Benchmark.php';
+require '_benchmark-libs.php';
 
 // Init statistics values
 $statistics = [];
