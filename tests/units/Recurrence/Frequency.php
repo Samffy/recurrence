@@ -39,4 +39,13 @@ class Frequency extends atoum
                 ->isEqualTo($interval);
         }
     }
+
+    public function testToString ()
+    {
+        $frequency = new \Recurrence\Frequency('MONTHLY');
+        $this->assert
+            ->string((string) $frequency)
+            ->isEqualTo('MONTHLY')
+        ;
+    }
 }

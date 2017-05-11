@@ -1,0 +1,13 @@
+language: php
+dist: trusty
+php:
+  - '5.6'
+  - '7.0'
+  - '7.1'
+cache:
+    apt: true
+before_install:
+    - composer install --no-scripts --optimize-autoloader
+    - composer require atoum/atoum
+script:
+    - vendor/bin/atoum -d tests/units/Recurrence
