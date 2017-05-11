@@ -85,7 +85,35 @@ class Recurrence
      */
     public static function createRecurrenceFromRrule($rrule)
     {
-        // TODO
-        return new Recurrence();
+        // TODO : think of a better way to do that without a static method, or at least, not in Recurrence object
+
+        $explodedRules = explode(';', str_replace(' ', '', trim(strtoupper($rrule))));
+
+        if (count($explodedRules) == 0 || empty($explodedRules[0])) {
+            throw new \InvalidArgumentException(sprintf('Invalid RRULE [%s]', $rrule));
+        }
+
+        $rules =[];
+        foreach ($explodedRules as $explodedRule) {
+            $ruleParts = explode('=', $explodedRule);
+
+            if (count($ruleParts) != 2) {
+                throw new \InvalidArgumentException(sprintf('Invalid RRULE  [%s] part [%s] is incorrect', $rrule, $explodedRule));
+            }
+
+            $rules[$ruleParts[0]] = $ruleParts[1];
+        }
+
+        $recurrence = new Recurrence();
+
+        if (isset($rules['FREQ'])) {
+            $frequency = new Frequency($rules['FREQ']);
+
+            $recurrence->setFrequency($frequency);
+        } else {
+            throw new \InvalidArgumentException('RRULE required [FREQ] option');
+        }
+
+        return $recurrence;
     }
 }

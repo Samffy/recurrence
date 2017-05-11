@@ -61,4 +61,12 @@ class Frequency
         return array_search($this->frequencyName, $this->frequencies);
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->frequencyName;
+    }
+
 }
