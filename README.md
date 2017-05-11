@@ -14,7 +14,7 @@ RFC : https://tools.ietf.org/html/rfc5545#page-37
 
 Html code coverage is generated here : `./var/code-coverage`
 
-Remember that you need `xdebug` to generage code coverage report.
+Remember that you need `xdebug` to generate code coverage report.
 
 #### First findings
 
