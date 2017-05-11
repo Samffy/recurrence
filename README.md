@@ -1,4 +1,8 @@
 # Readme
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
+[![Build Status](https://travis-ci.org/Samffy/recurrence.svg?branch=master)](https://travis-ci.org/Samffy/recurrence)
+
+## Presentation
 
 **WARNING** : This is a work in progress.
 
@@ -6,7 +10,25 @@ This library is a simple test to check optimization possibilities on recurrence 
 
 RFC : https://tools.ietf.org/html/rfc5545#page-37
 
-#### Unit tests
+## Usage
+
+### Create recurrences using object method
+
+```php
+$recurrence = (new Recurrence())
+->setPeriodStartAt(new \Datetime())
+->setFrequency(new Frequency('MONTHLY');
+$periods    = (new DatetimeProvider($recurrence))-provide();
+```
+
+### Create recurrences from RRULE standard expression
+
+```php
+$recurrence = Recurrence::createRecurrenceFromRrule('FREQ=MONTHLY;BYMONTHDAY=1;INTERVAL=2');
+$periods    = (new DatetimeProvider($recurrence))-provide();
+```
+
+### Unit tests
 
 ```
 ./vendor/bin/atoum -d tests/units/Recurrence
@@ -16,7 +38,7 @@ Html code coverage is generated here : `./var/code-coverage`
 
 Remember that you need `xdebug` to generate code coverage report.
 
-#### First findings
+### First findings
 
 * PHP native is extremely fast if we do not process results
 * Greater is the period of computation, less important is the predominance of PHP native
