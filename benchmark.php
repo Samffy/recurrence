@@ -16,7 +16,7 @@ $benchmark = new Benchmark();
 
 $iteration = 1;
 $years     = 1;
-while($iteration <= ITERATION) {
+while ($iteration <= ITERATION) {
     echo '.';
     // Init new period with new interval in years
     $start = new \Datetime(sprintf('%s-%s-01', rand(1000, 9999), rand(1, 12)));

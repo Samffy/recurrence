@@ -93,7 +93,7 @@ class Recurrence
             throw new \InvalidArgumentException(sprintf('Invalid RRULE [%s]', $rrule));
         }
 
-        $rules =[];
+        $rules = [];
         foreach ($explodedRules as $explodedRule) {
             $ruleParts = explode('=', $explodedRule);
 

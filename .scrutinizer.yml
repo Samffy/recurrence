@@ -1,0 +1,15 @@
+filter:
+    paths:
+        - 'src/*'
+    excluded_paths:
+            - 'tests/*'
+checks:
+    php:
+        excluded_dependencies:
+            - atoum/atoum
+            - simshaun/recurr
+coding_style:
+    php:
+        spaces:
+            around_operators:
+                multiplicative: false
