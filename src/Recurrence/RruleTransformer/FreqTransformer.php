@@ -4,6 +4,9 @@ namespace Recurrence\RruleTransformer;
 
 use Recurrence\Frequency;
 
+/**
+ * Class FreqTransformer
+ */
 class FreqTransformer implements TransformerInterface
 {
     /**
@@ -12,7 +15,7 @@ class FreqTransformer implements TransformerInterface
      */
     public function transform($rRule)
     {
-        if(preg_match('/FREQ=([a-zA-Z]+)/', $rRule, $matches)) {
+        if (preg_match('/FREQ=([a-zA-Z]+)/', $rRule, $matches)) {
             return new Frequency($matches[1]);
         }
 

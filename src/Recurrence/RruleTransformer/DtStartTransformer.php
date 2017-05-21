@@ -2,6 +2,9 @@
 
 namespace Recurrence\RruleTransformer;
 
+/**
+ * Class DtStartTransformer
+ */
 class DtStartTransformer implements TransformerInterface
 {
     const RRULE_PARAMETER = 'DTSTART';
@@ -12,7 +15,7 @@ class DtStartTransformer implements TransformerInterface
      */
     public function transform($rRule)
     {
-        if(preg_match('/' . $this::RRULE_PARAMETER . ';TZID=([a-zA-Z_-]+[\/[a-zA-Z_+\-0-9]+]?):([0-9]{8}T[0-9]{6})/', $rRule, $matches)) {
+        if (preg_match('/'.$this::RRULE_PARAMETER.';TZID=([a-zA-Z_-]+[\/[a-zA-Z_+\-0-9]+]?):([0-9]{8}T[0-9]{6})/', $rRule, $matches)) {
             try {
                 return \DateTime::createFromFormat('Ymd\THis', $matches[2], new \DateTimeZone($matches[1]));
             } catch (\Exception $e) {
@@ -20,19 +23,19 @@ class DtStartTransformer implements TransformerInterface
             }
         }
 
-        if(preg_match('/' . $this::RRULE_PARAMETER . '=([0-9]{8}T[0-9]{6}Z)/', $rRule, $matches)) {
+        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8}T[0-9]{6}Z)/', $rRule, $matches)) {
             return \DateTime::createFromFormat('Ymd\THisZ', $matches[1], new \DateTimeZone('UTC'));
         }
 
-        if(preg_match('/' . $this::RRULE_PARAMETER . '=([0-9]{8}T[0-9]{6})/', $rRule, $matches)) {
+        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8}T[0-9]{6})/', $rRule, $matches)) {
             return \DateTime::createFromFormat('Ymd\THis', $matches[1]);
         }
 
-        if(preg_match('/' . $this::RRULE_PARAMETER . '=([0-9]{8})/', $rRule, $matches)) {
+        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8})/', $rRule, $matches)) {
             return \DateTime::createFromFormat('Ymd', $matches[1]);
         }
 
-        if(preg_match('/' . $this::RRULE_PARAMETER . '/', $rRule, $matches)) {
+        if (preg_match('/'.$this::RRULE_PARAMETER.'/', $rRule, $matches)) {
             throw new \InvalidArgumentException(sprintf('Invalid RRULE [%s]', $this::RRULE_PARAMETER));
         }
 

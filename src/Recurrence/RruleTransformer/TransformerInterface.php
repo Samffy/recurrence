@@ -2,6 +2,9 @@
 
 namespace Recurrence\RruleTransformer;
 
+/**
+ * Interface TransformerInterface
+ */
 interface TransformerInterface
 {
     /**

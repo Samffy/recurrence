@@ -2,6 +2,9 @@
 
 namespace Recurrence\RruleTransformer;
 
+/**
+ * Class UntilTransformer
+ */
 class UntilTransformer extends DtStartTransformer
 {
     const RRULE_PARAMETER = 'UNTIL';

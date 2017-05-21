@@ -6,8 +6,26 @@ use Recurrence\RruleTransformer\DtStartTransformer;
 use Recurrence\RruleTransformer\FreqTransformer;
 use Recurrence\RruleTransformer\UntilTransformer;
 
+/**
+ * Class RecurrenceProvider
+ */
 class RecurrenceProvider
 {
+
+    /**
+     * @var FreqTransformer
+     */
+    private $freqTransformer;
+
+    /**
+     * @var DtStartTransformer
+     */
+    private $dtStartTransformer;
+
+    /**
+     * @var UntilTransformer
+     */
+    private $untilTransformer;
 
     public function __construct()
     {
@@ -41,5 +59,4 @@ class RecurrenceProvider
 
         return $recurrence;
     }
-
 }

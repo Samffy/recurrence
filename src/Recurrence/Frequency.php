@@ -68,5 +68,4 @@ class Frequency
     {
         return $this->frequencyName;
     }
-
 }
