@@ -17,17 +17,31 @@ RFC : https://tools.ietf.org/html/rfc5545#page-37
 
 ```php
 $recurrence = (new Recurrence())
-->setPeriodStartAt(new \Datetime())
-->setFrequency(new Frequency('MONTHLY');
+    ->setPeriodStartAt(new \Datetime())
+    ->setFrequency(new Frequency('MONTHLY');
 $periods    = (new DatetimeProvider($recurrence))-provide();
 ```
 
 ### Create recurrences from RRULE standard expression
 
 ```php
-$recurrence = Recurrence::createRecurrenceFromRrule('FREQ=MONTHLY;BYMONTHDAY=1;INTERVAL=2');
+$recurrence = (new RecurrenceProvider())->parse('FREQ=MONTHLY;DTSTART=20170521;INTERVAL=2');
 $periods    = (new DatetimeProvider($recurrence))-provide();
 ```
+
+Supported rules : 
+- `FREQ` : `YEARLY`, `MONTHLY`, `WEEKLY`, `DAILY`, `HOURLY`, `MINUTELY`, `SECONDLY`
+- `DTSTART` : 
+    - Simple date : `YYYYMMDD` (example : `20170520`)
+    - Datetime : `YYYYMMDDTHHMMSS` (example : `20170520T154720`)
+    - Datetime UTC : `YYYYMMDDTHHMMSSZ` (example : `20170520T154720Z`)
+- `DTSTART` with `TZID` : `{timezone}:YYYYMMDDTHHMMSS`  (example : `Europe/Paris:20170520T154720`)
+- `UNTIL` : 
+    - Simple date : `YYYYMMDD` (example : `20170520`)
+    - Datetime : `YYYYMMDDTHHMMSS` (example : `20170520T154720`)
+    - Datetime UTC : `YYYYMMDDTHHMMSSZ` (example : `20170520T154720Z`)
+- `UNTIL` with `TZID` : `{timezone}:YYYYMMDDTHHMMSS`  (example : `Europe/Paris:20170520T154720`)
+
 
 ### Unit tests
 
@@ -38,10 +52,3 @@ $periods    = (new DatetimeProvider($recurrence))-provide();
 Html code coverage is generated here : `./var/code-coverage`
 
 Remember that you need `xdebug` to generate code coverage report.
-
-### First findings
-
-* PHP native is extremely fast if we do not process results
-* Greater is the period of computation, less important is the predominance of PHP native
-* First I try a static Frequency class, with static methods, it's seem slower (about 2s slower on a 4month period)
-* I try to launch many process on different periods to smooth results

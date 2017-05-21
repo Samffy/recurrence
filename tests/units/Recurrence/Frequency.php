@@ -9,6 +9,9 @@ use atoum;
 class Frequency extends atoum
 {
 
+    /**
+     * Use an invalid frequency value on construct
+     */
     public function testConstructor ()
     {
         $this->assert
@@ -19,27 +22,39 @@ class Frequency extends atoum
         ;
     }
 
-    public function testGetInterval()
+    /**
+     * Validate get interval from frequency for each supported frequency
+     *
+     * @dataProvider frequenciesDataProvider
+     *
+     * @param string $frequencyName
+     * @param string $expectedIntervalName
+     */
+    public function testGetInterval($frequencyName, $expectedIntervalName)
     {
-        $frequencies = [
-            'YEARLY'   => 'P1Y',
-            'MONTHLY'  => 'P1M',
-            'WEEKLY'   => 'P1W',
-            'DAILY'    => 'P1D',
-            'HOURLY'   => 'PT1H',
-            'MINUTELY' => 'PT1M',
-            'SECONDLY' => 'PT1S',
-        ];
+        $frequency = new \Recurrence\Frequency($frequencyName);
 
-        foreach ($frequencies as $freq => $interval) {
-            $frequency = new \Recurrence\Frequency($freq);
-
-            $this->assert
-                ->string($frequency->getInterval())
-                ->isEqualTo($interval);
-        }
+        $this->assert
+            ->string($frequency->getInterval())
+            ->isEqualTo($expectedIntervalName);
     }
 
+    protected function frequenciesDataProvider()
+    {
+        return [
+            ['YEARLY', 'P1Y'],
+            ['MONTHLY', 'P1M'],
+            ['WEEKLY', 'P1W'],
+            ['DAILY', 'P1D'],
+            ['HOURLY', 'PT1H'],
+            ['MINUTELY', 'PT1M'],
+            ['SECONDLY', 'PT1S'],
+        ];
+    }
+
+    /**
+     * Validate that __toString method return frequency name
+     */
     public function testToString ()
     {
         $frequency = new \Recurrence\Frequency('MONTHLY');

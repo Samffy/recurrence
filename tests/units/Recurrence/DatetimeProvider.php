@@ -78,6 +78,17 @@ class DatetimeProvider extends atoum
                     new \Datetime('2017-11-03'),
                     new \Datetime('2017-12-03'),
                 ]
+            ],
+            [
+                new \Datetime('2017-01-01'),
+                new \Datetime('2020-01-01'),
+                'YEARLY',
+                [
+                    new \Datetime('2017-01-01'),
+                    new \Datetime('2018-01-01'),
+                    new \Datetime('2019-01-01'),
+                    new \Datetime('2020-01-01'),
+                ]
             ]
         ];
     }
