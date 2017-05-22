@@ -2,6 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
 [![Build Status](https://travis-ci.org/Samffy/recurrence.svg?branch=master)](https://travis-ci.org/Samffy/recurrence)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
 
 ## Presentation
 
