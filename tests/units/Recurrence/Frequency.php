@@ -12,10 +12,10 @@ class Frequency extends atoum
     /**
      * Use an invalid frequency value on construct
      */
-    public function testConstructor ()
+    public function testConstructor()
     {
         $this->assert
-            ->exception(function() {
+            ->exception(function () {
                 new \Recurrence\Frequency('INVALID_FREQUENCY_NAME');
             })
             ->isInstanceOf('InvalidArgumentException')
@@ -39,6 +39,18 @@ class Frequency extends atoum
             ->isEqualTo($expectedIntervalName);
     }
 
+    /**
+     * Validate that __toString method return frequency name
+     */
+    public function testToString()
+    {
+        $frequency = new \Recurrence\Frequency('MONTHLY');
+        $this->assert
+            ->string((string) $frequency)
+            ->isEqualTo('MONTHLY')
+        ;
+    }
+
     protected function frequenciesDataProvider()
     {
         return [
@@ -50,17 +62,5 @@ class Frequency extends atoum
             ['MINUTELY', 'PT1M'],
             ['SECONDLY', 'PT1S'],
         ];
-    }
-
-    /**
-     * Validate that __toString method return frequency name
-     */
-    public function testToString ()
-    {
-        $frequency = new \Recurrence\Frequency('MONTHLY');
-        $this->assert
-            ->string((string) $frequency)
-            ->isEqualTo('MONTHLY')
-        ;
     }
 }

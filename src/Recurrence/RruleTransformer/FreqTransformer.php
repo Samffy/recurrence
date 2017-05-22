@@ -6,6 +6,7 @@ use Recurrence\Frequency;
 
 /**
  * Class FreqTransformer
+ * @package Recurrence\RruleTransformer
  */
 class FreqTransformer implements TransformerInterface
 {

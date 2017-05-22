@@ -4,6 +4,7 @@ namespace Recurrence\RruleTransformer;
 
 /**
  * Class DtStartTransformer
+ * @package Recurrence\RruleTransformer
  */
 class DtStartTransformer implements TransformerInterface
 {

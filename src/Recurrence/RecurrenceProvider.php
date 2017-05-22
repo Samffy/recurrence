@@ -8,6 +8,7 @@ use Recurrence\RruleTransformer\UntilTransformer;
 
 /**
  * Class RecurrenceProvider
+ * @package Recurrence
  */
 class RecurrenceProvider
 {
@@ -27,6 +28,9 @@ class RecurrenceProvider
      */
     private $untilTransformer;
 
+    /**
+     * RecurrenceProvider constructor.
+     */
     public function __construct()
     {
         $this->freqTransformer    = new FreqTransformer();

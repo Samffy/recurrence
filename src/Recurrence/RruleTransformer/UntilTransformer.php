@@ -4,6 +4,7 @@ namespace Recurrence\RruleTransformer;
 
 /**
  * Class UntilTransformer
+ * @package Recurrence\RruleTransformer
  */
 class UntilTransformer extends DtStartTransformer
 {

@@ -4,6 +4,7 @@ namespace Recurrence\RruleTransformer;
 
 /**
  * Interface TransformerInterface
+ * @package Recurrence\RruleTransformer
  */
 interface TransformerInterface
 {

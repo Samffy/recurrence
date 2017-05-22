@@ -4,6 +4,7 @@ namespace Recurrence;
 
 /**
  * Class DatetimeProvider
+ * @package Recurrence
  */
 class DatetimeProvider
 {

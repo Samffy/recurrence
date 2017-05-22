@@ -2,16 +2,20 @@
 
 namespace Recurrence\tests\units\RruleTransformer;
 
-require_once __DIR__ . '/../../../../src/Recurrence/RruleTransformer/DtStartTransformer.php';
+require_once __DIR__.'/../../../../src/Recurrence/RruleTransformer/DtStartTransformer.php';
 
 use atoum;
 
+/**
+ * Class DtStartTransformer
+ * @package Recurrence\tests\units\RruleTransformer
+ */
 class DtStartTransformer extends atoum
 {
     /**
      * Success : Create timezoned Datetime
      */
-    public function testTimezonedDatetime ()
+    public function testTimezonedDatetime()
     {
         // Success creation of recurrence from RRULE using timezoned datetime with TZID option
         $periodStartAt = (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;DTSTART;TZID=Europe/Paris:20170520T161322');
@@ -27,7 +31,7 @@ class DtStartTransformer extends atoum
     /**
      * Success : Create UTC Datetime
      */
-    public function testUtcDatetime ()
+    public function testUtcDatetime()
     {
         // Success creation of recurrence from RRULE using datetime with default UTC timezone
         $periodStartAt = (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;DTSTART=20170520T161322Z');
@@ -43,7 +47,7 @@ class DtStartTransformer extends atoum
     /**
      * Success : Create Datetime
      */
-    public function testDatetime ()
+    public function testDatetime()
     {
         // Success creation of recurrence from RRULE using simple datetime
         $periodStartAt = (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;DTSTART=20170520T161322');
@@ -58,7 +62,7 @@ class DtStartTransformer extends atoum
     /**
      * Success : Create Datetime from simple date format
      */
-    public function testDate ()
+    public function testDate()
     {
         // Success creation of recurrence from RRULE using simple date format
         $periodStartAt = (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;DTSTART=20170520');
@@ -73,11 +77,11 @@ class DtStartTransformer extends atoum
     /**
      * Failed : try different invalid format
      */
-    public function testInvalidFormat ()
+    public function testInvalidFormat()
     {
         // Invalid DTSTART
         $this->assert
-            ->exception(function() {
+            ->exception(function () {
                 (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;DTSTART=201A0520');
             })
             ->isInstanceOf('InvalidArgumentException')
@@ -85,7 +89,7 @@ class DtStartTransformer extends atoum
 
         // Invalid timezone
         $this->assert
-            ->exception(function() {
+            ->exception(function () {
                 (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;DTSTART;TZID=Disneyland/Paris:20170520T161322');
             })
             ->isInstanceOf('InvalidArgumentException')
@@ -95,7 +99,7 @@ class DtStartTransformer extends atoum
     /**
      * Success : no DTSTART information in RRULE
      */
-    public function testNoDtStartFormat ()
+    public function testNoDtStartFormat()
     {
         // N DoTSTART
         $periodStartAt = (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;INTERVAL=2');

@@ -4,6 +4,7 @@ namespace Recurrence;
 
 /**
  * Class Frequency
+ * @package Recurrence
  */
 class Frequency
 {
@@ -42,7 +43,7 @@ class Frequency
     private $frequencyName;
 
     /**
-     * @param $frequencyName
+     * @param string $frequencyName
      */
     public function __construct($frequencyName)
     {
