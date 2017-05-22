@@ -41,7 +41,7 @@ Supported rules :
     - Datetime : `YYYYMMDDTHHMMSS` (example : `20170520T154720`)
     - Datetime UTC : `YYYYMMDDTHHMMSSZ` (example : `20170520T154720Z`)
 - `UNTIL` with `TZID` : `{timezone}:YYYYMMDDTHHMMSS`  (example : `Europe/Paris:20170520T154720`)
-
+- `INTERVAL`
 
 ### Unit tests
 
