@@ -26,7 +26,7 @@ class Recurrence
     /**
      * @var integer
      */
-    private $interval;
+    private $interval = 1;
 
     /**
      * @param \Datetime $periodStartAt
