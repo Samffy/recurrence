@@ -23,6 +23,12 @@ $recurrence = (new Recurrence())
 $periods    = (new DatetimeProvider($recurrence))-provide();
 ```
 
+Available methods :
+- `setFrequency` (`Frequency`) : set `FREQ` option 
+- `setPeriodStartAt` (`\Datetime()`) : set `DTSTART` option
+- `setPeriodEndAt` (`\Datetime()`) : set `UNTIL` option
+- `setInterval` (`integer`) : set `INTERVAL` option
+
 ### Create recurrences from RRULE standard expression
 
 ```php
@@ -44,7 +50,7 @@ Supported rules :
 - `UNTIL` with `TZID` : `{timezone}:YYYYMMDDTHHMMSS`  (example : `Europe/Paris:20170520T154720`)
 - `INTERVAL`
 
-### Unit tests
+### Unit tests
 
 ```
 ./vendor/bin/atoum -d tests/units/Recurrence
