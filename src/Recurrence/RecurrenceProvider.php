@@ -4,6 +4,7 @@ namespace Recurrence;
 
 use Recurrence\RruleTransformer\DtStartTransformer;
 use Recurrence\RruleTransformer\FreqTransformer;
+use Recurrence\RruleTransformer\IntervalTransformer;
 use Recurrence\RruleTransformer\UntilTransformer;
 
 /**
@@ -29,13 +30,19 @@ class RecurrenceProvider
     private $untilTransformer;
 
     /**
+     * @var IntervalTransformer
+     */
+    private $intervalTransformer;
+
+    /**
      * RecurrenceProvider constructor.
      */
     public function __construct()
     {
-        $this->freqTransformer    = new FreqTransformer();
-        $this->dtStartTransformer = new DtStartTransformer();
-        $this->untilTransformer   = new UntilTransformer();
+        $this->freqTransformer     = new FreqTransformer();
+        $this->dtStartTransformer  = new DtStartTransformer();
+        $this->untilTransformer    = new UntilTransformer();
+        $this->intervalTransformer = new IntervalTransformer();
     }
 
     /**
@@ -59,6 +66,10 @@ class RecurrenceProvider
 
         if ($periodStartAt = $this->untilTransformer->transform($rRule)) {
             $recurrence->setPeriodEndAt($periodStartAt);
+        }
+
+        if ($interval = $this->intervalTransformer->transform($rRule)) {
+            $recurrence->setInterval($interval);
         }
 
         return $recurrence;

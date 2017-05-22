@@ -2,10 +2,14 @@
 
 namespace Recurrence\tests\units;
 
-require_once __DIR__ . '/../../../src/Recurrence/Frequency.php';
+require_once __DIR__.'/../../../src/Recurrence/Frequency.php';
 
 use atoum;
 
+/**
+ * Class Frequency
+ * @package Recurrence\tests\units
+ */
 class Frequency extends atoum
 {
 
@@ -51,6 +55,9 @@ class Frequency extends atoum
         ;
     }
 
+    /**
+     * @return array
+     */
     protected function frequenciesDataProvider()
     {
         return [

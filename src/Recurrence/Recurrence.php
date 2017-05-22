@@ -24,6 +24,11 @@ class Recurrence
     private $periodEndAt;
 
     /**
+     * @var integer
+     */
+    private $interval;
+
+    /**
      * @param \Datetime $periodStartAt
      * @return $this
      */
@@ -79,4 +84,24 @@ class Recurrence
     {
         return $this->frequency;
     }
+
+    /**
+     * @return int
+     */
+    public function getInterval()
+    {
+        return $this->interval;
+    }
+
+    /**
+     * @param int $interval
+     * @return $this
+     */
+    public function setInterval($interval)
+    {
+        $this->interval = $interval;
+
+        return $this;
+    }
+
 }
