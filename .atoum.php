@@ -8,6 +8,8 @@ $coverageHtmlField = new atoum\report\fields\runner\coverage\html('Recurrence', 
 $coverageHtmlField->addSrcDirectory(__DIR__ . '/src');
 //$coverageHtmlField->setRootUrl('http://localhost');
 
+$script->noCodeCoverageForClasses(\Recurrence\Recurrence::class);
+
 $script
     ->addDefaultReport()
         ->addField($coverageHtmlField)

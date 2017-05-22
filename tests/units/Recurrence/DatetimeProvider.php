@@ -2,11 +2,15 @@
 
 namespace Recurrence\tests\units;
 
-require_once __DIR__ . '/../../../src/Recurrence/DatetimeProvider.php';
+require_once __DIR__.'/../../../src/Recurrence/DatetimeProvider.php';
 
 use atoum;
 use Recurrence\Recurrence;
 
+/**
+ * Class DatetimeProvider
+ * @package Recurrence\tests\units
+ */
 class DatetimeProvider extends atoum
 {
 
@@ -16,14 +20,22 @@ class DatetimeProvider extends atoum
      * @param \Datetime $periodStartAt
      * @param \Datetime $periodEndAt
      * @param string    $frequency
+     * @param integer   $interval
      * @param array     $expected
      */
-    public function testMonthlyFrequency(\Datetime $periodStartAt, \Datetime $periodEndAt, $frequency, array $expected)
+    public function testMonthlyFrequency(
+        \Datetime $periodStartAt,
+        \Datetime $periodEndAt,
+        $frequency,
+        $interval,
+        array $expected
+    )
     {
         $recurrence = (new Recurrence())
             ->setPeriodStartAt($periodStartAt)
             ->setPeriodEndAt($periodEndAt)
             ->setFrequency(new \Recurrence\Frequency($frequency))
+            ->setInterval($interval)
         ;
 
         $period = (new \Recurrence\DatetimeProvider($recurrence))->provide();
@@ -39,6 +51,9 @@ class DatetimeProvider extends atoum
         }
     }
 
+    /**
+     * @return array
+     */
     protected function monthlyFrequenciesDataProvider()
     {
         return [
@@ -46,6 +61,7 @@ class DatetimeProvider extends atoum
                 new \Datetime('2017-01-01'),
                 new \Datetime('2017-12-31'),
                 'MONTHLY',
+                1,
                 [
                     new \Datetime('2017-01-01'),
                     new \Datetime('2017-02-01'),
@@ -65,6 +81,7 @@ class DatetimeProvider extends atoum
                 new \Datetime('2017-01-31'),
                 new \Datetime('2017-12-31'),
                 'MONTHLY',
+                1,
                 [
                     new \Datetime('2017-01-31'),
                     new \Datetime('2017-03-03'),
@@ -83,11 +100,36 @@ class DatetimeProvider extends atoum
                 new \Datetime('2017-01-01'),
                 new \Datetime('2020-01-01'),
                 'YEARLY',
+                1,
                 [
                     new \Datetime('2017-01-01'),
                     new \Datetime('2018-01-01'),
                     new \Datetime('2019-01-01'),
                     new \Datetime('2020-01-01'),
+                ]
+            ],
+            [
+                new \Datetime('2017-01-31'),
+                new \Datetime('2017-12-31'),
+                'MONTHLY',
+                2,
+                [
+                    new \Datetime('2017-01-31'),
+                    new \Datetime('2017-03-31'),
+                    new \Datetime('2017-05-31'),
+                    new \Datetime('2017-07-31'),
+                    new \Datetime('2017-10-01'),
+                    new \Datetime('2017-12-01'),
+                ]
+            ],
+            [
+                new \Datetime('2017-01-01'),
+                new \Datetime('2020-01-01'),
+                'YEARLY',
+                2,
+                [
+                    new \Datetime('2017-01-01'),
+                    new \Datetime('2019-01-01'),
                 ]
             ]
         ];

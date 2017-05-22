@@ -26,7 +26,12 @@ class DatetimeProvider
      */
     public function provide()
     {
-        $interval     = $this->recurrence->getFrequency()->getInterval();
+        $interval = $this->recurrence->getFrequency()->getInterval();
+
+        if ($this->recurrence->getInterval() !== 1) {
+            $interval = str_replace('1', $this->recurrence->getInterval(), $interval);
+        }
+
         $dateInterval = new \DateInterval($interval);
 
         return new \DatePeriod(
