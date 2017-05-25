@@ -57,7 +57,7 @@ class Frequency
     /**
      * @return string
      */
-    public function getInterval()
+    public function convertToDateIntervalFormat()
     {
         return array_search($this->frequencyName, $this->frequencies);
     }

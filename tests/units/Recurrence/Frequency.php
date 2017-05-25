@@ -22,7 +22,7 @@ class Frequency extends atoum
             ->exception(function () {
                 new \Recurrence\Frequency('INVALID_FREQUENCY_NAME');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 
@@ -39,7 +39,7 @@ class Frequency extends atoum
         $frequency = new \Recurrence\Frequency($frequencyName);
 
         $this->assert
-            ->string($frequency->getInterval())
+            ->string($frequency->convertToDateIntervalFormat())
             ->isEqualTo($expectedIntervalName);
     }
 

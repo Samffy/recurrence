@@ -20,6 +20,11 @@ class FreqTransformer implements TransformerInterface
             return new Frequency($matches[1]);
         }
 
+        // If there is a FREQ option but transformer was not able to get it, assume it was an invalid option
+        if (preg_match('/FREQ=/', $rRule, $matches)) {
+            throw new \InvalidArgumentException('RRULE invalid [FREQ] option');
+        }
+
         throw new \InvalidArgumentException('RRULE required [FREQ] option');
     }
 }

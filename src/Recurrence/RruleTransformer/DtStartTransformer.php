@@ -36,8 +36,9 @@ class DtStartTransformer implements TransformerInterface
             return \DateTime::createFromFormat('Ymd', $matches[1]);
         }
 
+        // If there is the search option but transformer was not able to get it, assume it was an invalid option
         if (preg_match('/'.$this::RRULE_PARAMETER.'/', $rRule, $matches)) {
-            throw new \InvalidArgumentException(sprintf('Invalid RRULE [%s]', $this::RRULE_PARAMETER));
+            throw new \InvalidArgumentException(sprintf('RRULE invalid [%s] option', $this::RRULE_PARAMETER));
         }
 
         return null;

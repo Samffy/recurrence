@@ -84,7 +84,7 @@ class DtStartTransformer extends atoum
             ->exception(function () {
                 (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;DTSTART=201A0520');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
 
         // Invalid timezone
@@ -92,7 +92,7 @@ class DtStartTransformer extends atoum
             ->exception(function () {
                 (new \Recurrence\RruleTransformer\DtStartTransformer())->transform('FREQ=MONTHLY;DTSTART;TZID=Disneyland/Paris:20170520T161322');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 

@@ -17,7 +17,20 @@ class IntervalTransformer extends atoum
      */
     public function testInvalidValue()
     {
-        $interval = (new \Recurrence\RruleTransformer\IntervalTransformer())->transform('FREQ=MONTHLY;DTSTART=20170520;INTERVAL=WRONG');
+        $this->assert
+            ->exception(function () {
+                (new \Recurrence\RruleTransformer\IntervalTransformer())->transform('FREQ=MONTHLY;DTSTART=20170520;INTERVAL=WRONG');
+            })
+            ->isInstanceOf(\InvalidArgumentException::class)
+        ;
+    }
+
+    /**
+     * Success : No interval option
+     */
+    public function testNoValue()
+    {
+        $interval = (new \Recurrence\RruleTransformer\IntervalTransformer())->transform('FREQ=MONTHLY;DTSTART=20170520');
 
         $this->assert
             ->variable($interval)
@@ -42,6 +55,20 @@ class IntervalTransformer extends atoum
         $this->assert
             ->integer($interval)
             ->isEqualTo(21)
+        ;
+    }
+
+    /**
+     * Failed : Missing value for RRULE option
+     */
+    public function tesMissingRruleValue()
+    {
+        // Missing INTERVAL value in RRULE
+        $this->assert
+            ->exception(function () {
+                (new \Recurrence\RecurrenceProvider())->parse('FREQ=MONTHLY;BYMONTHDAY=1;INTERVAL');
+            })
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 }

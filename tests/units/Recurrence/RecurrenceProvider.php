@@ -24,7 +24,7 @@ class RecurrenceProvider extends atoum
             ->exception(function () {
                 (new \Recurrence\RecurrenceProvider())->parse('');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 
@@ -36,9 +36,9 @@ class RecurrenceProvider extends atoum
         // Wrong option syntax in RRULE
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->parse('FREQ:MONTHLY;BYMONTHDAY=1;INTERVAL=2');
+                (new \Recurrence\RecurrenceProvider())->parse('FREQ:MONTHLY;BYMONTHDAY=1;INTERVAL');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 
@@ -52,7 +52,7 @@ class RecurrenceProvider extends atoum
             ->exception(function () {
                 (new \Recurrence\RecurrenceProvider())->parse('FREQ=MONTHLY;BYMONTHDAY=1;INTERVAL');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 
@@ -74,7 +74,7 @@ class RecurrenceProvider extends atoum
             ->exception(function () {
                 (new \Recurrence\RecurrenceProvider())->parse('FREQUENCY=MONTHLY;BYMONTHDAY=1;INTERVAL=2');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
 
         // Wrong frequency option in RRULE
@@ -82,7 +82,7 @@ class RecurrenceProvider extends atoum
             ->exception(function () {
                 (new \Recurrence\RecurrenceProvider())->parse('FREQ=BADLY;BYMONTHDAY=1;INTERVAL=2');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 
@@ -140,7 +140,7 @@ class RecurrenceProvider extends atoum
             ->exception(function () {
                 (new \Recurrence\RecurrenceProvider())->parse('FREQ=MONTHLY;DTSTART;TZID=Disneyland/Paris:20170520T161322');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 
@@ -198,7 +198,7 @@ class RecurrenceProvider extends atoum
             ->exception(function () {
                 (new \Recurrence\RecurrenceProvider())->parse('FREQ=MONTHLY;UNTIL;TZID=Disneyland/Paris:20170520T161322');
             })
-            ->isInstanceOf('InvalidArgumentException')
+            ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 
