@@ -26,13 +26,26 @@ class FreqTransformer extends atoum
     }
 
     /**
-     * Failed : Use an invalid frequency value
+     * Failed : Use an invalid frequency value, but pattern match on first check
      */
     public function testInvalidValue()
     {
         $this->assert
             ->exception(function () {
                 (new \Recurrence\RruleTransformer\FreqTransformer())->transform('FREQ=INVALID;DTSTART=20170520;INTERVAL=1');
+            })
+            ->isInstanceOf('InvalidArgumentException')
+        ;
+    }
+
+    /**
+     * Failed : Use an invalid frequency value, but patter do not match at all
+     */
+    public function testReallyInvalidValue()
+    {
+        $this->assert
+            ->exception(function () {
+                (new \Recurrence\RruleTransformer\FreqTransformer())->transform('FREQ=666;DTSTART=20170520;INTERVAL=1');
             })
             ->isInstanceOf('InvalidArgumentException')
         ;
