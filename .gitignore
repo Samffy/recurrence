@@ -2,4 +2,6 @@ vendor
 composer.lock
 var/code-coverage/*
 !var/code-coverage/.gitkeep
+var/benchmark/*
+!var/benchmark/.gitkeep
 .idea

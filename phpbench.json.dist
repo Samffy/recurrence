@@ -1,0 +1,18 @@
+{
+  "bootstrap": "vendor/autoload.php",
+  "path": "tests/benchmark",
+  "xml_storage_path": "var/benchmark/",
+  "outputs": {
+    "my_output": {
+      "extends": "html",
+      "file": "var/benchmark/report.html",
+      "title": "Recurrence"
+    }
+  },
+  "reports": {
+    "my_report": {
+      "extends": "default",
+      "exclude": ["tests"]
+    }
+  }
+}

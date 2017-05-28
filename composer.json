@@ -24,6 +24,7 @@
         "simshaun/recurr": "~2.2"
     },
     "require-dev": {
-        "atoum/atoum": "~3.0"
+        "atoum/atoum": "~3.0",
+        "phpbench/phpbench": "~0.13"
     }
 }
