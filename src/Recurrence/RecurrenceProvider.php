@@ -36,6 +36,11 @@ class RecurrenceProvider
     private $intervalTransformer;
 
     /**
+     * @var CountTransformer
+     */
+    private $countTransformer;
+
+    /**
      * RecurrenceProvider constructor.
      */
     public function __construct()
