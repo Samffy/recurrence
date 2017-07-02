@@ -9,35 +9,38 @@ namespace Recurrence;
 class DatetimeProvider
 {
     /**
-     * @var Recurrence
-     */
-    private $recurrence;
-
-    /**
      * @param Recurrence $recurrence
+     * @return array<\DateTime>
      */
-    public function __construct(Recurrence $recurrence)
+    public function provide(Recurrence $recurrence)
     {
-        $this->recurrence = $recurrence;
-    }
+        $interval = $recurrence->getFrequency()->convertToDateIntervalFormat();
 
-    /**
-     * @return \DatePeriod
-     */
-    public function provide()
-    {
-        $interval = $this->recurrence->getFrequency()->convertToDateIntervalFormat();
-
-        if ($this->recurrence->getInterval() !== 1) {
-            $interval = str_replace('1', $this->recurrence->getInterval(), $interval);
+        // Transform interval in Datetime interval expression
+        if ($recurrence->getInterval() !== 1) {
+            $interval = str_replace('1', $recurrence->getInterval(), $interval);
         }
 
         $dateInterval = new \DateInterval($interval);
 
-        return new \DatePeriod(
-            $this->recurrence->getPeriodStartAt(),
+        // Estimate end date in case of count option
+        $periodEndAt = $recurrence->getPeriodEndAt();
+        if ($recurrence->hasCount()) {
+            $periodEndAt   = clone $recurrence->getPeriodStartAt();
+            $periodEndAt->modify(str_replace('1', ($recurrence->getCount() + 1), $recurrence->getFrequency()->convertToDateTimeFormat()));
+        }
+
+        $recurrences = iterator_to_array(new \DatePeriod(
+            $recurrence->getPeriodStartAt(),
             $dateInterval,
-            $this->recurrence->getPeriodEndAt()
-        );
+            $periodEndAt
+        ));
+
+        // When having count option, return only amount of recurrences requested
+        if ($recurrence->hasCount()) {
+            return array_slice($recurrences, 0, $recurrence->getCount());
+        }
+
+        return $recurrences;
     }
 }

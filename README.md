@@ -30,6 +30,7 @@ Available methods :
 - `setPeriodStartAt` (`\Datetime()`) : set `DTSTART` option
 - `setPeriodEndAt` (`\Datetime()`) : set `UNTIL` option
 - `setInterval` (`integer`) : set `INTERVAL` option
+- `setCount` (`integer`) : set `COUNT` option
 
 ### Create recurrences from RRULE standard expression
 
@@ -37,7 +38,7 @@ This example as the same result as example above using object method :
 
 ```php
 $recurrence = (new RecurrenceProvider())->parse('FREQ=MONTHLY;DTSTART=20170101;UNTIL=20171231;INTERVAL=1');
-$periods    = (new DatetimeProvider($recurrence))-provide();
+$periods    = (new DatetimeProvider())-provide($recurrence);
 ```
 
 Supported rules : 
@@ -53,6 +54,7 @@ Supported rules :
     - Datetime UTC : `string` using format `YYYYMMDDTHHMMSSZ` (example : `20170520T154720Z`)
 - `UNTIL` with `TZID` : `string` using format `{timezone}:YYYYMMDDTHHMMSS`  (example : `Europe/Paris:20170520T154720`)
 - `INTERVAL` : simple `integer`
+- `COUNT` : simple `integer`
 
 ### Unit tests
 
@@ -66,7 +68,7 @@ Remember that you need `xdebug` to generate code coverage report.
 
 ### Benchmark
 
-To assume that you don't degrade performance when you update the library, run a benchmark using context name `Initial` first :
+To assume that you don't degrade performance when you update the library, run a benchmark using context name `initial` first :
 
 ```
 ./vendor/bin/phpbench run --store --context="initial" --dump-file=var/benchmark/initial.xml
@@ -74,7 +76,7 @@ To assume that you don't degrade performance when you update the library, run a 
 
 Use `--report=default` option if you want to see report in console.
 
-Before committing your changes, run a new benchmark using `Update` as context :
+Before committing your changes, run a new benchmark using `update` as context :
 
 ```
 ./vendor/bin/phpbench run --store --context="update" --dump-file=var/benchmark/update.xml

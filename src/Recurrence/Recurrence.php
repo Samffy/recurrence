@@ -29,6 +29,19 @@ class Recurrence
     private $interval = 1;
 
     /**
+     * @var integer
+     */
+    private $count;
+
+    /**
+     * Recurrence constructor.
+     */
+    public function __construct()
+    {
+        $this->setPeriodStartAt(new \DateTime());
+    }
+
+    /**
      * @param \Datetime $periodStartAt
      * @return $this
      */
@@ -104,4 +117,30 @@ class Recurrence
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @return int
+     */
+    public function hasCount()
+    {
+        return ($this->count !== null);
+    }
+
+    /**
+     * @param int $count
+     * @return $this
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
+
+        return $this;
+    }
 }

@@ -27,20 +27,37 @@ class Frequency extends atoum
     }
 
     /**
-     * Validate get interval from frequency for each supported frequency
+     * Validate get DateInterval format from frequency for each supported frequency
      *
-     * @dataProvider frequenciesDataProvider
+     * @dataProvider DateIntervalFrequenciesDataProvider
      *
      * @param string $frequencyName
-     * @param string $expectedIntervalName
+     * @param string $expectedDateIntervalName
      */
-    public function testGetInterval($frequencyName, $expectedIntervalName)
+    public function testDateIntervalFrequencies($frequencyName, $expectedDateIntervalName)
     {
         $frequency = new \Recurrence\Frequency($frequencyName);
 
         $this->assert
             ->string($frequency->convertToDateIntervalFormat())
-            ->isEqualTo($expectedIntervalName);
+            ->isEqualTo($expectedDateIntervalName);
+    }
+
+    /**
+     * Validate get DateTime format from frequency for each supported frequency
+     *
+     * @dataProvider DateTimeFrequenciesDataProvider
+     *
+     * @param string $frequencyName
+     * @param string $expectedDateTimeName
+     */
+    public function testDateTimeFrequencies($frequencyName, $expectedDateTimeName)
+    {
+        $frequency = new \Recurrence\Frequency($frequencyName);
+
+        $this->assert
+            ->string($frequency->convertToDateTimeFormat())
+            ->isEqualTo($expectedDateTimeName);
     }
 
     /**
@@ -58,7 +75,7 @@ class Frequency extends atoum
     /**
      * @return array
      */
-    protected function frequenciesDataProvider()
+    protected function DateIntervalFrequenciesDataProvider()
     {
         return [
             ['YEARLY', 'P1Y'],
@@ -68,6 +85,22 @@ class Frequency extends atoum
             ['HOURLY', 'PT1H'],
             ['MINUTELY', 'PT1M'],
             ['SECONDLY', 'PT1S'],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function DateTimeFrequenciesDataProvider()
+    {
+        return [
+            ['YEARLY', '+1 years'],
+            ['MONTHLY', '+1 months'],
+            ['WEEKLY', '+1 weeks'],
+            ['DAILY', '+1 days'],
+            ['HOURLY', '+1 hours'],
+            ['MINUTELY', '+1 minutes'],
+            ['SECONDLY', '+1 seconds'],
         ];
     }
 }

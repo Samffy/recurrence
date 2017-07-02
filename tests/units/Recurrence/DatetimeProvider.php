@@ -15,7 +15,7 @@ class DatetimeProvider extends atoum
 {
 
     /**
-     * @dataProvider monthlyFrequenciesDataProvider
+     * @dataProvider periodAndFrequenciesDataProvider
      *
      * @param \Datetime $periodStartAt
      * @param \Datetime $periodEndAt
@@ -23,7 +23,7 @@ class DatetimeProvider extends atoum
      * @param integer   $interval
      * @param array     $expected
      */
-    public function testMonthlyFrequency(
+    public function testFrequencyWithEndedPeriod(
         \Datetime $periodStartAt,
         \Datetime $periodEndAt,
         $frequency,
@@ -38,7 +38,7 @@ class DatetimeProvider extends atoum
             ->setInterval($interval)
         ;
 
-        $period = (new \Recurrence\DatetimeProvider($recurrence))->provide();
+        $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 
         $key = 0;
         foreach ($period as $date) {
@@ -54,7 +54,7 @@ class DatetimeProvider extends atoum
     /**
      * @return array
      */
-    protected function monthlyFrequenciesDataProvider()
+    protected function periodAndFrequenciesDataProvider()
     {
         return [
             [
@@ -131,7 +131,74 @@ class DatetimeProvider extends atoum
                     new \Datetime('2017-01-01'),
                     new \Datetime('2019-01-01'),
                 ]
+            ],
+            [
+                new \Datetime('2017-01-01'),
+                new \Datetime('2017-06-01'),
+                'WEEKLY',
+                4,
+                [
+                    new \Datetime('2017-01-01'),
+                    new \Datetime('2017-01-29'),
+                    new \Datetime('2017-02-26'),
+                    new \Datetime('2017-03-26'),
+                    new \Datetime('2017-04-23'),
+                    new \Datetime('2017-05-21'),
+                ]
+            ],
+            [
+                new \Datetime('2017-02-28'),
+                new \Datetime('2017-03-15'),
+                'DAILY',
+                2,
+                [
+                    new \Datetime('2017-02-28'),
+                    new \Datetime('2017-03-02'),
+                    new \Datetime('2017-03-04'),
+                    new \Datetime('2017-03-06'),
+                    new \Datetime('2017-03-08'),
+                    new \Datetime('2017-03-10'),
+                    new \Datetime('2017-03-12'),
+                    new \Datetime('2017-03-14'),
+                ]
             ]
         ];
+    }
+
+    /**
+     * @dataProvider periodAndFrequenciesDataProvider
+     *
+     * @param \Datetime $periodStartAt
+     * @param \Datetime $periodEndAt
+     * @param string    $frequency
+     * @param integer   $interval
+     * @param array     $expected
+     */
+    public function testFrequencyWithCount(
+        \Datetime $periodStartAt,
+        \Datetime $periodEndAt,
+        $frequency,
+        $interval,
+        array $expected
+    )
+    {
+        $recurrence = (new Recurrence())
+            ->setPeriodStartAt($periodStartAt)
+            ->setCount(count($expected))
+            ->setFrequency(new \Recurrence\Frequency($frequency))
+            ->setInterval($interval)
+        ;
+
+        $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
+
+        $key = 0;
+        foreach ($period as $date) {
+            $this
+                ->dateTime($date)
+                ->isEqualTo($expected[$key])
+            ;
+
+            $key++;
+        }
     }
 }

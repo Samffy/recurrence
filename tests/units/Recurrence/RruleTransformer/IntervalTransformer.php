@@ -39,7 +39,7 @@ class IntervalTransformer extends atoum
     }
 
     /**
-     * Success : Use an valid interval value
+     * Success : Use a valid interval value
      */
     public function testValidValue()
     {
