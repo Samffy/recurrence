@@ -2,6 +2,7 @@
 
 namespace Recurrence;
 
+use Recurrence\RruleTransformer\CountTransformer;
 use Recurrence\RruleTransformer\DtStartTransformer;
 use Recurrence\RruleTransformer\FreqTransformer;
 use Recurrence\RruleTransformer\IntervalTransformer;
@@ -43,6 +44,7 @@ class RecurrenceProvider
         $this->dtStartTransformer  = new DtStartTransformer();
         $this->untilTransformer    = new UntilTransformer();
         $this->intervalTransformer = new IntervalTransformer();
+        $this->countTransformer    = new CountTransformer();
     }
 
     /**
@@ -70,6 +72,18 @@ class RecurrenceProvider
 
         if ($interval = $this->intervalTransformer->transform($rRule)) {
             $recurrence->setInterval($interval);
+        }
+
+        if ($interval = $this->countTransformer->transform($rRule)) {
+            $recurrence->setCount($interval);
+        }
+
+        if ($recurrence->hasCount() && $recurrence->getPeriodEndAt()) {
+            throw new \InvalidArgumentException('Recurrence cannot have [UNTIL] and [COUNT] option at the same time');
+        }
+
+        if (!$recurrence->hasCount() && !$recurrence->getPeriodEndAt()) {
+            throw new \InvalidArgumentException('Recurrence required an [UNTIL] or [COUNT] option');
         }
 
         return $recurrence;
