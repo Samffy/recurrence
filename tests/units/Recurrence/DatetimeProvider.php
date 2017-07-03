@@ -40,6 +40,10 @@ class DatetimeProvider extends atoum
 
         $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 
+        $this->assert
+            ->integer(count($period))
+            ->isEqualTo(count($expected));
+
         $key = 0;
         foreach ($period as $date) {
             $this
@@ -98,7 +102,7 @@ class DatetimeProvider extends atoum
             ],
             [
                 new \Datetime('2017-01-01'),
-                new \Datetime('2020-01-01'),
+                new \Datetime('2020-01-02'),
                 'YEARLY',
                 1,
                 [
