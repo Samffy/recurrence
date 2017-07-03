@@ -191,6 +191,10 @@ class DatetimeProvider extends atoum
 
         $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 
+        $this->assert
+            ->integer(count($period))
+            ->isEqualTo(count($expected));
+
         $key = 0;
         foreach ($period as $date) {
             $this

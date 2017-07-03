@@ -27,7 +27,7 @@ class DatetimeProvider
         $periodEndAt = $recurrence->getPeriodEndAt();
         if ($recurrence->hasCount()) {
             $periodEndAt   = clone $recurrence->getPeriodStartAt();
-            $periodEndAt->modify(str_replace('1', ($recurrence->getCount() + 1), $recurrence->getFrequency()->convertToDateTimeFormat()));
+            $periodEndAt->modify(str_replace('1', ($recurrence->getCount()*$recurrence->getInterval()), $recurrence->getFrequency()->convertToDateTimeFormat()));
         }
 
         $recurrences = iterator_to_array(new \DatePeriod(
