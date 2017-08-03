@@ -6,7 +6,7 @@ namespace Recurrence\RruleTransformer;
  * Class AbstractRruleTransformer
  * @package Recurrence\RruleTransformer
  */
-class AbstractRruleTransformer
+abstract class AbstractRruleTransformer
 {
     /**
      * @param string $rRule
