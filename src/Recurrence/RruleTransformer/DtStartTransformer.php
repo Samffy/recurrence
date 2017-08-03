@@ -6,9 +6,30 @@ namespace Recurrence\RruleTransformer;
  * Class DtStartTransformer
  * @package Recurrence\RruleTransformer
  */
-class DtStartTransformer implements TransformerInterface
+class DtStartTransformer extends AbstractRruleTransformer implements TransformerInterface
 {
     const RRULE_PARAMETER = 'DTSTART';
+
+    /**
+     * @var array
+     */
+    private $datePatterns = [
+        [
+            'pattern'     => '[0-9]{8}T[0-9]{6}Z',
+            'date_format' => 'Ymd\THisZ',
+            'timezone'    => 'UTC',
+        ],
+        [
+            'pattern'     => '[0-9]{8}T[0-9]{6}',
+            'date_format' => 'Ymd\THis',
+            'timezone'    => null,
+        ],
+        [
+            'pattern'     => '[0-9]{8}',
+            'date_format' => 'Ymd',
+            'timezone'    => null,
+        ],
+    ];
 
     /**
      * @param string $rRule
@@ -24,22 +45,18 @@ class DtStartTransformer implements TransformerInterface
             }
         }
 
-        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8}T[0-9]{6}Z)/', $rRule, $matches)) {
-            return \DateTime::createFromFormat('Ymd\THisZ', $matches[1], new \DateTimeZone('UTC'));
+        // Process each supported date patterns and try to create \Datetime
+        foreach ($this->datePatterns as $datePattern) {
+            if (preg_match(sprintf('/%s=(%s)/', $this::RRULE_PARAMETER, $datePattern['pattern']), $rRule, $matches)) {
+                return \DateTime::createFromFormat(
+                    $datePattern['date_format'],
+                    $matches[1],
+                    (($datePattern['timezone'])? new \DateTimeZone($datePattern['timezone']) : new \DateTimeZone(date_default_timezone_get()))
+                );
+            }
         }
 
-        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8}T[0-9]{6})/', $rRule, $matches)) {
-            return \DateTime::createFromFormat('Ymd\THis', $matches[1]);
-        }
-
-        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8})/', $rRule, $matches)) {
-            return \DateTime::createFromFormat('Ymd', $matches[1]);
-        }
-
-        // If there is the search option but transformer was not able to get it, assume it was an invalid option
-        if (preg_match('/'.$this::RRULE_PARAMETER.'/', $rRule, $matches)) {
-            throw new \InvalidArgumentException(sprintf('RRULE invalid [%s] option', $this::RRULE_PARAMETER));
-        }
+        $this->throwExceptionOnInvalidParameter($rRule, $this::RRULE_PARAMETER);
 
         return null;
     }

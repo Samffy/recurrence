@@ -8,8 +8,10 @@ use Recurrence\Frequency;
  * Class FreqTransformer
  * @package Recurrence\RruleTransformer
  */
-class FreqTransformer implements TransformerInterface
+class FreqTransformer extends AbstractRruleTransformer implements TransformerInterface
 {
+    const RRULE_PARAMETER = 'FREQ';
+
     /**
      * @param string $rRule
      * @return Frequency
@@ -20,10 +22,7 @@ class FreqTransformer implements TransformerInterface
             return new Frequency($matches[1]);
         }
 
-        // If there is a FREQ option but transformer was not able to get it, assume it was an invalid option
-        if (preg_match('/FREQ=/', $rRule, $matches)) {
-            throw new \InvalidArgumentException('RRULE invalid [FREQ] option');
-        }
+        $this->throwExceptionOnInvalidParameter($rRule, self::RRULE_PARAMETER);
 
         throw new \InvalidArgumentException('RRULE required [FREQ] option');
     }
