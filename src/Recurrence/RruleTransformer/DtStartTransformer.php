@@ -6,7 +6,7 @@ namespace Recurrence\RruleTransformer;
  * Class DtStartTransformer
  * @package Recurrence\RruleTransformer
  */
-class DtStartTransformer implements TransformerInterface
+class DtStartTransformer extends AbstractRruleTransformer implements TransformerInterface
 {
     const RRULE_PARAMETER = 'DTSTART';
 
@@ -36,10 +36,7 @@ class DtStartTransformer implements TransformerInterface
             return \DateTime::createFromFormat('Ymd', $matches[1]);
         }
 
-        // If there is the search option but transformer was not able to get it, assume it was an invalid option
-        if (preg_match('/'.$this::RRULE_PARAMETER.'/', $rRule, $matches)) {
-            throw new \InvalidArgumentException(sprintf('RRULE invalid [%s] option', $this::RRULE_PARAMETER));
-        }
+        $this->throwExceptionOnInvalidParameter($rRule, $this::RRULE_PARAMETER);
 
         return null;
     }
