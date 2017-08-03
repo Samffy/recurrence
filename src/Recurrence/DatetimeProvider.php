@@ -26,7 +26,7 @@ class DatetimeProvider
         // Estimate end date in case of count option
         $periodEndAt = $recurrence->getPeriodEndAt();
         if ($recurrence->hasCount()) {
-            $periodEndAt   = clone $recurrence->getPeriodStartAt();
+            $periodEndAt = clone $recurrence->getPeriodStartAt();
             $periodEndAt->modify(str_replace('1', ($recurrence->getCount()*$recurrence->getInterval()), $recurrence->getFrequency()->convertToDateTimeFormat()));
         }
 
