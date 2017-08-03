@@ -24,6 +24,6 @@ class FreqTransformer extends AbstractRruleTransformer implements TransformerInt
 
         $this->throwExceptionOnInvalidParameter($rRule, self::RRULE_PARAMETER);
 
-        throw new \InvalidArgumentException('RRULE required [FREQ] option');
+        return null;
     }
 }

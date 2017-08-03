@@ -17,11 +17,11 @@ class FreqTransformer extends atoum
      */
     public function testMissingValue()
     {
+        $frequency = (new \Recurrence\RruleTransformer\FreqTransformer())->transform('DTSTART=20170520;INTERVAL=1');
+
         $this->assert
-            ->exception(function () {
-                (new \Recurrence\RruleTransformer\FreqTransformer())->transform('DTSTART=20170520;INTERVAL=1');
-            })
-            ->isInstanceOf('InvalidArgumentException')
+            ->variable($frequency)
+            ->isNull()
         ;
     }
 

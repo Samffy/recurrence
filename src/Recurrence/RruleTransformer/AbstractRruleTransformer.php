@@ -1,6 +1,7 @@
 <?php
 
 namespace Recurrence\RruleTransformer;
+use Recurrence\Recurrence;
 
 /**
  * Class AbstractRruleTransformer
