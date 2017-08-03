@@ -11,6 +11,27 @@ class DtStartTransformer extends AbstractRruleTransformer implements Transformer
     const RRULE_PARAMETER = 'DTSTART';
 
     /**
+     * @var array
+     */
+    private $datePatterns = [
+        [
+            'pattern'     => '[0-9]{8}T[0-9]{6}Z',
+            'date_format' => 'Ymd\THisZ',
+            'timezone'    => 'UTC',
+        ],
+        [
+            'pattern'     => '[0-9]{8}T[0-9]{6}',
+            'date_format' => 'Ymd\THis',
+            'timezone'    => null,
+        ],
+        [
+            'pattern'     => '[0-9]{8}',
+            'date_format' => 'Ymd',
+            'timezone'    => null,
+        ],
+    ];
+
+    /**
      * @param string $rRule
      * @return \DateTime
      */
@@ -24,16 +45,15 @@ class DtStartTransformer extends AbstractRruleTransformer implements Transformer
             }
         }
 
-        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8}T[0-9]{6}Z)/', $rRule, $matches)) {
-            return \DateTime::createFromFormat('Ymd\THisZ', $matches[1], new \DateTimeZone('UTC'));
-        }
-
-        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8}T[0-9]{6})/', $rRule, $matches)) {
-            return \DateTime::createFromFormat('Ymd\THis', $matches[1]);
-        }
-
-        if (preg_match('/'.$this::RRULE_PARAMETER.'=([0-9]{8})/', $rRule, $matches)) {
-            return \DateTime::createFromFormat('Ymd', $matches[1]);
+        // Process each supported date patterns and try to create \Datetime
+        foreach ($this->datePatterns as $datePattern) {
+            if (preg_match(sprintf('/%s=(%s)/', $this::RRULE_PARAMETER, $datePattern['pattern']), $rRule, $matches)) {
+                return \DateTime::createFromFormat(
+                    $datePattern['date_format'],
+                    $matches[1],
+                    (($datePattern['timezone'])? new \DateTimeZone($datePattern['timezone']) : null)
+                );
+            }
         }
 
         $this->throwExceptionOnInvalidParameter($rRule, $this::RRULE_PARAMETER);
