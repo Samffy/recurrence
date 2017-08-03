@@ -6,8 +6,10 @@ namespace Recurrence\RruleTransformer;
  * Class CountTransformer
  * @package Recurrence\RruleTransformer
  */
-class CountTransformer implements TransformerInterface
+class CountTransformer extends AbstractRruleTransformer implements TransformerInterface
 {
+    const RRULE_PARAMETER = 'COUNT';
+
     /**
      * @param string $rRule
      * @return integer
@@ -18,10 +20,7 @@ class CountTransformer implements TransformerInterface
             return (int) $matches[1];
         }
 
-        // If there is an INTERVAL option but transformer was not able to get it, assume it was an invalid option
-        if (preg_match('/COUNT=/', $rRule, $matches)) {
-            throw new \InvalidArgumentException('RRULE invalid [COUNT] option');
-        }
+        $this->throwExceptionOnInvalidParameter($rRule, self::RRULE_PARAMETER);
 
         return null;
     }

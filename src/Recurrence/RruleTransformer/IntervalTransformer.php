@@ -6,8 +6,10 @@ namespace Recurrence\RruleTransformer;
  * Class IntervalTransformer
  * @package Recurrence\RruleTransformer
  */
-class IntervalTransformer implements TransformerInterface
+class IntervalTransformer extends AbstractRruleTransformer implements TransformerInterface
 {
+    const RRULE_PARAMETER = 'INTERVAL';
+
     /**
      * @param string $rRule
      * @return integer
@@ -18,10 +20,7 @@ class IntervalTransformer implements TransformerInterface
             return (int) $matches[1];
         }
 
-        // If there is an INTERVAL option but transformer was not able to get it, assume it was an invalid option
-        if (preg_match('/INTERVAL=/', $rRule, $matches)) {
-            throw new \InvalidArgumentException('RRULE invalid [INTERVAL] option');
-        }
+        $this->throwExceptionOnInvalidParameter($rRule, self::RRULE_PARAMETER);
 
         return null;
     }
