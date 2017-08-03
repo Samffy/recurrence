@@ -51,7 +51,7 @@ class DtStartTransformer extends AbstractRruleTransformer implements Transformer
                 return \DateTime::createFromFormat(
                     $datePattern['date_format'],
                     $matches[1],
-                    (($datePattern['timezone'])? new \DateTimeZone($datePattern['timezone']) : null)
+                    (($datePattern['timezone'])? new \DateTimeZone($datePattern['timezone']) : new \DateTimeZone(date_default_timezone_get()))
                 );
             }
         }
