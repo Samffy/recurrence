@@ -14,11 +14,10 @@
     ],
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "Recurrence\\": "src/Recurrence/"
         }
     },
-    "optimize-autoloader": true,
-    "classmap-authoritative": true,
+    "minimum-stability": "stable",
     "require": {
         "php": "^5.6.0 || ^7.0.0"
     },
