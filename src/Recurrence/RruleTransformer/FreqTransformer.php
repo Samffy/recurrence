@@ -12,18 +12,17 @@ class FreqTransformer extends AbstractRruleTransformer implements TransformerInt
 {
     const RRULE_PARAMETER = 'FREQ';
 
+    const RRULE_PATTERN = '([a-zA-Z]+)';
+
     /**
      * @param string $rRule
-     * @return Frequency
+     * @throws \InvalidArgumentException
+     * @return Frequency|null
      */
     public function transform($rRule)
     {
-        if (preg_match('/FREQ=([a-zA-Z]+)/', $rRule, $matches)) {
-            return new Frequency($matches[1]);
-        }
+        $value = parent::transform($rRule);
 
-        $this->throwExceptionOnInvalidParameter($rRule, self::RRULE_PARAMETER);
-
-        return null;
+        return ($value) ? new Frequency($value) : null;
     }
 }

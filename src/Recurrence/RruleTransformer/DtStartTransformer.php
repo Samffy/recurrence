@@ -10,6 +10,8 @@ class DtStartTransformer extends AbstractRruleTransformer implements Transformer
 {
     const RRULE_PARAMETER = 'DTSTART';
 
+    const RRULE_PATTERN = null;
+
     /**
      * @var array
      */
@@ -33,7 +35,7 @@ class DtStartTransformer extends AbstractRruleTransformer implements Transformer
 
     /**
      * @param string $rRule
-     * @return \DateTime
+     * @return \DateTime|null
      */
     public function transform($rRule)
     {
