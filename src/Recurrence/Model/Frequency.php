@@ -1,10 +1,10 @@
 <?php
 
-namespace Recurrence;
+namespace Recurrence\Model;
 
 /**
  * Class Frequency
- * @package Recurrence
+ * @package Recurrence\Model
  */
 class Frequency
 {

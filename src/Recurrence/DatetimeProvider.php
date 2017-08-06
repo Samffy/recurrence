@@ -2,6 +2,8 @@
 
 namespace Recurrence;
 
+use Recurrence\Model\Recurrence;
+
 /**
  * Class DatetimeProvider
  * @package Recurrence

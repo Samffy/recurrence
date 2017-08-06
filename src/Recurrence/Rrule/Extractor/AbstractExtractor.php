@@ -1,22 +1,22 @@
 <?php
 
-namespace Recurrence\RruleTransformer;
+namespace Recurrence\Rrule\Extractor;
 
 /**
- * Class AbstractRruleTransformer
- * @package Recurrence\RruleTransformer
+ * Class AbstractExtractor
+ * @package Recurrence\Rrule\Model
  */
-abstract class AbstractRruleTransformer
+abstract class AbstractExtractor implements RruleExtractorInterface
 {
     /**
      * @param string $rRule
      * @throws \InvalidArgumentException
-     * @return mixed
+     * @return array|null
      */
-    public function transform($rRule)
+    public function extract($rRule)
     {
         if (preg_match(sprintf('/%s=%s/', $this::RRULE_PARAMETER, $this::RRULE_PATTERN), $rRule, $matches)) {
-            return (is_numeric($matches[1])) ? (int) $matches[1] : $matches[1];
+            return array_slice($matches, 1);
         }
 
         $this->throwExceptionOnInvalidParameter($rRule, $this::RRULE_PARAMETER);
@@ -33,7 +33,7 @@ abstract class AbstractRruleTransformer
     public function throwExceptionOnInvalidParameter($rRule, $ruleKey)
     {
         if ((preg_match(sprintf('/%s=/', $ruleKey), $rRule, $matches) === 1)) {
-            throw new \InvalidArgumentException(sprintf('RRULE invalid [%s] option', $ruleKey));
+            throw new \InvalidArgumentException(sprintf('Invalid RRULE [%s] option', $ruleKey));
         }
     }
 }

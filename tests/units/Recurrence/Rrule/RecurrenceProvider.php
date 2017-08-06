@@ -1,9 +1,9 @@
 <?php
 
-namespace Recurrence\tests\units;
+namespace Recurrence\tests\units\Rrule;
 
-require_once __DIR__.'/../../../src/Recurrence/Frequency.php';
-require_once __DIR__.'/../../../src/Recurrence/RecurrenceProvider.php';
+require_once __DIR__ . '/../../../../src/Recurrence/Model/Frequency.php';
+require_once __DIR__ . '/../../../../src/Recurrence/Rrule/RecurrenceProvider.php';
 
 use atoum;
 
@@ -22,7 +22,7 @@ class RecurrenceProvider extends atoum
         // Empty RRULE
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('');
             })
             ->isInstanceOf(\InvalidArgumentException::class)
         ;
@@ -36,21 +36,21 @@ class RecurrenceProvider extends atoum
         // Wrong option syntax in RRULE
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('FREQ:MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ:MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL');
             })
             ->isInstanceOf(\InvalidArgumentException::class)
         ;
     }
 
     /**
-     * Failed : Missing value for RRULE option
+     * Failed : Missing required value for RRULE option
      */
     public function tesMissingRruleValue()
     {
         // Missing INTERVAL value in RRULE
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL');
             })
             ->isInstanceOf(\InvalidArgumentException::class)
         ;
@@ -62,7 +62,7 @@ class RecurrenceProvider extends atoum
     public function testRruleFreqSupport()
     {
         // Success creation of recurrence from RRULE
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -72,7 +72,7 @@ class RecurrenceProvider extends atoum
         // Wrong frequency name in RRULE
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('FREQUENCY=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQUENCY=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
             })
             ->isInstanceOf(\InvalidArgumentException::class)
         ;
@@ -80,7 +80,7 @@ class RecurrenceProvider extends atoum
         // Wrong frequency option in RRULE
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('FREQ=BADLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=BADLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
             })
             ->isInstanceOf(\InvalidArgumentException::class)
         ;
@@ -92,7 +92,7 @@ class RecurrenceProvider extends atoum
     public function testRruleDstartSupport()
     {
         // Success creation of recurrence from RRULE using simple date
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170520;UNTIL=20170520');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170520;UNTIL=20170520');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -102,7 +102,7 @@ class RecurrenceProvider extends atoum
         ;
 
         // Success creation of recurrence from RRULE using datetime
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170520T161322;UNTIL=20170520');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170520T161322;UNTIL=20170520');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -112,7 +112,7 @@ class RecurrenceProvider extends atoum
         ;
 
         // Success creation of recurrence from RRULE using timezoned datetime
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170520T161322Z;UNTIL=20170520');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170520T161322Z;UNTIL=20170520');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -124,7 +124,7 @@ class RecurrenceProvider extends atoum
         ;
 
         // Success creation of recurrence from RRULE using timezoned datetime with TZID option
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART;TZID=Europe/Paris:20170520T161322;UNTIL=20170520');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART;TZID=Europe/Paris:20170520T161322;UNTIL=20170520');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -138,7 +138,7 @@ class RecurrenceProvider extends atoum
         // Invalid datetime
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART;TZID=Disneyland/Paris:20170520T161322;UNTIL=20170520');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART;TZID=Disneyland/Paris:20170520T161322;UNTIL=20170520');
             })
             ->isInstanceOf(\InvalidArgumentException::class)
         ;
@@ -150,7 +150,7 @@ class RecurrenceProvider extends atoum
     public function testRruleUntilSupport()
     {
         // Success creation of recurrence from RRULE using simple date
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -160,7 +160,7 @@ class RecurrenceProvider extends atoum
         ;
 
         // Success creation of recurrence from RRULE using datetime
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520T161322');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520T161322');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -170,7 +170,7 @@ class RecurrenceProvider extends atoum
         ;
 
         // Success creation of recurrence from RRULE using timezoned datetime
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520T161322Z');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520T161322Z');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -182,7 +182,7 @@ class RecurrenceProvider extends atoum
         ;
 
         // Success creation of recurrence from RRULE using timezoned datetime with TZID option
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL;TZID=Europe/Paris:20170520T161322');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL;TZID=Europe/Paris:20170520T161322');
 
         $this->assert
             ->string((string) $recurrence->getFrequency())
@@ -196,7 +196,7 @@ class RecurrenceProvider extends atoum
         // Invalid datetime
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL;TZID=Disneyland/Paris:20170520T161322');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL;TZID=Disneyland/Paris:20170520T161322');
             })
             ->isInstanceOf(\InvalidArgumentException::class)
         ;
@@ -209,7 +209,7 @@ class RecurrenceProvider extends atoum
     public function testRruleIntervalSupport()
     {
         // Success creation of recurrence from RRULE
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
 
         $this->assert
             ->integer($recurrence->getInterval())
@@ -223,7 +223,7 @@ class RecurrenceProvider extends atoum
     public function testRruleCountSupport()
     {
         // Success creation of recurrence from RRULE
-        $recurrence = (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;BYMONTHDAY=1;COUNT=2');
+        $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;BYMONTHDAY=1;COUNT=2');
 
         $this->assert
             ->integer($recurrence->getCount())
@@ -232,14 +232,14 @@ class RecurrenceProvider extends atoum
         // You can not create Recurrence with both COUNT and UNTIL option
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170120;UNTIL=20170520;COUNT=2');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170120;UNTIL=20170520;COUNT=2');
             })
             ->isInstanceOf(\InvalidArgumentException::class);
 
         // You have to set Recurrence with at least COUNT or UNTIL option
         $this->assert
             ->exception(function () {
-                (new \Recurrence\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170120;');
+                (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170120;');
             })
             ->isInstanceOf(\InvalidArgumentException::class);
     }
