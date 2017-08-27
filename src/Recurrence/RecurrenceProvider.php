@@ -25,6 +25,7 @@ class RecurrenceProvider
      */
     public function __construct()
     {
+        // Map Recurrence attributes with corresponding transformers
         $this->transformers = [
             'frequency'     => new FreqTransformer(),
             'periodStartAt' => new DtStartTransformer(),
