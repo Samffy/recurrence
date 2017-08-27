@@ -1,8 +1,10 @@
 # Readme
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
 [![Build Status](https://travis-ci.org/Samffy/recurrence.svg?branch=master)](https://travis-ci.org/Samffy/recurrence)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/118c5326-4be0-4e48-a6d3-8f403c25e3e4/mini.png)](https://insight.sensiolabs.com/projects/118c5326-4be0-4e48-a6d3-8f403c25e3e4)
 
 ## Presentation
 
@@ -37,7 +39,7 @@ Available methods :
 This example as the same result as example above using object method :
 
 ```php
-$recurrence = (new RecurrenceProvider())->parse('FREQ=MONTHLY;DTSTART=20170101;UNTIL=20171231;INTERVAL=1');
+$recurrence = (new RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170101;UNTIL=20171231;INTERVAL=1');
 $periods    = (new DatetimeProvider())-provide($recurrence);
 ```
 

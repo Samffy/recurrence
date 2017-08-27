@@ -10,18 +10,5 @@ class IntervalTransformer extends AbstractRruleTransformer implements Transforme
 {
     const RRULE_PARAMETER = 'INTERVAL';
 
-    /**
-     * @param string $rRule
-     * @return integer
-     */
-    public function transform($rRule)
-    {
-        if (preg_match('/INTERVAL=([0-9]+)/', $rRule, $matches)) {
-            return (int) $matches[1];
-        }
-
-        $this->throwExceptionOnInvalidParameter($rRule, self::RRULE_PARAMETER);
-
-        return null;
-    }
+    const RRULE_PATTERN = '([0-9]+)';
 }

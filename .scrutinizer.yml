@@ -4,35 +4,11 @@ filter:
     excluded_paths:
             - 'tests/*'
             - 'vendor/*'
+
 checks:
     php:
-        variable_existence: true
-        unused_parameters: true
-        unused_variables: true
-        unused_properties: true
-        unused_methods: true
-        unreachable_code: true
-        code_rating: true
-        deprecated_code_usage: true
-        duplication: true
-        security_vulnerabilities: true
-        parameter_doc_comments: true
-        no_underscore_prefix_in_methods: true
-        no_underscore_prefix_in_properties: true
-        no_short_method_names:
-            minimum: '3'
-        no_long_variable_names:
-            maximum: '30'
-
-tools:
-    php_sim: true
-    php_pdepend: true
-    php_analyzer: true
-    php_mess_detector: true
-    php_changetracking: true
-    php_code_sniffer: true
-    php_cs_fixer: true
-    sensiolabs_security_checker: true
+        excluded_dependencies:
+            - atoum/atoum
 
 coding_style:
     php:
