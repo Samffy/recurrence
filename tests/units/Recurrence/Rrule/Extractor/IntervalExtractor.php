@@ -7,54 +7,54 @@ use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Rrule\RecurrenceProvider;
 
 /**
- * Class CountExtractor
+ * Class IntervalExtractor
  * @package Recurrence\tests\units\Rrule\Extractor
  */
-class CountExtractor extends atoum
+class IntervalExtractor extends atoum
 {
     /**
-     * Failed : Use an invalid COUNT value
+     * Failed : Use an invalid INTERVAL value
      */
     public function testInvalidValue()
     {
         $this->assert
             ->exception(function () {
-                (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=WRONG');
+                (new \Recurrence\Rrule\Extractor\IntervalExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;INTERVAL=WRONG');
             })
             ->isInstanceOf(InvalidRruleException::class)
-            ->hasMessage('Invalid RRULE [COUNT] option : [WRONG]')
+            ->hasMessage('Invalid RRULE [INTERVAL] option : [WRONG]')
         ;
     }
 
     /**
-     * Success : No COUNT option
+     * Success : No INTERVAL option
      */
     public function testNoValue()
     {
-        $count = (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520');
+        $interval = (new \Recurrence\Rrule\Extractor\IntervalExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520');
 
         $this->assert
-            ->variable($count)
+            ->variable($interval)
             ->isNull()
         ;
     }
 
     /**
-     * Success : Use a valid COUNT value
+     * Success : Use a valid INTERVAL value
      */
     public function testValidValue()
     {
-        $count = (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=1');
+        $interval = (new \Recurrence\Rrule\Extractor\IntervalExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;INTERVAL=1');
 
         $this->assert
-            ->string($count[0])
+            ->string($interval[0])
             ->isEqualTo('1')
         ;
 
-        $count = (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=21');
+        $interval = (new \Recurrence\Rrule\Extractor\IntervalExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;INTERVAL=21');
 
         $this->assert
-            ->string($count[0])
+            ->string($interval[0])
             ->isEqualTo('21')
         ;
     }
@@ -64,10 +64,10 @@ class CountExtractor extends atoum
      */
     public function tesMissingRruleValue()
     {
-        // Missing COUNT value in RRULE
+        // Missing INTERVAL value in RRULE
         $this->assert
             ->exception(function () {
-                (new RecurrenceProvider())->create('FREQ=MONTHLY;BYMONTHDAY=1;COUNT');
+                (new RecurrenceProvider())->create('FREQ=MONTHLY;BYMONTHDAY=1;INTERVAL');
             })
             ->isInstanceOf(InvalidRruleException::class)
         ;

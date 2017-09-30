@@ -2,9 +2,8 @@
 
 namespace Recurrence\tests\units\Model;
 
-require_once __DIR__ . '/../../../../../src/Recurrence/Model/Frequency.php';
-
 use atoum;
+use Recurrence\Model\Exception\InvalidFrequencyOptionException;
 
 /**
  * Class Frequency
@@ -19,7 +18,8 @@ class Frequency extends atoum
             ->exception(function () {
                 (new \Recurrence\Model\Frequency('RANDOMLY'));
             })
-            ->isInstanceOf(\InvalidArgumentException::class)
+            ->isInstanceOf(InvalidFrequencyOptionException::class)
+            ->hasMessage('Invalid frequency name. Supported values are : YEARLY, MONTHLY, WEEKLY, DAILY, HOURLY, MINUTELY, SECONDLY')
         ;
 
     }

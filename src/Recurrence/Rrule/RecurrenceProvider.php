@@ -2,10 +2,14 @@
 
 namespace Recurrence\Rrule;
 
+use Recurrence\Model\Exception\InvalidRecurrenceException;
+use Recurrence\Model\Exception\InvalidRruleExpressionException;
 use Recurrence\Model\Recurrence;
 use Recurrence\Rrule\Extractor\CountExtractor;
 use Recurrence\Rrule\Extractor\FreqExtractor;
 use Recurrence\Rrule\Extractor\UntilExtractor;
+use Recurrence\Model\Exception\InvalidRruleException;
+use Recurrence\Validator\RecurrenceValidator;
 
 /**
  * Class RecurrenceProvider
@@ -31,7 +35,7 @@ class RecurrenceProvider
     /**
      * @param string $rRule
      * @return Recurrence
-     * @throws \InvalidArgumentException
+     * @throws InvalidRruleException
      */
     public function create($rRule)
     {
@@ -54,16 +58,10 @@ class RecurrenceProvider
             }
         }
 
-        if (!$recurrence->getFrequency()) {
-            throw new \InvalidArgumentException(sprintf('Recurrence [%s] option is required', FreqExtractor::RRULE_PARAMETER));
-        }
-
-        if ($recurrence->hasCount() && $recurrence->getPeriodEndAt()) {
-            throw new \InvalidArgumentException(sprintf('Recurrence cannot have [%s] and [%s] option at the same time', UntilExtractor::RRULE_PARAMETER, CountExtractor::RRULE_PARAMETER));
-        }
-
-        if (!$recurrence->hasCount() && !$recurrence->getPeriodEndAt()) {
-            throw new \InvalidArgumentException(sprintf('Recurrence required an [%s] or [%s] option', UntilExtractor::RRULE_PARAMETER, CountExtractor::RRULE_PARAMETER));
+        try {
+            RecurrenceValidator::validate($recurrence);
+        } catch (InvalidRecurrenceException $e)  {
+            throw new InvalidRruleExpressionException($e->getMessage());
         }
 
         return $recurrence;
@@ -79,7 +77,7 @@ class RecurrenceProvider
     {
         $method = sprintf('set%s', ucfirst($attribute));
 
-        if (method_exists($recurrence, $method)) {
+        if ($value && method_exists($recurrence, $method)) {
             $recurrence->$method($value);
         }
 

@@ -81,6 +81,14 @@ class Recurrence
     }
 
     /**
+     * @return bool
+     */
+    public function hasPeriodEndAt()
+    {
+        return $this->periodEndAt !== null;
+    }
+
+    /**
      * @param Frequency $frequency
      * @return $this
      */
@@ -127,11 +135,11 @@ class Recurrence
     }
 
     /**
-     * @return int
+     * @return bool
      */
     public function hasCount()
     {
-        return ($this->count !== null);
+        return $this->count !== null;
     }
 
     /**

@@ -7,55 +7,55 @@ use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Rrule\RecurrenceProvider;
 
 /**
- * Class CountExtractor
+ * Class FreqExtractor
  * @package Recurrence\tests\units\Rrule\Extractor
  */
-class CountExtractor extends atoum
+class FreqExtractor extends atoum
 {
     /**
-     * Failed : Use an invalid COUNT value
+     * Failed : Use an invalid FREQ value
      */
     public function testInvalidValue()
     {
         $this->assert
             ->exception(function () {
-                (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=WRONG');
+                (new \Recurrence\Rrule\Extractor\FreqExtractor())->extract('FREQ=1337;DTSTART=20170520;COUNT=1');
             })
             ->isInstanceOf(InvalidRruleException::class)
-            ->hasMessage('Invalid RRULE [COUNT] option : [WRONG]')
+            ->hasMessage('Invalid RRULE [FREQ] option : [1337]')
         ;
     }
 
     /**
-     * Success : No COUNT option
+     * Success : No FREQ option
      */
     public function testNoValue()
     {
-        $count = (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520');
+        $freq = (new \Recurrence\Rrule\Extractor\FreqExtractor())->extract('FREQ=;DTSTART=20170520');
 
         $this->assert
-            ->variable($count)
+            ->variable($freq)
             ->isNull()
         ;
     }
 
     /**
-     * Success : Use a valid COUNT value
+     * Success : Use a valid FREQ value
      */
     public function testValidValue()
     {
-        $count = (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=1');
+        $freq = (new \Recurrence\Rrule\Extractor\FreqExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=1');
 
         $this->assert
-            ->string($count[0])
-            ->isEqualTo('1')
+            ->string($freq[0])
+            ->isEqualTo('MONTHLY')
         ;
 
-        $count = (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=21');
+        $freq = (new \Recurrence\Rrule\Extractor\FreqExtractor())->extract('FREQ=DAILY;DTSTART=20170520;COUNT=21');
 
         $this->assert
-            ->string($count[0])
-            ->isEqualTo('21')
+            ->string($freq[0])
+            ->isEqualTo('DAILY')
         ;
     }
 
@@ -67,7 +67,7 @@ class CountExtractor extends atoum
         // Missing COUNT value in RRULE
         $this->assert
             ->exception(function () {
-                (new RecurrenceProvider())->create('FREQ=MONTHLY;BYMONTHDAY=1;COUNT');
+                (new RecurrenceProvider())->create('BYMONTHDAY=1;COUNT');
             })
             ->isInstanceOf(InvalidRruleException::class)
         ;

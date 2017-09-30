@@ -2,6 +2,8 @@
 
 namespace Recurrence\Rrule\Extractor;
 
+use Recurrence\Model\Exception\InvalidRruleException;
+
 /**
  * Class AbstractExtractor
  * @package Recurrence\Rrule\Model
@@ -10,7 +12,7 @@ abstract class AbstractExtractor implements RruleExtractorInterface
 {
     /**
      * @param string $rRule
-     * @throws \InvalidArgumentException
+     * @throws InvalidRruleException
      * @return array|null
      */
     public function extract($rRule)
@@ -27,13 +29,13 @@ abstract class AbstractExtractor implements RruleExtractorInterface
     /**
      * @param string $rRule
      * @param string $ruleKey
-     * @throws \InvalidArgumentException
+     * @throws InvalidRruleException
      * @return void
      */
     public function throwExceptionOnInvalidParameter($rRule, $ruleKey)
     {
-        if ((preg_match(sprintf('/%s=/', $ruleKey), $rRule, $matches) === 1)) {
-            throw new \InvalidArgumentException(sprintf('Invalid RRULE [%s] option', $ruleKey));
+        if ((preg_match(sprintf('/%s=([\d\w]+)/', $ruleKey), $rRule, $matches) === 1)) {
+            throw new InvalidRruleException($ruleKey, ((count($matches) > 0)? implode(', ', array_slice($matches, 1)) : ''));
         }
     }
 }

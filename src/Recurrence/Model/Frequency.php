@@ -2,6 +2,8 @@
 
 namespace Recurrence\Model;
 
+use Recurrence\Model\Exception\InvalidFrequencyOptionException;
+
 /**
  * Class Frequency
  * @package Recurrence\Model
@@ -82,7 +84,7 @@ class Frequency
     public function __construct($frequencyName)
     {
         if (!in_array($frequencyName, $this->frequencies)) {
-            throw new \InvalidArgumentException(sprintf('Invalid frequency name. Supported values are : %s', implode(', ', $this->frequencies)));
+            throw new InvalidFrequencyOptionException(sprintf('Invalid frequency name. Supported values are : %s', implode(', ', $this->frequencies)));
         }
 
         $this->frequencyName = $frequencyName;

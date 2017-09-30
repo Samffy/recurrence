@@ -3,6 +3,7 @@
 namespace Recurrence\Rrule\Transformer;
 
 use Recurrence\Rrule\Extractor\UntilExtractor;
+use Recurrence\Model\Exception\InvalidRruleException;
 
 /**
  * Class UntilTransformer
@@ -13,14 +14,27 @@ class UntilTransformer extends DtStartTransformer
     /**
      * @param array $values
      * @return \DateTime
-     * @throws \InvalidArgumentException
+     * @throws InvalidRruleException
      */
-    public function transform($values)
+    public function transform(array $values)
     {
+        $this->validate($values);
+
         try {
             return parent::transform($values);
         } catch (\Exception $e) {
-            throw new \InvalidArgumentException(sprintf('Invalid RRULE [%s] option : [%s]', UntilExtractor::RRULE_PARAMETER, $values[0]));
+            throw new InvalidRruleException(UntilExtractor::RRULE_PARAMETER, (string) $values[0]);
+        }
+    }
+
+    /**
+     * @param array $values
+     * @throws InvalidRruleException
+     */
+    protected function validate(array $values)
+    {
+        if (!isset($values[0])) {
+            throw new InvalidRruleException(UntilExtractor::RRULE_PARAMETER);
         }
     }
 }

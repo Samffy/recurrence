@@ -12,5 +12,5 @@ interface RruleTransformerInterface
      * @param array $values
      * @return mixed
      */
-    public function transform($values);
+    public function transform(array $values);
 }
