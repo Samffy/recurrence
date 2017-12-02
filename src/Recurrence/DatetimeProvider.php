@@ -2,6 +2,9 @@
 
 namespace Recurrence;
 
+use Recurrence\Model\Recurrence;
+use Recurrence\Validator\RecurrenceValidator;
+
 /**
  * Class DatetimeProvider
  * @package Recurrence
@@ -14,6 +17,8 @@ class DatetimeProvider
      */
     public function provide(Recurrence $recurrence)
     {
+        RecurrenceValidator::validate($recurrence);
+
         $interval = $recurrence->getFrequency()->convertToDateIntervalFormat();
 
         // Transform interval in Datetime interval expression

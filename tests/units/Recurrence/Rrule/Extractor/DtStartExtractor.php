@@ -1,0 +1,60 @@
+<?php
+
+namespace Recurrence\tests\units\Rrule\Extractor;
+
+use atoum;
+use Recurrence\Model\Exception\InvalidRruleException;
+
+/**
+ * Class DtStartExtractor
+ * @package Recurrence\tests\units\Rrule\Extractor
+ */
+class DtStartExtractor extends atoum
+{
+    /**
+     * Failed : Use an invalid DTSTART value
+     */
+    public function testInvalidValue()
+    {
+        $this->assert
+            ->exception(function () {
+                (new \Recurrence\Rrule\Extractor\DtStartExtractor())->extract('FREQ=MONTHLY;DTSTART=20ERROR12;COUNT=1');
+            })
+            ->isInstanceOf(InvalidRruleException::class)
+            ->hasMessage('Invalid RRULE [DTSTART] option : [20ERROR12]')
+        ;
+    }
+
+    /**
+     * Success : No DTSTART option
+     */
+    public function testNoValue()
+    {
+        $dtStart = (new \Recurrence\Rrule\Extractor\DtStartExtractor())->extract('FREQ=MONTHLY;COUNT=1');
+
+        $this->assert
+            ->variable($dtStart)
+            ->isNull()
+        ;
+    }
+
+    /**
+     * Success : Use a valid DTSTART value
+     */
+    public function testValidValue()
+    {
+        $dtStart = (new \Recurrence\Rrule\Extractor\DtStartExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=1');
+
+        $this->assert
+            ->string($dtStart[0])
+            ->isEqualTo('20170520')
+        ;
+
+        $dtStart = (new \Recurrence\Rrule\Extractor\DtStartExtractor())->extract('FREQ=MONTHLY;DTSTART=20181220;COUNT=1');
+
+        $this->assert
+            ->string($dtStart[0])
+            ->isEqualTo('20181220')
+        ;
+    }
+}
