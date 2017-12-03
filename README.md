@@ -8,9 +8,7 @@
 
 ## Presentation
 
-**WARNING** : This is a work in progress.
-
-This library is a simple test to check optimization possibilities on recurrence calculation. 
+This library allow to manage datetime recurrences. It implement basic RRULE standards and add constraints support. 
 
 RFC : https://tools.ietf.org/html/rfc5545#page-37
 
@@ -57,6 +55,22 @@ Supported rules :
 - `UNTIL` with `TZID` : `string` using format `{timezone}:YYYYMMDDTHHMMSS`  (example : `Europe/Paris:20170520T154720`)
 - `INTERVAL` : simple `integer`
 - `COUNT` : simple `integer`
+
+### Adding constraints
+
+You can add some constraint to `Recurrence` in order to manage more precisely generated datetimes.  
+For example, if you do not want to generate datetime on wednesday (day `3` according to date format in PHP), add this constraint : 
+
+```php
+$recurrence->addConstraint(new ExcludeDaysOfWeekConstraint([3]));
+```
+
+* `EndOfMonthConstraint` : if recurrence has `MONTHLY` frequency and start date is last day of current month, force last day of month for all datetimes
+* `ExcludeDaysOfWeekConstraint` : if datetime is concerned, `DatetimeProvider` will return next valid date
+* `ExcludeWeekendConstraint` : if datetime is concerned, `DatetimeProvider` will return next monday
+
+Constraints are not a part of RRULE standard, this is an addition to optimize datetimes manipulation.  
+Be careful, constraints will be applied in the order you add it to recurrence.
 
 ### Unit tests
 

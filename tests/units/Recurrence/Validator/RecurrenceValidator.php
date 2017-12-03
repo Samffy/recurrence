@@ -4,6 +4,7 @@ namespace Recurrence\tests\units\Validator;
 
 use atoum;
 
+use Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint;
 use Recurrence\Model\Exception\InvalidRecurrenceException;
 use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
@@ -66,6 +67,23 @@ class RecurrenceValidator extends atoum
             })
             ->isInstanceOf(InvalidRecurrenceException::class)
             ->hasMessage('Recurrence required [COUNT] or [UNTIL] option')
+        ;
+
+        // Conflict between constraint and frequency
+        $this->assert
+            ->exception(function () {
+                $recurrence = new Recurrence();
+                $recurrence
+                    ->setFrequency(new Frequency('DAILY'))
+                    ->addConstraint(new EndOfMonthConstraint())
+                    ->setCount(2)
+                    ->setInterval(2)
+                ;
+
+                TestedRecurrenceValidator::validate($recurrence);
+            })
+            ->isInstanceOf(InvalidRecurrenceException::class)
+            ->hasMessage('End of month constraint can be applied only with monthly frequency')
         ;
     }
 }

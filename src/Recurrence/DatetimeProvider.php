@@ -2,7 +2,9 @@
 
 namespace Recurrence;
 
+use Recurrence\Constraint\DatetimeConstraint\DatetimeConstraintInterface;
 use Recurrence\Model\Recurrence;
+use Recurrence\Provider\DatetimeProviderFactory;
 use Recurrence\Validator\RecurrenceValidator;
 
 /**
@@ -19,33 +21,51 @@ class DatetimeProvider
     {
         RecurrenceValidator::validate($recurrence);
 
-        $interval = $recurrence->getFrequency()->convertToDateIntervalFormat();
+        $provider = DatetimeProviderFactory::create($recurrence);
 
-        // Transform interval in Datetime interval expression
-        if ($recurrence->getInterval() !== 1) {
-            $interval = str_replace('1', $recurrence->getInterval(), $interval);
+        $datetimes = $provider->provide($recurrence);
+
+        if (!$recurrence->hasDatetimeConstraint()) {
+            return $datetimes;
         }
 
-        $dateInterval = new \DateInterval($interval);
+        $filteredDatetimes = [];
 
-        // Estimate end date in case of count option
-        $periodEndAt = $recurrence->getPeriodEndAt();
-        if ($recurrence->hasCount()) {
-            $periodEndAt = clone $recurrence->getPeriodStartAt();
-            $periodEndAt->modify(str_replace('1', ($recurrence->getCount()*$recurrence->getInterval()), $recurrence->getFrequency()->convertToDateTimeFormat()));
+        $previousDatetime = null;
+        foreach ($datetimes as $key => $datetime) {
+            $filteredDatetime = $this->applyConstraints($recurrence, $datetime);
+
+            // Check that datetime do not pass recurrence end period
+            if ($recurrence->hasPeriodEndAt() && $datetime > $recurrence->getPeriodEndAt()) {
+                break;
+            }
+
+            // Avoid duplicate datetime due to constraint updates
+            if (empty($filteredDatetimes) || $previousDatetime != $filteredDatetime) {
+                $filteredDatetimes[] = $filteredDatetime;
+                $previousDatetime    = $filteredDatetime;
+            }
         }
 
-        $recurrences = iterator_to_array(new \DatePeriod(
-            $recurrence->getPeriodStartAt(),
-            $dateInterval,
-            $periodEndAt
-        ));
+        return $filteredDatetimes;
+    }
 
-        // When having count option, return only amount of recurrences requested
-        if ($recurrence->hasCount()) {
-            return array_slice($recurrences, 0, $recurrence->getCount());
+    /**
+     * @param Recurrence $recurrence
+     * @param \Datetime  $datetime
+     * @return \Datetime
+     */
+    private function applyConstraints($recurrence, $datetime)
+    {
+        $filteredDatetime = $datetime;
+
+        // Apply each constraint on current datetime
+        foreach ($recurrence->getConstraints() as $constraint) {
+            if ($constraint instanceof DatetimeConstraintInterface) {
+                $filteredDatetime = $constraint->apply($recurrence, $datetime);
+            }
         }
 
-        return $recurrences;
+        return $filteredDatetime;
     }
 }
