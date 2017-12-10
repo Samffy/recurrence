@@ -4,6 +4,7 @@ namespace Recurrence\tests\units;
 
 use atoum;
 
+use Recurrence\Constraint\DatetimeConstraint\ExcludeWeekendConstraint;
 use Recurrence\Model\Exception\InvalidRecurrenceException;
 use Recurrence\Model\Recurrence;
 use Recurrence\Model\Frequency;
@@ -49,6 +50,19 @@ class DatetimeProvider extends atoum
         $this->assert
             ->integer(count($periods))
             ->isEqualTo(1);
+
+        $recurrence = new Recurrence();
+        $recurrence->setFrequency(new Frequency('MONTHLY'));
+        $periodEndAt = clone $recurrence->getPeriodStartAt();
+        $periodEndAt->modify('+12 months');
+        $recurrence->setPeriodEndAt($periodEndAt);
+        $recurrence->addConstraint(new ExcludeWeekendConstraint());
+
+        $periods = (new \Recurrence\DatetimeProvider())->provide($recurrence);
+
+        $this->assert
+            ->integer(count($periods))
+            ->isEqualTo(12);
     }
 
     public function testFailed()
@@ -63,5 +77,20 @@ class DatetimeProvider extends atoum
             ->isInstanceOf(InvalidRecurrenceException::class)
             ->hasMessage('Frequency is required')
         ;
+    }
+
+    public function testNoDuplicateDays()
+    {
+        $recurrence = new Recurrence();
+        $recurrence->setFrequency(new Frequency('DAILY'));
+        $recurrence->setPeriodStartAt(new \Datetime('2017-01-01'));
+        $recurrence->setPeriodEndAt(new \Datetime('2017-01-15'));
+        $recurrence->addConstraint(new ExcludeWeekendConstraint());
+
+        $periods = (new \Recurrence\DatetimeProvider())->provide($recurrence);
+
+        $this->assert
+            ->integer(count($periods))
+            ->isEqualTo(10);
     }
 }

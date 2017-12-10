@@ -21,7 +21,6 @@ class Frequency extends atoum
             ->isInstanceOf(InvalidFrequencyOptionException::class)
             ->hasMessage('Invalid frequency name. Supported values are : YEARLY, MONTHLY, WEEKLY, DAILY, HOURLY, MINUTELY, SECONDLY')
         ;
-
     }
 
     /**

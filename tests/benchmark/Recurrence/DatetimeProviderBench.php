@@ -65,4 +65,24 @@ class DatetimeProviderBench
             $date->format('c');
         }
     }
+
+    /**
+     * @Revs(50)
+     * @Iterations(3)
+     * @OutputTimeUnit("seconds", precision=6)
+     */
+    public function benchEndOfMonthProviderPeriod()
+    {
+        $recurrence = (new \Recurrence\Model\Recurrence())
+            ->setPeriodStartAt(new \Datetime('2017-01-01'))
+            ->setPeriodEndAt(new \Datetime('2018-01-01'))
+            ->setFrequency(new \Recurrence\Model\Frequency('MONTHLY'))
+            ->addConstraint(new \Recurrence\Constraint\EndOfMonthConstraint())
+        ;
+        $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
+
+        foreach ($period as $date) {
+            $date->format('c');
+        }
+    }
 }

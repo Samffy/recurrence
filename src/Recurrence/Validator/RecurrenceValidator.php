@@ -2,7 +2,9 @@
 
 namespace Recurrence\Validator;
 
+use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
+use Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint;
 use Recurrence\Model\Exception\InvalidRecurrenceException;
 
 /**
@@ -28,6 +30,10 @@ class RecurrenceValidator
 
         if (!$recurrence->hasCount() && !$recurrence->getPeriodEndAt()) {
             throw new InvalidRecurrenceException('Recurrence required [COUNT] or [UNTIL] option');
+        }
+
+        if ($recurrence->hasConstraint(EndOfMonthConstraint::class) && (string) $recurrence->getFrequency() != Frequency::FREQUENCY_MONTHLY) {
+            throw new InvalidRecurrenceException('End of month constraint can be applied only with monthly frequency');
         }
 
         return true;

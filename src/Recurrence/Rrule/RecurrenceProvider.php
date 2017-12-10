@@ -5,9 +5,6 @@ namespace Recurrence\Rrule;
 use Recurrence\Model\Exception\InvalidRecurrenceException;
 use Recurrence\Model\Exception\InvalidRruleExpressionException;
 use Recurrence\Model\Recurrence;
-use Recurrence\Rrule\Extractor\CountExtractor;
-use Recurrence\Rrule\Extractor\FreqExtractor;
-use Recurrence\Rrule\Extractor\UntilExtractor;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Validator\RecurrenceValidator;
 

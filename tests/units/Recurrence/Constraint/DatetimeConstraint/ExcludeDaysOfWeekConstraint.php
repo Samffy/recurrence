@@ -1,0 +1,136 @@
+<?php
+
+namespace Recurrence\tests\units\Constraint\DatetimeConstraint;
+
+use atoum;
+
+use Recurrence\Model\Recurrence;
+use Recurrence\Constraint\DatetimeConstraint\ExcludeDaysOfWeekConstraint as TestedExcludeDaysOfWeekConstraint;
+
+/**
+ * Class ExcludeDaysOfWeekConstraint
+ * @package Recurrence\tests\units\Constraint
+ */
+class ExcludeDaysOfWeekConstraint extends atoum
+{
+    public function testInvalidOptions()
+    {
+        $this->assert
+            ->exception(function () {
+                new TestedExcludeDaysOfWeekConstraint([1, 2, 3, 4, 5, 6, 7, 8]);
+            })
+            ->isInstanceOf(\InvalidArgumentException::class)
+            ->hasMessage('At least one day of the week must be allowed')
+        ;
+
+        $this->assert
+            ->exception(function () {
+                new TestedExcludeDaysOfWeekConstraint([1, 'ratatouille']);
+            })
+            ->isInstanceOf(\InvalidArgumentException::class)
+            ->hasMessage('Exclude day must be an integer between 1 and 7')
+        ;
+
+        $this->assert
+            ->exception(function () {
+                new TestedExcludeDaysOfWeekConstraint([1, 12]);
+            })
+            ->isInstanceOf(\InvalidArgumentException::class)
+            ->hasMessage('Exclude day must be an integer between 1 and 7')
+        ;
+    }
+
+    /**
+     * @dataProvider datetimesLessOneDayProvider
+     */
+    public function testExcludeOneDayOfWeek($originalDatetime, $expectedDatetime)
+    {
+        $constraint = new TestedExcludeDaysOfWeekConstraint([3]);
+
+        $this->assert
+            ->object($constraint->apply(new Recurrence(), $originalDatetime))
+            ->isEqualTo($expectedDatetime)
+        ;
+    }
+
+    public function datetimesLessOneDayProvider()
+    {
+        return [
+            [
+                new \Datetime('2017-01-01'),
+                new \Datetime('2017-01-01'),
+            ],
+            [
+                new \Datetime('2017-01-02'),
+                new \Datetime('2017-01-02'),
+            ],
+            [
+                new \Datetime('2017-01-03'),
+                new \Datetime('2017-01-03'),
+            ],
+            [
+                new \Datetime('2017-01-04'),
+                new \Datetime('2017-01-05'),
+            ],
+            [
+                new \Datetime('2017-01-05'),
+                new \Datetime('2017-01-05'),
+            ],
+            [
+                new \Datetime('2017-01-06'),
+                new \Datetime('2017-01-06'),
+            ],
+            [
+                new \Datetime('2017-01-07'),
+                new \Datetime('2017-01-07'),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider datetimesLessMultipleDaysProvider
+     */
+    public function testExcludeMultipleDaysOfWeek($originalDatetime, $expectedDatetime)
+    {
+        $constraint = new TestedExcludeDaysOfWeekConstraint([2, 5]);
+
+        $this->assert
+            ->object($constraint->apply(new Recurrence(), $originalDatetime))
+            ->isEqualTo($expectedDatetime)
+        ;
+    }
+
+    public function datetimesLessMultipleDaysProvider()
+    {
+        return [
+            [
+                new \Datetime('2017-01-01'),
+                new \Datetime('2017-01-01'),
+            ],
+            [
+                new \Datetime('2017-01-02'),
+                new \Datetime('2017-01-02'),
+            ],
+            [
+                new \Datetime('2017-01-03'),
+                new \Datetime('2017-01-04'),
+            ],
+            [
+                new \Datetime('2017-01-04'),
+                new \Datetime('2017-01-04'),
+            ],
+            [
+                new \Datetime('2017-01-05'),
+                new \Datetime('2017-01-05'),
+            ],
+            [
+                new \Datetime('2017-01-06'),
+                new \Datetime('2017-01-07'),
+            ],
+            [
+                new \Datetime('2017-01-07'),
+                new \Datetime('2017-01-07'),
+            ],
+        ];
+    }
+}
