@@ -16,13 +16,13 @@ class EndOfMonthProvider extends AbstractDatetimeProvider
      */
     public function provide(Recurrence $recurrence)
     {
-        $periodEndAt = ($recurrence->hasPeriodEndAt())? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence) ;
+        $periodEndAt = ($recurrence->hasPeriodEndAt()) ? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence) ;
 
         $recurrences = [];
 
         $date = clone $recurrence->getPeriodStartAt();
 
-        while($date < $periodEndAt) {
+        while ($date < $periodEndAt) {
             $recurrences[] = clone $date;
             $date->modify('last day of next month');
         }

@@ -11,7 +11,6 @@ use Recurrence\Model\Recurrence;
  */
 class ExcludeDaysOfWeekConstraint implements DatetimeConstraintInterface, RecurrenceConstraintInterface
 {
-
     /**
      * @var array
      */

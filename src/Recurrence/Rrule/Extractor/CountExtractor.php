@@ -10,7 +10,7 @@ use Recurrence\Rrule\Extractor\AbstractExtractor;
  */
 class CountExtractor extends AbstractExtractor
 {
-    const RRULE_PARAMETER = 'COUNT';
+    public const RRULE_PARAMETER = 'COUNT';
 
-    const RRULE_PATTERN = '([0-9]+)';
+    public const RRULE_PATTERN = '([0-9]+)';
 }

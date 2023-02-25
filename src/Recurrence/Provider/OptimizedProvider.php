@@ -10,7 +10,6 @@ use Recurrence\Model\Recurrence;
  */
 class OptimizedProvider extends AbstractDatetimeProvider
 {
-
     /**
      * @param Recurrence $recurrence
      * @return array<\DateTime>
@@ -19,7 +18,7 @@ class OptimizedProvider extends AbstractDatetimeProvider
     {
         $interval = $recurrence->getFrequency()->convertToDateIntervalFormat();
 
-        $periodEndAt = ($recurrence->hasPeriodEndAt())? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence) ;
+        $periodEndAt = ($recurrence->hasPeriodEndAt()) ? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence) ;
 
         // Transform interval in Datetime interval expression
         if ($recurrence->getInterval() !== 1) {

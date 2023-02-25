@@ -22,7 +22,7 @@ class DtStartTransformer implements RruleTransformerInterface
 
         if (count($values) == 2 && substr($values[1], -1) == 'Z') {
             $dtStart = \DateTime::createFromFormat('Ymd\THis\Z', $values[0], new \DateTimeZone('UTC'));
-        } else if (count($values) == 2) {
+        } elseif (count($values) == 2) {
             $dtStart = \DateTime::createFromFormat('Ymd\THis', $values[0]);
         } else {
             $dtStart = \DateTime::createFromFormat('Ymd', $values[0]);

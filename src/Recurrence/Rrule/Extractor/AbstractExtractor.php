@@ -35,7 +35,7 @@ abstract class AbstractExtractor implements RruleExtractorInterface
     public function throwExceptionOnInvalidParameter($rRule, $ruleKey)
     {
         if ((preg_match(sprintf('/%s=([\d\w]+)/', $ruleKey), $rRule, $matches) === 1)) {
-            throw new InvalidRruleException($ruleKey, ((count($matches) > 0)? implode(', ', array_slice($matches, 1)) : ''));
+            throw new InvalidRruleException($ruleKey, ((count($matches) > 0) ? implode(', ', array_slice($matches, 1)) : ''));
         }
     }
 }

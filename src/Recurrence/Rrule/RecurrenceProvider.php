@@ -14,7 +14,6 @@ use Recurrence\Validator\RecurrenceValidator;
  */
 class RecurrenceProvider
 {
-
     /**
      * Map extractor/transformer names with Recurrence attributes
      * @var array
@@ -45,7 +44,6 @@ class RecurrenceProvider
             $extractor = new $className();
 
             if ($values = $extractor->extract($rRule)) {
-
                 // Create corresponding transformer
                 $className = 'Recurrence\Rrule\Transformer\\'.$option.'Transformer';
                 $transformer = new $className();
@@ -57,7 +55,7 @@ class RecurrenceProvider
 
         try {
             RecurrenceValidator::validate($recurrence);
-        } catch (InvalidRecurrenceException $e)  {
+        } catch (InvalidRecurrenceException $e) {
             throw new InvalidRruleExpressionException($e->getMessage());
         }
 

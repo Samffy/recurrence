@@ -30,7 +30,7 @@ class CountTransformer implements RruleTransformerInterface
     protected function validate(array $values)
     {
         if (!isset($values[0]) || !is_numeric($values[0])) {
-            throw new InvalidRruleException(CountExtractor::RRULE_PARAMETER, ((isset($values[0]))? (string) $values[0] : ''));
+            throw new InvalidRruleException(CountExtractor::RRULE_PARAMETER, ((isset($values[0])) ? (string) $values[0] : ''));
         }
     }
 }

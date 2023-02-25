@@ -8,7 +8,6 @@ namespace Recurrence\Model\Exception;
  */
 class InvalidRruleException extends \InvalidArgumentException
 {
-
     /**
      * @param string $rRuleName
      * @param string $value

@@ -11,7 +11,6 @@ use Recurrence\Model\Recurrence;
  */
 class ExcludeWeekendConstraint implements DatetimeConstraintInterface, RecurrenceConstraintInterface
 {
-
     /**
      * @param Recurrence $recurrence
      * @param \Datetime $datetime
@@ -32,7 +31,8 @@ class ExcludeWeekendConstraint implements DatetimeConstraintInterface, Recurrenc
      * @param \Datetime $datetime
      * @return bool
      */
-    private function isWeekend($datetime) {
+    private function isWeekend($datetime)
+    {
         return ((int) $datetime->format('N') >= 6);
     }
 }

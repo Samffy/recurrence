@@ -20,7 +20,7 @@ class DatetimeProviderFactory
     {
         $provider = new OptimizedProvider();
 
-        if(
+        if (
             $recurrence->hasConstraint(EndOfMonthConstraint::class) &&
             (string) $recurrence->getFrequency() == Frequency::FREQUENCY_MONTHLY &&
             in_array((int) $recurrence->getPeriodStartAt()->format('d'), [29, 30, 31])
