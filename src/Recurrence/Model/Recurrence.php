@@ -25,7 +25,7 @@ class Recurrence
     /**
      * @var \Datetime
      */
-    private $periodEndAt;
+    private $periodEndAt = null;
 
     /**
      * @var integer
@@ -35,7 +35,7 @@ class Recurrence
     /**
      * @var integer
      */
-    private $count;
+    private $count = null;
 
     /**
      * @var array

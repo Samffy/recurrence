@@ -18,11 +18,11 @@ RFC : https://tools.ietf.org/html/rfc5545#page-37
 
 ```php
 $recurrence = (new Recurrence())
-    ->setFrequency(new Frequency('MONTHLY')
+    ->setFrequency(new Frequency('MONTHLY'))
     ->setPeriodStartAt(new \Datetime('2017-01-01'))
     ->setPeriodEndAt(new \Datetime('2017-12-31'))
     ->setInterval(1);
-$periods    = (new DatetimeProvider($recurrence))-provide();
+$periods = (new DatetimeProvider())->provide($recurrence);
 ```
 
 Available methods :
@@ -38,7 +38,7 @@ This example as the same result as example above using object method :
 
 ```php
 $recurrence = (new RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170101;UNTIL=20171231;INTERVAL=1');
-$periods    = (new DatetimeProvider())-provide($recurrence);
+$periods    = (new DatetimeProvider())->provide($recurrence);
 ```
 
 Supported rules : 
