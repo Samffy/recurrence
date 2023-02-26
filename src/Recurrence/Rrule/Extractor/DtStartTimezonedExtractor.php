@@ -4,10 +4,6 @@ namespace Recurrence\Rrule\Extractor;
 
 use Recurrence\Rrule\Extractor\AbstractExtractor;
 
-/**
- * Class DtStartTimezonedExtractor
- * @package Recurrence\Rrule\Extractor
- */
 class DtStartTimezonedExtractor extends AbstractExtractor
 {
     public const RRULE_PARAMETER = 'DTSTART;TZID';

@@ -1,7 +1,7 @@
 # Recurrence
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
-![Build Status](https://github.com/Samffy/recurrence/actions/workflows/ci.yml/badge.svg)
+![Build Status](https://github.com/Samffy/recurrence/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
 

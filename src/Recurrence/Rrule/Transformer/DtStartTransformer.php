@@ -5,18 +5,12 @@ namespace Recurrence\Rrule\Transformer;
 use Recurrence\Rrule\Extractor\DtStartExtractor;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-/**
- * Class DtStartTransformer
- * @package Recurrence\Rrule\Transformer
- */
 class DtStartTransformer implements RruleTransformerInterface
 {
     /**
-     * @param array $values
-     * @return \DateTime
      * @throws InvalidRruleException
      */
-    public function transform(array $values)
+    public function transform(array $values): \DateTime
     {
         $this->validate($values);
 
@@ -36,10 +30,9 @@ class DtStartTransformer implements RruleTransformerInterface
     }
 
     /**
-     * @param array $values
      * @throws InvalidRruleException
      */
-    protected function validate(array $values)
+    protected function validate(array $values): void
     {
         if (!isset($values[0])) {
             throw new InvalidRruleException(DtStartExtractor::RRULE_PARAMETER);

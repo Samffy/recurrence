@@ -4,10 +4,6 @@ namespace Recurrence\Model;
 
 use Recurrence\Model\Exception\InvalidFrequencyOptionException;
 
-/**
- * Class Frequency
- * @package Recurrence\Model
- */
 class Frequency
 {
     public const FREQUENCY_YEARLY   = 'YEARLY';
@@ -18,10 +14,7 @@ class Frequency
     public const FREQUENCY_MINUTELY = 'MINUTELY';
     public const FREQUENCY_SECONDLY = 'SECONDLY';
 
-    /**
-     * @var array
-     */
-    private $frequencies = [
+    private array $frequencies = [
         self::FREQUENCY_YEARLY,
         self::FREQUENCY_MONTHLY,
         self::FREQUENCY_WEEKLY,
@@ -39,10 +32,7 @@ class Frequency
     public const DATEINTERVAL_MINUTELY = 'PT1M';
     public const DATEINTERVAL_SECONDLY = 'PT1S';
 
-    /**
-     * @var array
-     */
-    private $dateIntervalFrequencies = [
+    private array $dateIntervalFrequencies = [
         self::FREQUENCY_YEARLY   => self::DATEINTERVAL_YEARLY,
         self::FREQUENCY_MONTHLY  => self::DATEINTERVAL_MONTHLY,
         self::FREQUENCY_WEEKLY   => self::DATEINTERVAL_WEEKLY,
@@ -60,10 +50,7 @@ class Frequency
     public const DATETIME_MINUTELY = '+1 minutes';
     public const DATETIME_SECONDLY = '+1 seconds';
 
-    /**
-     * @var array
-     */
-    private $dateTimeFrequencies = [
+    private array $dateTimeFrequencies = [
         self::FREQUENCY_YEARLY   => self::DATETIME_YEARLY,
         self::FREQUENCY_MONTHLY  => self::DATETIME_MONTHLY,
         self::FREQUENCY_WEEKLY   => self::DATETIME_WEEKLY,
@@ -73,15 +60,9 @@ class Frequency
         self::FREQUENCY_SECONDLY => self::DATETIME_SECONDLY,
     ];
 
-    /**
-     * @var string
-     */
-    private $frequencyName;
+    private string $frequencyName;
 
-    /**
-     * @param string $frequencyName
-     */
-    public function __construct($frequencyName)
+    public function __construct(string $frequencyName)
     {
         if (!in_array($frequencyName, $this->frequencies)) {
             throw new InvalidFrequencyOptionException(sprintf('Invalid frequency name. Supported values are : %s', implode(', ', $this->frequencies)));
@@ -90,26 +71,17 @@ class Frequency
         $this->frequencyName = $frequencyName;
     }
 
-    /**
-     * @return string
-     */
-    public function convertToDateIntervalFormat()
+    public function convertToDateIntervalFormat(): string
     {
         return $this->dateIntervalFrequencies[$this->frequencyName];
     }
 
-    /**
-     * @return string
-     */
-    public function convertToDateTimeFormat()
+    public function convertToDateTimeFormat(): string
     {
         return $this->dateTimeFrequencies[$this->frequencyName];
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->frequencyName;
     }

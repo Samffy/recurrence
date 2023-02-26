@@ -5,18 +5,12 @@ namespace Recurrence\Rrule\Transformer;
 use Recurrence\Rrule\Extractor\UntilExtractor;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-/**
- * Class UntilTransformer
- * @package Recurrence\Rrule\Transformer
- */
 class UntilTransformer extends DtStartTransformer
 {
     /**
-     * @param array $values
-     * @return \DateTime
      * @throws InvalidRruleException
      */
-    public function transform(array $values)
+    public function transform(array $values): \DateTime
     {
         $this->validate($values);
 
@@ -28,10 +22,9 @@ class UntilTransformer extends DtStartTransformer
     }
 
     /**
-     * @param array $values
      * @throws InvalidRruleException
      */
-    protected function validate(array $values)
+    protected function validate(array $values): void
     {
         if (!isset($values[0])) {
             throw new InvalidRruleException(UntilExtractor::RRULE_PARAMETER);

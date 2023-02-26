@@ -2,11 +2,6 @@
 
 namespace Benchmark\Recurrence;
 
-/**
- * Class DatetimeProviderBench
- *
- * @package Benchmark\Recurrence
- */
 class DatetimeProviderBench
 {
     /**

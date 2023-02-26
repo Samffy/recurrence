@@ -7,17 +7,13 @@ use atoum;
 use Recurrence\Model\Recurrence;
 use Recurrence\Constraint\DatetimeConstraint\ExcludeWeekendConstraint as TestedExcludeWeekendConstraint;
 
-/**
- * Class ExcludeWeekendConstraint
- * @package Recurrence\tests\units\Constraint
- */
 class ExcludeWeekendConstraint extends atoum
 {
 
     /**
      * @dataProvider datetimesProvider
      */
-    public function testDatetimes($originalDatetime, $expectedDatetime)
+    public function testDatetimes($originalDatetime, $expectedDatetime): void
     {
         $constraint = new TestedExcludeWeekendConstraint();
 
@@ -27,7 +23,7 @@ class ExcludeWeekendConstraint extends atoum
         ;
     }
 
-    public function datetimesProvider()
+    public function datetimesProvider(): array
     {
         return [
             // List of datetimes which are not on saturday or sunday

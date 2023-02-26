@@ -4,10 +4,6 @@ namespace Recurrence\Rrule\Extractor;
 
 use Recurrence\Rrule\Extractor\AbstractExtractor;
 
-/**
- * Class DtStartExtractor
- * @package Recurrence\Rrule\Extractor
- */
 class DtStartExtractor extends AbstractExtractor
 {
     public const RRULE_PARAMETER = 'DTSTART';

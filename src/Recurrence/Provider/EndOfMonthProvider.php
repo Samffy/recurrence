@@ -4,19 +4,14 @@ namespace Recurrence\Provider;
 
 use Recurrence\Model\Recurrence;
 
-/**
- * Class EndOfMonthProvider
- * @package Recurrence\Provider
- */
 class EndOfMonthProvider extends AbstractDatetimeProvider
 {
     /**
-     * @param Recurrence $recurrence
      * @return array<\DateTime>
      */
-    public function provide(Recurrence $recurrence)
+    public function provide(Recurrence $recurrence): array
     {
-        $periodEndAt = ($recurrence->hasPeriodEndAt()) ? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence) ;
+        $periodEndAt = ($recurrence->hasPeriodEndAt()) ? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence);
 
         $recurrences = [];
 

@@ -8,16 +8,12 @@ use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
 use Recurrence\Provider\OptimizedProvider as TestedOptimizedProvider;
 
-/**
- * Class OptimizedProvider
- * @package Recurrence\tests\units\Provider
- */
 class OptimizedProvider extends atoum
 {
     /**
      * @dataProvider datetimesWithoutIntervalProvider
      */
-    public function testWithoutIntervalProvide($position, $periodStartAt, $countOption, $expected)
+    public function testWithoutIntervalProvide(int $position, \DateTime $periodStartAt, int $countOption, \DateTime $expected): void
     {
         $recurrence = new Recurrence();
         $recurrence
@@ -42,7 +38,7 @@ class OptimizedProvider extends atoum
     /**
      * @dataProvider datetimesWithoutIntervalProvider
      */
-    public function testWithoutIntervalAndWithoutCountProvide($position, $periodStartAt, $countOption, $expected)
+    public function testWithoutIntervalAndWithoutCountProvide(int $position, \DateTime $periodStartAt, int $countOption, \DateTime $expected): void
     {
         $periodEndAt = clone $periodStartAt;
         $periodEndAt->modify(sprintf('+%d months', $countOption));
@@ -66,7 +62,7 @@ class OptimizedProvider extends atoum
             ->isEqualTo($expected);
     }
 
-    public function datetimesWithoutIntervalProvider()
+    public function datetimesWithoutIntervalProvider(): array
     {
         return [
             [
@@ -118,7 +114,7 @@ class OptimizedProvider extends atoum
     /**
      * @dataProvider datetimesWithIntervalProvider
      */
-    public function testWithIntervalProvide($position, $periodStartAt, $countOption, $expected)
+    public function testWithIntervalProvide(int $position, \DateTime $periodStartAt, int $countOption, \DateTime $expected): void
     {
         $recurrence = new Recurrence();
         $recurrence
@@ -140,7 +136,7 @@ class OptimizedProvider extends atoum
             ->isEqualTo($expected);
     }
 
-    public function datetimesWithIntervalProvider()
+    public function datetimesWithIntervalProvider(): array
     {
         return [
             [

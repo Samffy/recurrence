@@ -5,16 +5,12 @@ namespace Recurrence\tests\units\Rrule\Extractor;
 use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-/**
- * Class DtStartTimezonedExtractor
- * @package Recurrence\tests\units\Rrule\Extractor
- */
 class DtStartTimezonedExtractor extends atoum
 {
     /**
      * Failed : Use an invalid DTSTART;TZID value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -28,7 +24,7 @@ class DtStartTimezonedExtractor extends atoum
     /**
      * Success : No DTSTART;TZID option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $dtStart = (new \Recurrence\Rrule\Extractor\DtStartTimezonedExtractor())->extract('FREQ=MONTHLY;COUNT=1');
 
@@ -41,7 +37,7 @@ class DtStartTimezonedExtractor extends atoum
     /**
      * Success : Use a valid DTSTART;TZID value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $dtStart = (new \Recurrence\Rrule\Extractor\DtStartTimezonedExtractor())->extract('FREQ=MONTHLY;DTSTART;TZID=Europe/Paris:20170520T154720;COUNT=1');
 

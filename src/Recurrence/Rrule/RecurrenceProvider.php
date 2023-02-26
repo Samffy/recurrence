@@ -8,17 +8,12 @@ use Recurrence\Model\Recurrence;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Validator\RecurrenceValidator;
 
-/**
- * Class RecurrenceProvider
- * @package Recurrence\Rrule
- */
 class RecurrenceProvider
 {
     /**
      * Map extractor/transformer names with Recurrence attributes
-     * @var array
      */
-    private $options = [
+    private array $options = [
         'Count'            => 'count',
         'Interval'         => 'interval',
         'Freq'             => 'frequency',
@@ -29,11 +24,10 @@ class RecurrenceProvider
     ];
 
     /**
-     * @param string $rRule
      * @return Recurrence
      * @throws InvalidRruleException
      */
-    public function create($rRule)
+    public function create(string $rRule): Recurrence
     {
         $recurrence = new Recurrence();
 
@@ -63,12 +57,9 @@ class RecurrenceProvider
     }
 
     /**
-     * @param Recurrence $recurrence
-     * @param string     $attribute
-     * @param mixed      $value
-     * @return Recurrence
+     * @param mixed $value
      */
-    private function setAttribute(Recurrence $recurrence, $attribute, $value)
+    private function setAttribute(Recurrence $recurrence, string $attribute, $value): Recurrence
     {
         $method = sprintf('set%s', ucfirst($attribute));
 

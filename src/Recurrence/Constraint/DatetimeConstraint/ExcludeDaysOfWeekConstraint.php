@@ -5,20 +5,10 @@ namespace Recurrence\Constraint\DatetimeConstraint;
 use Recurrence\Constraint\RecurrenceConstraintInterface;
 use Recurrence\Model\Recurrence;
 
-/**
- * Class ExcludeDaysOfWeekConstraint
- * @package Recurrence\Constraint
- */
 class ExcludeDaysOfWeekConstraint implements DatetimeConstraintInterface, RecurrenceConstraintInterface
 {
-    /**
-     * @var array
-     */
-    private $excludedDays = [];
+    private array $excludedDays = [];
 
-    /**
-     * @param array $excludedDays
-     */
     public function __construct(array $excludedDays = [])
     {
         $excludedDays = array_unique($excludedDays);
@@ -40,12 +30,7 @@ class ExcludeDaysOfWeekConstraint implements DatetimeConstraintInterface, Recurr
         }
     }
 
-    /**
-     * @param Recurrence $recurrence
-     * @param \Datetime $datetime
-     * @return \Datetime
-     */
-    public function apply(Recurrence $recurrence, \Datetime $datetime)
+    public function apply(Recurrence $recurrence, \Datetime $datetime): \Datetime
     {
         while (in_array((int) $datetime->format('N'), $this->excludedDays)) {
             $datetime->modify('+1 day');

@@ -11,13 +11,9 @@ use Recurrence\Provider\DatetimeProviderFactory as TestedDatetimeProviderFactory
 use Recurrence\Provider\EndOfMonthProvider;
 use Recurrence\Provider\OptimizedProvider;
 
-/**
- * Class DatetimeProviderFactory
- * @package Recurrence\tests\units\Provider
- */
 class DatetimeProviderFactory extends atoum
 {
-    public function testStandardRecurrence()
+    public function testStandardRecurrence(): void
     {
         $recurrence = new Recurrence();
         $recurrence
@@ -31,7 +27,7 @@ class DatetimeProviderFactory extends atoum
         ;
     }
 
-    public function testRecurrenceWithEndOfMonthConstraint()
+    public function testRecurrenceWithEndOfMonthConstraint(): void
     {
         $recurrence = new Recurrence();
         $recurrence

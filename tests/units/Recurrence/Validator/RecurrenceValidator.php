@@ -10,13 +10,9 @@ use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
 use Recurrence\Validator\RecurrenceValidator as TestedRecurrenceValidator;
 
-/**
- * Class RecurrenceValidator
- * @package Recurrence\tests\units\Validator
- */
 class RecurrenceValidator extends atoum
 {
-    public function testValidRecurrence()
+    public function testValidRecurrence(): void
     {
         $recurrence = new Recurrence();
         $recurrence->setFrequency(new Frequency('MONTHLY'));
@@ -28,7 +24,7 @@ class RecurrenceValidator extends atoum
         ;
     }
 
-    public function testInvalidRecurrence()
+    public function testInvalidRecurrence(): void
     {
         // Missing FREQ option
         $this->assert

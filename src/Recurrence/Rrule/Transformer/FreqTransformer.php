@@ -7,18 +7,12 @@ use Recurrence\Rrule\Extractor\FreqExtractor;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Model\Exception\InvalidFrequencyOptionException;
 
-/**
- * Class FreqTransformer
- * @package Recurrence\RruleTransformer
- */
 class FreqTransformer implements RruleTransformerInterface
 {
     /**
-     * @param array $values
      * @throws InvalidRruleException
-     * @return Frequency
      */
-    public function transform(array $values)
+    public function transform(array $values): Frequency
     {
         $this->validate($values);
 
@@ -30,10 +24,9 @@ class FreqTransformer implements RruleTransformerInterface
     }
 
     /**
-     * @param array $values
      * @throws InvalidRruleException
      */
-    protected function validate(array $values)
+    protected function validate(array $values): void
     {
         if (!isset($values[0])) {
             throw new InvalidRruleException(FreqExtractor::RRULE_PARAMETER);

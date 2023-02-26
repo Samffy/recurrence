@@ -9,14 +9,10 @@ use Recurrence\Model\Exception\InvalidRecurrenceException;
 use Recurrence\Model\Recurrence;
 use Recurrence\Model\Frequency;
 
-/**
- * Class RecurrenceProvider
- * @package Recurrence\tests\units
- */
 class DatetimeProvider extends atoum
 {
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $recurrence = new Recurrence();
         $recurrence->setFrequency(new Frequency('MONTHLY'));
@@ -65,7 +61,7 @@ class DatetimeProvider extends atoum
             ->isEqualTo(12);
     }
 
-    public function testFailed()
+    public function testFailed(): void
     {
         $this->assert
             ->exception(function () {
@@ -79,7 +75,7 @@ class DatetimeProvider extends atoum
         ;
     }
 
-    public function testNoDuplicateDays()
+    public function testNoDuplicateDays(): void
     {
         $recurrence = new Recurrence();
         $recurrence->setFrequency(new Frequency('DAILY'));

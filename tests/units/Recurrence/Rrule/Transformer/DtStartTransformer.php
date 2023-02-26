@@ -5,16 +5,12 @@ namespace Recurrence\tests\units\Rrule\Transformer;
 use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-/**
- * Class DtStartTransformer
- * @package Recurrence\tests\units\Rrule\Transformer
- */
 class DtStartTransformer extends atoum
 {
     /**
      * Failed : Use an invalid DTSTART value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -28,7 +24,7 @@ class DtStartTransformer extends atoum
     /**
      * Success : No DTSTART option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -42,7 +38,7 @@ class DtStartTransformer extends atoum
     /**
      * Success : Use a valid DTSTART value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $dtStart = (new \Recurrence\Rrule\Transformer\DtStartTransformer())->transform(['20170924T193402Z', '20170924T193402Z']);
 

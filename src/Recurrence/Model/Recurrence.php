@@ -6,174 +6,96 @@ use Recurrence\Constraint\DatetimeConstraint\DatetimeConstraintInterface;
 use Recurrence\Constraint\ProviderConstraint\ProviderConstraintInterface;
 use Recurrence\Constraint\RecurrenceConstraintInterface;
 
-/**
- * Class Recurrence
- * @package Recurrence\Model
- */
 class Recurrence
 {
-    /**
-     * @var Frequency
-     */
-    private $frequency;
+    private ?Frequency $frequency = null;
+    private \Datetime $periodStartAt;
+    private ?\Datetime $periodEndAt = null;
+    private int $interval = 1;
+    private ?int $count = null;
+    private array $constraints = [];
 
-    /**
-     * @var \Datetime
-     */
-    private $periodStartAt;
-
-    /**
-     * @var \Datetime
-     */
-    private $periodEndAt = null;
-
-    /**
-     * @var integer
-     */
-    private $interval = 1;
-
-    /**
-     * @var integer
-     */
-    private $count = null;
-
-    /**
-     * @var array
-     */
-    private $constraints = [];
-
-    /**
-     * Recurrence constructor.
-     */
     public function __construct()
     {
         $this->setPeriodStartAt(new \DateTime());
     }
 
-    /**
-     * @param \Datetime $periodStartAt
-     * @return $this
-     */
-    public function setPeriodStartAt(\Datetime $periodStartAt)
+    public function setPeriodStartAt(\Datetime $periodStartAt): self
     {
         $this->periodStartAt = $periodStartAt;
 
         return $this;
     }
 
-    /**
-     * @return \Datetime
-     */
-    public function getPeriodStartAt()
+    public function getPeriodStartAt(): \Datetime
     {
         return $this->periodStartAt;
     }
 
-    /**
-     * @param \Datetime $periodEndAt
-     * @return $this
-     */
-    public function setPeriodEndAt(\Datetime $periodEndAt)
+    public function setPeriodEndAt(\Datetime $periodEndAt): self
     {
         $this->periodEndAt = $periodEndAt;
 
         return $this;
     }
 
-    /**
-     * @return \Datetime
-     */
-    public function getPeriodEndAt()
+    public function getPeriodEndAt(): ?\Datetime
     {
         return $this->periodEndAt;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPeriodEndAt()
+    public function hasPeriodEndAt(): bool
     {
         return $this->periodEndAt !== null;
     }
 
-    /**
-     * @param Frequency $frequency
-     * @return $this
-     */
-    public function setFrequency(Frequency $frequency)
+    public function setFrequency(Frequency $frequency): self
     {
         $this->frequency = $frequency;
 
         return $this;
     }
 
-    /**
-     * @return Frequency
-     */
-    public function getFrequency()
+    public function getFrequency(): ?Frequency
     {
         return $this->frequency;
     }
 
-    /**
-     * @return int
-     */
-    public function getInterval()
+    public function getInterval(): int
     {
         return $this->interval;
     }
 
-    /**
-     * @param int $interval
-     * @return $this
-     */
-    public function setInterval($interval)
+    public function setInterval(int $interval): self
     {
         $this->interval = $interval;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getCount()
+    public function getCount(): ?int
     {
         return $this->count;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasCount()
+    public function hasCount(): bool
     {
         return $this->count !== null;
     }
 
-    /**
-     * @param int $count
-     * @return $this
-     */
-    public function setCount($count)
+    public function setCount(int $count): self
     {
         $this->count = $count;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getConstraints()
+    public function getConstraints(): array
     {
         return $this->constraints;
     }
 
-    /**
-     * @param array $constraints
-     * @return $this
-     */
-    public function setConstraints(array $constraints)
+    public function setConstraints(array $constraints): self
     {
         $this->constraints = [];
 
@@ -184,19 +106,12 @@ class Recurrence
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasConstraints()
+    public function hasConstraints(): bool
     {
         return !empty($this->constraints);
     }
 
-    /**
-     * @param RecurrenceConstraintInterface $constraint
-     * @return $this
-     */
-    public function addConstraint(RecurrenceConstraintInterface $constraint)
+    public function addConstraint(RecurrenceConstraintInterface $constraint): self
     {
         if ($this->hasConstraint(get_class($constraint))) {
             throw new \InvalidArgumentException(sprintf('Duplicate constraint [%s]', get_class($constraint)));
@@ -207,11 +122,7 @@ class Recurrence
         return $this;
     }
 
-    /**
-     * @param string $constraintClassName
-     * @return $this
-     */
-    public function removeConstraint($constraintClassName)
+    public function removeConstraint(string $constraintClassName): self
     {
         foreach ($this->constraints as $key => $constraint) {
             if (get_class($constraint) == $constraintClassName) {
@@ -226,11 +137,7 @@ class Recurrence
         return $this;
     }
 
-    /**
-     * @param string $constraintClassName
-     * @return bool
-     */
-    public function hasConstraint($constraintClassName)
+    public function hasConstraint(string $constraintClassName): bool
     {
         foreach ($this->constraints as $key => $constraint) {
             if (get_class($constraint) == $constraintClassName) {
@@ -241,10 +148,7 @@ class Recurrence
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasProviderConstraint()
+    public function hasProviderConstraint(): bool
     {
         foreach ($this->constraints as $key => $constraint) {
             if ($constraint instanceof ProviderConstraintInterface) {
@@ -255,10 +159,7 @@ class Recurrence
         return false;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasDatetimeConstraint()
+    public function hasDatetimeConstraint(): bool
     {
         foreach ($this->constraints as $key => $constraint) {
             if ($constraint instanceof DatetimeConstraintInterface) {
