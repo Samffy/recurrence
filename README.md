@@ -1,10 +1,9 @@
-# Readme
+# Recurrence
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
-[![Build Status](https://travis-ci.org/Samffy/recurrence.svg?branch=master)](https://travis-ci.org/Samffy/recurrence)
+![Build Status](https://github.com/Samffy/recurrence/actions/workflows/ci.yml/badge.svg)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/118c5326-4be0-4e48-a6d3-8f403c25e3e4/mini.png)](https://insight.sensiolabs.com/projects/118c5326-4be0-4e48-a6d3-8f403c25e3e4)
 
 ## Presentation
 
