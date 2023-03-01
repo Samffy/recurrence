@@ -55,7 +55,7 @@ class DatetimeProvider
      * @param \Datetime  $datetime
      * @return \Datetime
      */
-    private function applyConstraints(Recurrence $recurrence, \DateTime $datetime)
+    private function applyConstraints($recurrence, $datetime)
     {
         $filteredDatetime = $datetime;
 
