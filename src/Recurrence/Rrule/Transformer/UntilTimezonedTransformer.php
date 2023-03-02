@@ -5,18 +5,12 @@ namespace Recurrence\Rrule\Transformer;
 use Recurrence\Rrule\Extractor\UntilTimezonedExtractor;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-/**
- * Class UntilTimezonedTransformer
- * @package Recurrence\Rrule\Transformer
- */
 class UntilTimezonedTransformer extends DtStartTimezonedTransformer
 {
     /**
-     * @param array $values
-     * @return \DateTime
      * @throws InvalidRruleException
      */
-    public function transform(array $values)
+    public function transform(array $values): \DateTime
     {
         $this->validate($values);
 
@@ -28,10 +22,9 @@ class UntilTimezonedTransformer extends DtStartTimezonedTransformer
     }
 
     /**
-     * @param array $values
      * @throws InvalidRruleException
      */
-    protected function validate(array $values)
+    protected function validate(array $values): void
     {
         if (!isset($values[0]) || !isset($values[1])) {
             throw new InvalidRruleException(UntilTimezonedExtractor::RRULE_PARAMETER);

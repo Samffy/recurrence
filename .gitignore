@@ -1,5 +1,8 @@
-vendor
+
+.phpbench
+.php-cs-fixer.cache
 composer.lock
+vendor
 var/code-coverage/*
 !var/code-coverage/.gitkeep
 var/benchmark/*

@@ -12,11 +12,9 @@ use Recurrence\Model\Exception\InvalidRruleException;
 class DtStartTimezonedTransformer implements RruleTransformerInterface
 {
     /**
-     * @param array $values
-     * @return \DateTime
      * @throws InvalidRruleException
      */
-    public function transform(array $values)
+    public function transform(array $values): \DateTime
     {
         $this->validate($values);
 
@@ -30,10 +28,9 @@ class DtStartTimezonedTransformer implements RruleTransformerInterface
     }
 
     /**
-     * @param array $values
      * @throws InvalidRruleException
      */
-    protected function validate(array $values)
+    protected function validate(array $values): void
     {
         if (!isset($values[0]) || !isset($values[1])) {
             throw new InvalidRruleException(DtStartTimezonedExtractor::RRULE_PARAMETER);

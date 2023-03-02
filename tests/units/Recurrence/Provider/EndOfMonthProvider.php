@@ -8,13 +8,9 @@ use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
 use Recurrence\Provider\EndOfMonthProvider as TestedEndOfMonthProvider;
 
-/**
- * Class EndOfMonthProvider
- * @package Recurrence\tests\units\Provider
- */
 class EndOfMonthProvider extends atoum
 {
-    public function testProvideWithCount()
+    public function testProvideWithCount(): void
     {
         $perioStartAt = new \Datetime('2017-01-01');
 
@@ -41,7 +37,7 @@ class EndOfMonthProvider extends atoum
         }
     }
 
-    public function testProvideWithEndPeriod()
+    public function testProvideWithEndPeriod(): void
     {
         $perioStartAt = new \Datetime('2017-01-01');
         $periodEndAt  = new \Datetime('2017-10-01');

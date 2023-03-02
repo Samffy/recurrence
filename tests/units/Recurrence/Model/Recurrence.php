@@ -7,13 +7,9 @@ use Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint;
 use Recurrence\Constraint\DatetimeConstraint\ExcludeWeekendConstraint;
 use Recurrence\tests\units\Constraint\DatetimeConstraint\ExcludeDaysOfWeekConstraint;
 
-/**
- * Class Recurrence
- * @package Recurrence\tests\units\Model
- */
 class Recurrence extends atoum
 {
-    public function testContructor()
+    public function testContructor(): void
     {
         $now = new \Datetime();
 
@@ -30,7 +26,7 @@ class Recurrence extends atoum
         ;
     }
 
-    public function testDuplicateConstraint()
+    public function testDuplicateConstraint(): void
     {
         $this->assert
             ->exception(function () {
@@ -54,7 +50,7 @@ class Recurrence extends atoum
         ;
     }
 
-    public function testRemoveConstraint()
+    public function testRemoveConstraint(): void
     {
         $recurrence =
             (new \Recurrence\Model\Recurrence())
@@ -82,7 +78,7 @@ class Recurrence extends atoum
         ;
     }
 
-    public function testHasConstraint()
+    public function testHasConstraint(): void
     {
         $recurrence =
             (new \Recurrence\Model\Recurrence())
@@ -101,7 +97,7 @@ class Recurrence extends atoum
         ;
     }
 
-    public function testHasConstraints()
+    public function testHasConstraints(): void
     {
         $recurrence = new \Recurrence\Model\Recurrence();
 
@@ -120,7 +116,7 @@ class Recurrence extends atoum
         ;
     }
 
-    public function testHasProviderConstraint()
+    public function testHasProviderConstraint(): void
     {
         $recurrence = new \Recurrence\Model\Recurrence();
 
@@ -146,7 +142,7 @@ class Recurrence extends atoum
         ;
     }
 
-    public function testHasDatetimeConstraint()
+    public function testHasDatetimeConstraint(): void
     {
         $recurrence = new \Recurrence\Model\Recurrence();
 

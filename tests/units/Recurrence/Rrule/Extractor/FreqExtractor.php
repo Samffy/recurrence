@@ -6,16 +6,12 @@ use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Rrule\RecurrenceProvider;
 
-/**
- * Class FreqExtractor
- * @package Recurrence\tests\units\Rrule\Extractor
- */
 class FreqExtractor extends atoum
 {
     /**
      * Failed : Use an invalid FREQ value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -29,7 +25,7 @@ class FreqExtractor extends atoum
     /**
      * Success : No FREQ option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $freq = (new \Recurrence\Rrule\Extractor\FreqExtractor())->extract('FREQ=;DTSTART=20170520');
 
@@ -42,7 +38,7 @@ class FreqExtractor extends atoum
     /**
      * Success : Use a valid FREQ value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $freq = (new \Recurrence\Rrule\Extractor\FreqExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=1');
 
@@ -62,7 +58,7 @@ class FreqExtractor extends atoum
     /**
      * Failed : Missing value for RRULE option
      */
-    public function tesMissingRruleValue()
+    public function tesMissingRruleValue(): void
     {
         // Missing COUNT value in RRULE
         $this->assert

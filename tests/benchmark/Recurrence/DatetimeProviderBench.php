@@ -2,11 +2,6 @@
 
 namespace Benchmark\Recurrence;
 
-/**
- * Class DatetimeProviderBench
- *
- * @package Benchmark\Recurrence
- */
 class DatetimeProviderBench
 {
     /**
@@ -77,7 +72,7 @@ class DatetimeProviderBench
             ->setPeriodStartAt(new \Datetime('2017-01-01'))
             ->setPeriodEndAt(new \Datetime('2018-01-01'))
             ->setFrequency(new \Recurrence\Model\Frequency('MONTHLY'))
-            ->addConstraint(new \Recurrence\Constraint\EndOfMonthConstraint())
+            ->addConstraint(new \Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint())
         ;
         $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 

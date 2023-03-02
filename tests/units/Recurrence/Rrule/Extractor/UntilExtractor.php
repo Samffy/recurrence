@@ -5,16 +5,12 @@ namespace Recurrence\tests\units\Rrule\Extractor;
 use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-/**
- * Class UntilExtractor
- * @package Recurrence\tests\units\Rrule\Extractor
- */
 class UntilExtractor extends atoum
 {
     /**
      * Failed : Use an invalid UNTIL value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -28,7 +24,7 @@ class UntilExtractor extends atoum
     /**
      * Success : No UNTIL option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $until = (new \Recurrence\Rrule\Extractor\UntilExtractor())->extract('FREQ=MONTHLY;COUNT=1');
 
@@ -41,7 +37,7 @@ class UntilExtractor extends atoum
     /**
      * Success : Use a valid UNTIL value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $until = (new \Recurrence\Rrule\Extractor\UntilExtractor())->extract('FREQ=MONTHLY;UNTIL=20170520');
 

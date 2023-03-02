@@ -7,13 +7,9 @@ use atoum;
 use Recurrence\Model\Recurrence;
 use Recurrence\Constraint\DatetimeConstraint\ExcludeDaysOfWeekConstraint as TestedExcludeDaysOfWeekConstraint;
 
-/**
- * Class ExcludeDaysOfWeekConstraint
- * @package Recurrence\tests\units\Constraint
- */
 class ExcludeDaysOfWeekConstraint extends atoum
 {
-    public function testInvalidOptions()
+    public function testInvalidOptions(): void
     {
         $this->assert
             ->exception(function () {
@@ -43,7 +39,7 @@ class ExcludeDaysOfWeekConstraint extends atoum
     /**
      * @dataProvider datetimesLessOneDayProvider
      */
-    public function testExcludeOneDayOfWeek($originalDatetime, $expectedDatetime)
+    public function testExcludeOneDayOfWeek($originalDatetime, $expectedDatetime): void
     {
         $constraint = new TestedExcludeDaysOfWeekConstraint([3]);
 
@@ -53,7 +49,7 @@ class ExcludeDaysOfWeekConstraint extends atoum
         ;
     }
 
-    public function datetimesLessOneDayProvider()
+    public function datetimesLessOneDayProvider(): array
     {
         return [
             [
@@ -90,7 +86,7 @@ class ExcludeDaysOfWeekConstraint extends atoum
     /**
      * @dataProvider datetimesLessMultipleDaysProvider
      */
-    public function testExcludeMultipleDaysOfWeek($originalDatetime, $expectedDatetime)
+    public function testExcludeMultipleDaysOfWeek(\DateTime $originalDatetime, \DateTime $expectedDatetime): void
     {
         $constraint = new TestedExcludeDaysOfWeekConstraint([2, 5]);
 
@@ -100,7 +96,7 @@ class ExcludeDaysOfWeekConstraint extends atoum
         ;
     }
 
-    public function datetimesLessMultipleDaysProvider()
+    public function datetimesLessMultipleDaysProvider(): array
     {
         return [
             [

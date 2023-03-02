@@ -4,14 +4,10 @@ namespace Recurrence\tests\units\Model\Exception;
 
 use atoum;
 
-/**
- * Class InvalidRruleException
- * @package Recurrence\tests\units\Model\Exception
- */
 class InvalidRruleException extends atoum
 {
 
-    public function testContructor()
+    public function testContructor(): void
     {
         $exception = (new \Recurrence\Model\Exception\InvalidRruleException('BIRD', 'IS_THE_WORD'));
 

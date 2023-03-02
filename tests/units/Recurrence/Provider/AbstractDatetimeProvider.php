@@ -8,13 +8,9 @@ use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
 use Recurrence\Provider\OptimizedProvider;
 
-/**
- * Class AbstractDatetimeProvider
- * @package Recurrence\tests\units\Provider
- */
 class AbstractDatetimeProvider extends atoum
 {
-    public function testEstimatePeriodEndAt()
+    public function testEstimatePeriodEndAt(): void
     {
         $provider = new OptimizedProvider();
 

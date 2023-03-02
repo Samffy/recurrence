@@ -7,17 +7,12 @@ use Recurrence\Model\Recurrence;
 use Recurrence\Provider\DatetimeProviderFactory;
 use Recurrence\Validator\RecurrenceValidator;
 
-/**
- * Class DatetimeProvider
- * @package Recurrence
- */
 class DatetimeProvider
 {
     /**
-     * @param Recurrence $recurrence
      * @return array<\DateTime>
      */
-    public function provide(Recurrence $recurrence)
+    public function provide(Recurrence $recurrence): array
     {
         RecurrenceValidator::validate($recurrence);
 
@@ -50,12 +45,7 @@ class DatetimeProvider
         return $filteredDatetimes;
     }
 
-    /**
-     * @param Recurrence $recurrence
-     * @param \Datetime  $datetime
-     * @return \Datetime
-     */
-    private function applyConstraints($recurrence, $datetime)
+    private function applyConstraints(Recurrence $recurrence, \DateTime $datetime): ?\DateTime
     {
         $filteredDatetime = $datetime;
 

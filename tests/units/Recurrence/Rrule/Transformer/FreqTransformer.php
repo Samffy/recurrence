@@ -6,16 +6,12 @@ use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Model\Frequency;
 
-/**
- * Class FreqTransformer
- * @package Recurrence\tests\units\Rrule\Transformer
- */
 class FreqTransformer extends atoum
 {
     /**
      * Failed : Use an invalid FREQ value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -29,7 +25,7 @@ class FreqTransformer extends atoum
     /**
      * Success : No FREQ option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -43,7 +39,7 @@ class FreqTransformer extends atoum
     /**
      * Success : Use a valid FREQ value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $frequency = (new \Recurrence\Rrule\Transformer\FreqTransformer())->transform(['MONTHLY']);
 

@@ -5,16 +5,12 @@ namespace Recurrence\tests\units\Rrule\Transformer;
 use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-/**
- * Class CountTransformer
- * @package Recurrence\tests\units\Rrule\Transformer
- */
 class CountTransformer extends atoum
 {
     /**
      * Failed : Use an invalid COUNT value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -28,7 +24,7 @@ class CountTransformer extends atoum
     /**
      * Success : No COUNT option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -42,7 +38,7 @@ class CountTransformer extends atoum
     /**
      * Success : Use a valid COUNT value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $count = (new \Recurrence\Rrule\Transformer\CountTransformer())->transform([2]);
 

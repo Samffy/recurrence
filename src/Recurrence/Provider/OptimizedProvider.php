@@ -4,22 +4,16 @@ namespace Recurrence\Provider;
 
 use Recurrence\Model\Recurrence;
 
-/**
- * Class OptimizedProvider
- * @package Recurrence\Provider
- */
 class OptimizedProvider extends AbstractDatetimeProvider
 {
-
     /**
-     * @param Recurrence $recurrence
      * @return array<\DateTime>
      */
-    public function provide(Recurrence $recurrence)
+    public function provide(Recurrence $recurrence): array
     {
         $interval = $recurrence->getFrequency()->convertToDateIntervalFormat();
 
-        $periodEndAt = ($recurrence->hasPeriodEndAt())? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence) ;
+        $periodEndAt = ($recurrence->hasPeriodEndAt()) ? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence);
 
         // Transform interval in Datetime interval expression
         if ($recurrence->getInterval() !== 1) {

@@ -7,18 +7,12 @@ use Recurrence\Model\Recurrence;
 use Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint;
 use Recurrence\Model\Exception\InvalidRecurrenceException;
 
-/**
- * Class RecurrenceValidator
- * @package Recurrence\Validator
- */
 class RecurrenceValidator
 {
     /**
-     * @param Recurrence $recurrence
      * @throws InvalidRecurrenceException
-     * @return bool
      */
-    public static function validate(Recurrence $recurrence)
+    public static function validate(Recurrence $recurrence): bool
     {
         if (!$recurrence->getFrequency()) {
             throw new InvalidRecurrenceException('Frequency is required');

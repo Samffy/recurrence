@@ -19,10 +19,10 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.0 <8.0"
+        "php": ">=8.0"
     },
     "require-dev": {
-        "atoum/atoum": "~3.2.0",
-        "phpbench/phpbench": "~0.13.0"
+        "atoum/atoum": "~4.0",
+        "phpbench/phpbench": "~1.2.0"
     }
 }

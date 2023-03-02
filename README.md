@@ -1,7 +1,7 @@
 # Recurrence
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
-![Build Status](https://github.com/Samffy/recurrence/actions/workflows/ci.yml/badge.svg)
+![Build Status](https://github.com/Samffy/recurrence/actions/workflows/ci.yml/badge.svg?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Samffy/recurrence/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Samffy/recurrence/?branch=master)
 
@@ -86,15 +86,13 @@ Remember that you need `xdebug` to generate code coverage report.
 To assume that you don't degrade performance when you update the library, run a benchmark using context name `initial` first :
 
 ```
-./vendor/bin/phpbench run --store --context="initial" --dump-file=var/benchmark/initial.xml
+./vendor/bin/phpbench run --store --tag="initial" --report=default
 ```
-
-Use `--report=default` option if you want to see report in console.
 
 Before committing your changes, run a new benchmark using `update` as context :
 
 ```
-./vendor/bin/phpbench run --store --context="update" --dump-file=var/benchmark/update.xml
+./vendor/bin/phpbench run --store --tag="update" --report=default
 ```
 
 You can then list log to see evolution using : 
@@ -106,7 +104,7 @@ You can then list log to see evolution using :
 Or even better, compare the 2 benchmarks and see if you don't degrade performance with your changes :
 
 ```
-./vendor/bin/phpbench report --file=var/benchmark/initial.xml --file=var/benchmark/update.xml --report=compare
+./vendor/bin/phpbench run --report=aggregate --ref=initial
 ```
 
 

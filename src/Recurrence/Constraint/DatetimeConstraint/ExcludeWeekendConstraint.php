@@ -5,19 +5,9 @@ namespace Recurrence\Constraint\DatetimeConstraint;
 use Recurrence\Constraint\RecurrenceConstraintInterface;
 use Recurrence\Model\Recurrence;
 
-/**
- * Class ExcludeWeekendConstraint
- * @package Recurrence\Constraint
- */
 class ExcludeWeekendConstraint implements DatetimeConstraintInterface, RecurrenceConstraintInterface
 {
-
-    /**
-     * @param Recurrence $recurrence
-     * @param \Datetime $datetime
-     * @return \Datetime
-     */
-    public function apply(Recurrence $recurrence, \Datetime $datetime)
+    public function apply(Recurrence $recurrence, \Datetime $datetime): \Datetime
     {
         if ($this->isWeekend($datetime)) {
             // Add 1 or 2 days to skip weekend (we didn't use `next monday` pattern of \Datetime::format cause it remove time)
@@ -28,11 +18,8 @@ class ExcludeWeekendConstraint implements DatetimeConstraintInterface, Recurrenc
         return $datetime;
     }
 
-    /**
-     * @param \Datetime $datetime
-     * @return bool
-     */
-    private function isWeekend($datetime) {
+    private function isWeekend(\Datetime$datetime): bool
+    {
         return ((int) $datetime->format('N') >= 6);
     }
 }

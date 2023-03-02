@@ -5,14 +5,10 @@ namespace Recurrence\tests\units\Model;
 use atoum;
 use Recurrence\Model\Exception\InvalidFrequencyOptionException;
 
-/**
- * Class Frequency
- * @package Recurrence\tests\units\Model
- */
 class Frequency extends atoum
 {
 
-    public function testContructor()
+    public function testContructor(): void
     {
         $this->assert
             ->exception(function () {
@@ -25,11 +21,8 @@ class Frequency extends atoum
 
     /**
      * @dataProvider convertToDateIntervalProvider
-     *
-     * @param string $frequencyName
-     * @param string $expected
      */
-    public function testConvertToDateIntervalFormat($frequencyName, $expected)
+    public function testConvertToDateIntervalFormat(string $frequencyName, string $expected): void
     {
         $frequency = (new \Recurrence\Model\Frequency($frequencyName));
 
@@ -38,10 +31,7 @@ class Frequency extends atoum
             ->isEqualTo($expected);
     }
 
-    /**
-     * @return array
-     */
-    protected function convertToDateIntervalProvider()
+    protected function convertToDateIntervalProvider(): array
     {
         return [
             ['YEARLY', 'P1Y'],
@@ -56,11 +46,8 @@ class Frequency extends atoum
 
     /**
      * @dataProvider convertToDateTimeProvider
-     *
-     * @param string $frequencyName
-     * @param string $expected
      */
-    public function testConvertToDateTimeFormat($frequencyName, $expected)
+    public function testConvertToDateTimeFormat(string $frequencyName, string $expected): void
     {
         $frequency = (new \Recurrence\Model\Frequency($frequencyName));
 
@@ -69,10 +56,7 @@ class Frequency extends atoum
             ->isEqualTo($expected);
     }
 
-    /**
-     * @return array
-     */
-    protected function convertToDateTimeProvider()
+    protected function convertToDateTimeProvider(): array
     {
         return [
             ['YEARLY', '+1 years'],
@@ -87,11 +71,8 @@ class Frequency extends atoum
 
     /**
      * @dataProvider toStringProvider
-     *
-     * @param string $frequencyName
-     * @param string $expected
      */
-    public function testToString($frequencyName, $expected)
+    public function testToString(string $frequencyName, string $expected): void
     {
         $frequency = (new \Recurrence\Model\Frequency($frequencyName));
 
@@ -100,10 +81,7 @@ class Frequency extends atoum
             ->isEqualTo($expected);
     }
 
-    /**
-     * @return array
-     */
-    protected function toStringProvider()
+    protected function toStringProvider(): array
     {
         return [
             ['YEARLY', 'YEARLY'],

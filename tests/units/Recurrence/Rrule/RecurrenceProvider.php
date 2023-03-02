@@ -6,17 +6,13 @@ use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Model\Exception\InvalidRruleExpressionException;
 
-/**
- * Class RecurrenceProvider
- * @package Recurrence\tests\units
- */
 class RecurrenceProvider extends atoum
 {
 
     /**
      * Failed : Empty RRULE
      */
-    public function testEmptyRrule()
+    public function testEmptyRrule(): void
     {
         // Empty RRULE
         $this->assert
@@ -30,7 +26,7 @@ class RecurrenceProvider extends atoum
     /**
      * Failed : Bad RRULE syntax
      */
-    public function tesBadRruleSyntax()
+    public function tesBadRruleSyntax(): void
     {
         // Wrong option syntax in RRULE
         $this->assert
@@ -44,7 +40,7 @@ class RecurrenceProvider extends atoum
     /**
      * Failed : Missing required value for RRULE option
      */
-    public function tesMissingRruleValue()
+    public function tesMissingRruleValue(): void
     {
         // Missing INTERVAL value in RRULE
         $this->assert
@@ -58,7 +54,7 @@ class RecurrenceProvider extends atoum
     /**
      * Check FREQ support
      */
-    public function testRruleFreqSupport()
+    public function testRruleFreqSupport(): void
     {
         // Success creation of recurrence from RRULE
         $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
@@ -90,7 +86,7 @@ class RecurrenceProvider extends atoum
     /**
      * Test DTSTART support
      */
-    public function testRruleDstartSupport()
+    public function testRruleDstartSupport(): void
     {
         // Success creation of recurrence from RRULE using simple date
         $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170520;UNTIL=20170520');
@@ -149,7 +145,7 @@ class RecurrenceProvider extends atoum
     /**
      * Test UNTIL support
      */
-    public function testRruleUntilSupport()
+    public function testRruleUntilSupport(): void
     {
         // Success creation of recurrence from RRULE using simple date
         $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520');
@@ -208,7 +204,7 @@ class RecurrenceProvider extends atoum
     /**
      * Check INTERVAL support
      */
-    public function testRruleIntervalSupport()
+    public function testRruleIntervalSupport(): void
     {
         // Success creation of recurrence from RRULE
         $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
@@ -221,7 +217,7 @@ class RecurrenceProvider extends atoum
     /**
      * Check COUNT support
      */
-    public function testRruleCountSupport()
+    public function testRruleCountSupport(): void
     {
         // Success creation of recurrence from RRULE
         $recurrence = (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;BYMONTHDAY=1;COUNT=2');

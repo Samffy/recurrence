@@ -2,18 +2,9 @@
 
 namespace Recurrence\Model\Exception;
 
-/**
- * Class InvalidRruleException
- * @package Recurrence\Model
- */
 class InvalidRruleException extends \InvalidArgumentException
 {
-
-    /**
-     * @param string $rRuleName
-     * @param string $value
-     */
-    public function __construct($rRuleName, $value = null)
+    public function __construct(string $rRuleName, string $value = null)
     {
         $message = sprintf('Invalid RRULE [%s] option : [%s]', $rRuleName, $value);
 

@@ -5,16 +5,12 @@ namespace Recurrence\tests\units\Rrule\Transformer;
 use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-/**
- * Class UntilTimezonedTransformer
- * @package Recurrence\tests\units\Rrule\Transformer
- */
 class UntilTimezonedTransformer extends atoum
 {
     /**
      * Failed : Use an invalid UNTIL;TZID value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -44,7 +40,7 @@ class UntilTimezonedTransformer extends atoum
     /**
      * Success : No UNTIL;TZID option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -58,7 +54,7 @@ class UntilTimezonedTransformer extends atoum
     /**
      * Success : Use a valid UNTIL;TZID value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $dtStart = (new \Recurrence\Rrule\Transformer\UntilTimezonedTransformer())->transform(['Europe/Paris', '20170924T193402']);
 

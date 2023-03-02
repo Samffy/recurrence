@@ -6,16 +6,12 @@ use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Rrule\RecurrenceProvider;
 
-/**
- * Class CountExtractor
- * @package Recurrence\tests\units\Rrule\Extractor
- */
 class CountExtractor extends atoum
 {
     /**
      * Failed : Use an invalid COUNT value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -29,7 +25,7 @@ class CountExtractor extends atoum
     /**
      * Success : No COUNT option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $count = (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520');
 
@@ -42,7 +38,7 @@ class CountExtractor extends atoum
     /**
      * Success : Use a valid COUNT value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $count = (new \Recurrence\Rrule\Extractor\CountExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;COUNT=1');
 
@@ -62,7 +58,7 @@ class CountExtractor extends atoum
     /**
      * Failed : Missing value for RRULE option
      */
-    public function tesMissingRruleValue()
+    public function tesMissingRruleValue(): void
     {
         // Missing COUNT value in RRULE
         $this->assert

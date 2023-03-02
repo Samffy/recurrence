@@ -4,18 +4,15 @@ namespace Recurrence\tests\units\Rrule\Extractor;
 
 use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
+use Recurrence\Model\Exception\InvalidRruleExpressionException;
 use Recurrence\Rrule\RecurrenceProvider;
 
-/**
- * Class IntervalExtractor
- * @package Recurrence\tests\units\Rrule\Extractor
- */
 class IntervalExtractor extends atoum
 {
     /**
      * Failed : Use an invalid INTERVAL value
      */
-    public function testInvalidValue()
+    public function testInvalidValue(): void
     {
         $this->assert
             ->exception(function () {
@@ -29,7 +26,7 @@ class IntervalExtractor extends atoum
     /**
      * Success : No INTERVAL option
      */
-    public function testNoValue()
+    public function testNoValue(): void
     {
         $interval = (new \Recurrence\Rrule\Extractor\IntervalExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520');
 
@@ -42,7 +39,7 @@ class IntervalExtractor extends atoum
     /**
      * Success : Use a valid INTERVAL value
      */
-    public function testValidValue()
+    public function testValidValue(): void
     {
         $interval = (new \Recurrence\Rrule\Extractor\IntervalExtractor())->extract('FREQ=MONTHLY;DTSTART=20170520;INTERVAL=1');
 
@@ -62,14 +59,14 @@ class IntervalExtractor extends atoum
     /**
      * Failed : Missing value for RRULE option
      */
-    public function tesMissingRruleValue()
+    public function testMissingRruleValue(): void
     {
         // Missing INTERVAL value in RRULE
         $this->assert
             ->exception(function () {
                 (new RecurrenceProvider())->create('FREQ=MONTHLY;BYMONTHDAY=1;INTERVAL');
             })
-            ->isInstanceOf(InvalidRruleException::class)
+            ->isInstanceOf(InvalidRruleExpressionException::class)
         ;
     }
 }
