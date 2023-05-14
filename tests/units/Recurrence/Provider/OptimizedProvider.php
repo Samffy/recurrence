@@ -15,12 +15,13 @@ class OptimizedProvider extends atoum
      */
     public function testWithoutIntervalProvide(int $position, \DateTime $periodStartAt, int $countOption, \DateTime $expected): void
     {
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency('MONTHLY'))
-            ->setPeriodStartAt($periodStartAt)
-            ->setCount($countOption)
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            $periodStartAt,
+            null,
+            $countOption,
+        );
 
         $provider  = new TestedOptimizedProvider();
         $datetimes = $provider->provide($recurrence);
@@ -43,12 +44,12 @@ class OptimizedProvider extends atoum
         $periodEndAt = clone $periodStartAt;
         $periodEndAt->modify(sprintf('+%d months', $countOption));
 
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency('MONTHLY'))
-            ->setPeriodStartAt($periodStartAt)
-            ->setPeriodEndAt($periodEndAt)
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            $periodStartAt,
+            $periodEndAt,
+        );
 
         $provider  = new TestedOptimizedProvider();
         $datetimes = $provider->provide($recurrence);
@@ -116,13 +117,13 @@ class OptimizedProvider extends atoum
      */
     public function testWithIntervalProvide(int $position, \DateTime $periodStartAt, int $countOption, \DateTime $expected): void
     {
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency('MONTHLY'))
-            ->setPeriodStartAt($periodStartAt)
-            ->setCount($countOption)
-            ->setInterval(2)
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            2,
+            $periodStartAt,
+            null,
+            $countOption,
+        );
 
         $provider  = new TestedOptimizedProvider();
         $datetimes = $provider->provide($recurrence);

@@ -4,6 +4,9 @@ namespace Recurrence\Model;
 
 use Recurrence\Model\Exception\InvalidFrequencyOptionException;
 
+/**
+ * TODO: replace by enum
+ */
 class Frequency
 {
     public const FREQUENCY_YEARLY   = 'YEARLY';

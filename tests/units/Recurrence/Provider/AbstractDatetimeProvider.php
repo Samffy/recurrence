@@ -15,12 +15,13 @@ class AbstractDatetimeProvider extends atoum
         $provider = new OptimizedProvider();
 
         // With COUNT option
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency(Frequency::FREQUENCY_MONTHLY))
-            ->setPeriodStartAt(new \Datetime('2017-01-01 00:00:00'))
-            ->setCount(2)
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            new \Datetime('2017-01-01 00:00:00'),
+            null,
+            2,
+        );
 
         $this->assert
             ->object($provider->estimatePeriodEndAt($recurrence))
@@ -30,12 +31,12 @@ class AbstractDatetimeProvider extends atoum
         ;
 
         // Without COUNT option
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency(Frequency::FREQUENCY_MONTHLY))
-            ->setPeriodStartAt(new \Datetime('2017-01-01 00:00:00'))
-            ->setPeriodEndAt(new \Datetime('2017-03-02 13:37:00'))
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            new \Datetime('2017-01-01 00:00:00'),
+            new \Datetime('2017-03-02 13:37:00'),
+        );
 
         $this->assert
             ->object($provider->estimatePeriodEndAt($recurrence))

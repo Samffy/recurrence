@@ -11,11 +11,12 @@ class DatetimeProviderBench
      */
     public function benchStandardPeriod()
     {
-        $recurrence = (new \Recurrence\Model\Recurrence())
-            ->setPeriodStartAt(new \Datetime('2017-01-01'))
-            ->setPeriodEndAt(new \Datetime('2018-01-01'))
-            ->setFrequency(new \Recurrence\Model\Frequency('MONTHLY'))
-        ;
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new \Recurrence\Model\Frequency('MONTHLY'),
+            1,
+            new \Datetime('2017-01-01'),
+            new \Datetime('2018-01-01'),
+        );
         $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 
         foreach ($period as $date) {
@@ -30,11 +31,12 @@ class DatetimeProviderBench
      */
     public function benchLongPeriod()
     {
-        $recurrence = (new \Recurrence\Model\Recurrence())
-            ->setPeriodStartAt(new \Datetime('2017-01-01'))
-            ->setPeriodEndAt(new \Datetime('2027-01-01'))
-            ->setFrequency(new \Recurrence\Model\Frequency('MONTHLY'))
-        ;
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new \Recurrence\Model\Frequency('MONTHLY'),
+            1,
+            new \Datetime('2017-01-01'),
+            new \Datetime('2027-01-01'),
+        );
         $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 
         foreach ($period as $date) {
@@ -49,11 +51,12 @@ class DatetimeProviderBench
      */
     public function benchManyRecurrencesPeriod()
     {
-        $recurrence = (new \Recurrence\Model\Recurrence())
-            ->setPeriodStartAt(new \Datetime('2017-01-01'))
-            ->setPeriodEndAt(new \Datetime('2018-01-01'))
-            ->setFrequency(new \Recurrence\Model\Frequency('DAILY'))
-        ;
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new \Recurrence\Model\Frequency('DAILY'),
+            1,
+            new \Datetime('2017-01-01'),
+            new \Datetime('2018-01-01'),
+        );
         $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 
         foreach ($period as $date) {
@@ -68,12 +71,15 @@ class DatetimeProviderBench
      */
     public function benchEndOfMonthProviderPeriod()
     {
-        $recurrence = (new \Recurrence\Model\Recurrence())
-            ->setPeriodStartAt(new \Datetime('2017-01-01'))
-            ->setPeriodEndAt(new \Datetime('2018-01-01'))
-            ->setFrequency(new \Recurrence\Model\Frequency('MONTHLY'))
-            ->addConstraint(new \Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint())
-        ;
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new \Recurrence\Model\Frequency('MONTHLY'),
+            1,
+            new \Datetime('2017-01-01'),
+            new \Datetime('2018-01-01'),
+            null, 
+            [new \Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint()]
+        );
+
         $period = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 
         foreach ($period as $date) {

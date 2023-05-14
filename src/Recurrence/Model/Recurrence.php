@@ -3,57 +3,35 @@
 namespace Recurrence\Model;
 
 use Recurrence\Constraint\DatetimeConstraint\DatetimeConstraintInterface;
+use Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint;
 use Recurrence\Constraint\ProviderConstraint\ProviderConstraintInterface;
 use Recurrence\Constraint\RecurrenceConstraintInterface;
+use Recurrence\Model\Exception\InvalidRecurrenceException;
 
 class Recurrence
 {
-    private ?Frequency $frequency = null;
-    private \Datetime $periodStartAt;
-    private ?\Datetime $periodEndAt = null;
-    private int $interval = 1;
-    private ?int $count = null;
-    private array $constraints = [];
+    public function __construct(
+        private Frequency $frequency,
+        private int $interval,
+        private \Datetime $periodStartAt,
+        private ?\Datetime $periodEndAt = null,
+        private ?int $count = null,
+        private array $constraints = []
+    ) {
+        if ($count && $periodEndAt) {
+            throw new InvalidRecurrenceException('Recurrence cannot have [COUNT] and [UNTIL] option at the same time');
+        }
 
-    public function __construct()
-    {
-        $this->setPeriodStartAt(new \DateTime());
-    }
+        if (null === $count && null === $periodEndAt) {
+            throw new InvalidRecurrenceException('Recurrence required [COUNT] or [UNTIL] option');
+        }
 
-    public function setPeriodStartAt(\Datetime $periodStartAt): self
-    {
-        $this->periodStartAt = $periodStartAt;
+        $constraintNames = array_map(function ($constraint) { return $constraint::class; }, $constraints);
+        $duplicateConstraints = array_diff_key($constraintNames, array_unique($constraintNames));
 
-        return $this;
-    }
-
-    public function getPeriodStartAt(): \Datetime
-    {
-        return $this->periodStartAt;
-    }
-
-    public function setPeriodEndAt(\Datetime $periodEndAt): self
-    {
-        $this->periodEndAt = $periodEndAt;
-
-        return $this;
-    }
-
-    public function getPeriodEndAt(): ?\Datetime
-    {
-        return $this->periodEndAt;
-    }
-
-    public function hasPeriodEndAt(): bool
-    {
-        return $this->periodEndAt !== null;
-    }
-
-    public function setFrequency(Frequency $frequency): self
-    {
-        $this->frequency = $frequency;
-
-        return $this;
+        if (!empty($duplicateConstraints)) {
+            throw new \InvalidArgumentException(sprintf('Duplicate constraint [%s]', implode(', ', $duplicateConstraints)));
+        }
     }
 
     public function getFrequency(): ?Frequency
@@ -66,11 +44,19 @@ class Recurrence
         return $this->interval;
     }
 
-    public function setInterval(int $interval): self
+    public function getPeriodStartAt(): \Datetime
     {
-        $this->interval = $interval;
+        return $this->periodStartAt;
+    }
 
-        return $this;
+    public function getPeriodEndAt(): ?\Datetime
+    {
+        return $this->periodEndAt;
+    }
+
+    public function hasPeriodEndAt(): bool
+    {
+        return $this->periodEndAt !== null;
     }
 
     public function getCount(): ?int
@@ -83,27 +69,9 @@ class Recurrence
         return $this->count !== null;
     }
 
-    public function setCount(int $count): self
-    {
-        $this->count = $count;
-
-        return $this;
-    }
-
     public function getConstraints(): array
     {
         return $this->constraints;
-    }
-
-    public function setConstraints(array $constraints): self
-    {
-        $this->constraints = [];
-
-        foreach ($constraints as $constraint) {
-            $this->addConstraint($constraint);
-        }
-
-        return $this;
     }
 
     public function hasConstraints(): bool
@@ -111,10 +79,25 @@ class Recurrence
         return !empty($this->constraints);
     }
 
+    public function hasConstraint(string $constraintClassName): bool
+    {
+        foreach ($this->constraints as $key => $constraint) {
+            if ($constraint::class == $constraintClassName) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function addConstraint(RecurrenceConstraintInterface $constraint): self
     {
-        if ($this->hasConstraint(get_class($constraint))) {
+        if ($this->hasConstraint($constraint::class)) {
             throw new \InvalidArgumentException(sprintf('Duplicate constraint [%s]', get_class($constraint)));
+        }
+
+        if ($constraint instanceof EndOfMonthConstraint && $this->frequency->__toString() !== Frequency::FREQUENCY_MONTHLY) {
+            throw new InvalidRecurrenceException('End of month constraint can be applied only with monthly frequency');
         }
 
         $this->constraints[] = $constraint;
@@ -125,7 +108,7 @@ class Recurrence
     public function removeConstraint(string $constraintClassName): self
     {
         foreach ($this->constraints as $key => $constraint) {
-            if (get_class($constraint) == $constraintClassName) {
+            if ($constraint::class == $constraintClassName) {
                 unset($this->constraints[$key]);
 
                 break;
@@ -135,17 +118,6 @@ class Recurrence
         $this->constraints = array_values($this->constraints);
 
         return $this;
-    }
-
-    public function hasConstraint(string $constraintClassName): bool
-    {
-        foreach ($this->constraints as $key => $constraint) {
-            if (get_class($constraint) == $constraintClassName) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public function hasProviderConstraint(): bool

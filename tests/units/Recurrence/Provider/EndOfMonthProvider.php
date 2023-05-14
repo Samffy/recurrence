@@ -14,12 +14,13 @@ class EndOfMonthProvider extends atoum
     {
         $perioStartAt = new \Datetime('2017-01-01');
 
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency('MONTHLY'))
-            ->setPeriodStartAt($perioStartAt)
-            ->setCount(10)
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            $perioStartAt,
+            null, 
+            10,
+        );
 
         $provider = new TestedEndOfMonthProvider();
         $datetimes = $provider->provide($recurrence);
@@ -42,12 +43,12 @@ class EndOfMonthProvider extends atoum
         $perioStartAt = new \Datetime('2017-01-01');
         $periodEndAt  = new \Datetime('2017-10-01');
 
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency('MONTHLY'))
-            ->setPeriodStartAt($perioStartAt)
-            ->setPeriodEndAt($periodEndAt)
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            $perioStartAt,
+            $periodEndAt,
+        );
 
         $provider = new TestedEndOfMonthProvider();
         $datetimes = $provider->provide($recurrence);

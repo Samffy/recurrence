@@ -5,6 +5,7 @@ namespace Recurrence\tests\units\Model;
 use atoum;
 use Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint;
 use Recurrence\Constraint\DatetimeConstraint\ExcludeWeekendConstraint;
+use Recurrence\Model\Frequency;
 use Recurrence\tests\units\Constraint\DatetimeConstraint\ExcludeDaysOfWeekConstraint;
 
 class Recurrence extends atoum
@@ -13,7 +14,13 @@ class Recurrence extends atoum
     {
         $now = new \Datetime();
 
-        $recurrence = new \Recurrence\Model\Recurrence();
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new Frequency('MONTHLY'),
+            1,
+            new \DateTime(),
+            null,
+            2
+        );
 
         $this->assert
             ->object($recurrence->getPeriodStartAt())
@@ -30,10 +37,14 @@ class Recurrence extends atoum
     {
         $this->assert
             ->exception(function () {
-                (new \Recurrence\Model\Recurrence())
-                    ->addConstraint(new EndOfMonthConstraint())
-                    ->addConstraint(new EndOfMonthConstraint())
-                ;
+                $recurrence = new \Recurrence\Model\Recurrence(
+                    new Frequency('MONTHLY'),
+                    1,
+                    new \DateTime(),
+                    null,
+                    10,
+                    [new EndOfMonthConstraint(), new EndOfMonthConstraint()]
+                );
             })
             ->isInstanceOf(\InvalidArgumentException::class)
             ->hasMessage('Duplicate constraint [Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint]')
@@ -41,9 +52,14 @@ class Recurrence extends atoum
 
         $this->assert
             ->exception(function () {
-                (new \Recurrence\Model\Recurrence())
-                    ->setConstraints([new EndOfMonthConstraint(), new EndOfMonthConstraint()])
-                ;
+                $recurrence = new \Recurrence\Model\Recurrence(
+                    new Frequency('MONTHLY'),
+                    1,
+                    new \DateTime(),
+                    null,
+                    10,
+                    [new EndOfMonthConstraint(), new EndOfMonthConstraint()]
+                );
             })
             ->isInstanceOf(\InvalidArgumentException::class)
             ->hasMessage('Duplicate constraint [Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint]')
@@ -52,11 +68,14 @@ class Recurrence extends atoum
 
     public function testRemoveConstraint(): void
     {
-        $recurrence =
-            (new \Recurrence\Model\Recurrence())
-                ->addConstraint(new EndOfMonthConstraint())
-                ->addConstraint(new ExcludeWeekendConstraint())
-        ;
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new Frequency('MONTHLY'),
+            1,
+            new \DateTime(),
+            null,
+            10,
+            [new EndOfMonthConstraint(), new ExcludeWeekendConstraint()]
+        );
 
         $this->assert
             ->integer(count($recurrence->getConstraints()))
@@ -80,11 +99,14 @@ class Recurrence extends atoum
 
     public function testHasConstraint(): void
     {
-        $recurrence =
-            (new \Recurrence\Model\Recurrence())
-                ->addConstraint(new EndOfMonthConstraint())
-                ->addConstraint(new ExcludeWeekendConstraint())
-        ;
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new Frequency('MONTHLY'),
+            1,
+            new \DateTime(),
+            null, 
+            10,
+            [new EndOfMonthConstraint(), new ExcludeWeekendConstraint()]
+        );
 
         $this->assert
             ->boolean($recurrence->hasConstraint(EndOfMonthConstraint::class))
@@ -99,7 +121,12 @@ class Recurrence extends atoum
 
     public function testHasConstraints(): void
     {
-        $recurrence = new \Recurrence\Model\Recurrence();
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new Frequency('MONTHLY'),
+            1,
+            new \DateTime(),
+            new \DateTime(),
+        );
 
         $this->assert
             ->boolean($recurrence->hasConstraints())
@@ -118,7 +145,12 @@ class Recurrence extends atoum
 
     public function testHasProviderConstraint(): void
     {
-        $recurrence = new \Recurrence\Model\Recurrence();
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new Frequency('MONTHLY'),
+            1,
+            new \DateTime(),
+            new \DateTime(),
+        );
 
         $this->assert
             ->boolean($recurrence->hasProviderConstraint())
@@ -144,7 +176,12 @@ class Recurrence extends atoum
 
     public function testHasDatetimeConstraint(): void
     {
-        $recurrence = new \Recurrence\Model\Recurrence();
+        $recurrence = new \Recurrence\Model\Recurrence(
+            new Frequency('MONTHLY'),
+            1,
+            new \DateTime(),
+            new \DateTime(),
+        );
 
         $this->assert
             ->boolean($recurrence->hasDatetimeConstraint())

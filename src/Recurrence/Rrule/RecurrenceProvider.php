@@ -2,25 +2,23 @@
 
 namespace Recurrence\Rrule;
 
-use Recurrence\Model\Exception\InvalidRecurrenceException;
-use Recurrence\Model\Exception\InvalidRruleExpressionException;
 use Recurrence\Model\Recurrence;
 use Recurrence\Model\Exception\InvalidRruleException;
-use Recurrence\Validator\RecurrenceValidator;
+use Recurrence\Model\Exception\InvalidRruleExpressionException;
 
 class RecurrenceProvider
 {
     /**
-     * Map extractor/transformer names with Recurrence attributes
+     * Map extractor/transformer names with Recurrence parameters
      */
     private array $options = [
-        'Count'            => 'count',
-        'Interval'         => 'interval',
-        'Freq'             => 'frequency',
-        'DtStartTimezoned' => 'periodStartAt',
-        'DtStart'          => 'periodStartAt',
-        'UntilTimezoned'   => 'periodEndAt',
-        'Until'            => 'periodEndAt',
+        'Count',
+        'Interval',
+        'Freq',
+        'DtStartTimezoned',
+        'DtStart',
+        'UntilTimezoned',
+        'Until',
     ];
 
     /**
@@ -29,10 +27,12 @@ class RecurrenceProvider
      */
     public function create(string $rRule): Recurrence
     {
-        $recurrence = new Recurrence();
+        $parameters = [];
 
         // Process all options supported
-        foreach ($this->options as $option => $attribute) {
+        foreach ($this->options as $option) {
+            $parameters[$option] = null;
+
             // Create extractor
             $className = 'Recurrence\Rrule\Extractor\\'.$option.'Extractor';
             $extractor = new $className();
@@ -42,31 +42,36 @@ class RecurrenceProvider
                 $className = 'Recurrence\Rrule\Transformer\\'.$option.'Transformer';
                 $transformer = new $className();
 
-                // Set Recurrence attribute
-                $recurrence = $this->setAttribute($recurrence, $attribute, $transformer->transform($values));
+                $parameters[$option] = $transformer->transform($values);
             }
         }
 
-        try {
-            RecurrenceValidator::validate($recurrence);
-        } catch (InvalidRecurrenceException $e) {
-            throw new InvalidRruleExpressionException($e->getMessage());
+        if (empty($parameters['Freq'])) {
+            throw new InvalidRruleExpressionException(sprintf('Missing [Freq] option.'));
         }
 
-        return $recurrence;
-    }
-
-    /**
-     * @param mixed $value
-     */
-    private function setAttribute(Recurrence $recurrence, string $attribute, $value): Recurrence
-    {
-        $method = sprintf('set%s', ucfirst($attribute));
-
-        if ($value && method_exists($recurrence, $method)) {
-            $recurrence->$method($value);
+        if (empty($parameters['Interval'])) {
+            throw new InvalidRruleExpressionException(sprintf('Missing [Interval] option.'));
         }
 
-        return $recurrence;
+        if (empty($parameters['DtStart']) && empty($parameters['DtStartTimezoned'])) {
+            throw new InvalidRruleExpressionException(sprintf('Missing [DtStart] or [DtStartTimezoned] option.'));
+        }
+
+        if (empty($parameters['UntilTimezoned']) && empty($parameters['Until']) && empty($parameters['Count'])) {
+            throw new InvalidRruleExpressionException(sprintf('Recurrence required [COUNT] or [UNTIL] option.'));
+        }
+
+        if ((!empty($parameters['UntilTimezoned']) || !empty($parameters['Until'])) && !empty($parameters['Count'])) {
+            throw new InvalidRruleExpressionException(sprintf('Recurrence cannot have [COUNT] and [UNTIL] option at the same time.'));
+        }
+
+        return new Recurrence(
+            $parameters['Freq'],
+            $parameters['Interval'],
+            $parameters['DtStartTimezoned'] ?? $parameters['DtStart'],
+            $parameters['UntilTimezoned'] ?? $parameters['Until'],
+            $parameters['Count']
+        );
     }
 }

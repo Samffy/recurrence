@@ -6,6 +6,7 @@ use atoum;
 
 use Recurrence\Model\Recurrence;
 use Recurrence\Constraint\DatetimeConstraint\ExcludeWeekendConstraint as TestedExcludeWeekendConstraint;
+use Recurrence\Model\Frequency;
 
 class ExcludeWeekendConstraint extends atoum
 {
@@ -17,8 +18,15 @@ class ExcludeWeekendConstraint extends atoum
     {
         $constraint = new TestedExcludeWeekendConstraint();
 
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            new \Datetime('2017-01-31'),
+            new \Datetime('2018-01-01'),
+        );
+
         $this->assert
-            ->object($constraint->apply(new Recurrence(), $originalDatetime))
+            ->object($constraint->apply($recurrence, $originalDatetime))
             ->isEqualTo($expectedDatetime)
         ;
     }
