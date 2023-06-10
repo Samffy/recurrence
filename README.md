@@ -16,20 +16,33 @@ RFC : https://tools.ietf.org/html/rfc5545#page-37
 ### Create recurrences using object method
 
 ```php
-$recurrence = (new Recurrence())
-    ->setFrequency(new Frequency('MONTHLY'))
-    ->setPeriodStartAt(new \Datetime('2017-01-01'))
-    ->setPeriodEndAt(new \Datetime('2017-12-31'))
-    ->setInterval(1);
-$periods = (new DatetimeProvider())->provide($recurrence);
+$frequency = new Frequency(Frequency::FREQUENCY_MONTHLY);
+$interval = 1;
+$periodStartAt = new \DateTime('2017-01-01');
+$periodEndAt = new \DateTime('2017-12-31');
+$count = null;
+$constraints = [];
+
+
+$recurrence = new Recurrence(
+    $frequency,
+    $interval,
+    $periodStartAt,
+    $periodEndAt,
+    $count,
+    $constraints
+);
+
+$periods = (new \Recurrence\DatetimeProvider())->provide($recurrence);
 ```
 
-Available methods :
-- `setFrequency` (`Frequency`) : set `FREQ` option
-- `setPeriodStartAt` (`\Datetime()`) : set `DTSTART` option
-- `setPeriodEndAt` (`\Datetime()`) : set `UNTIL` option
-- `setInterval` (`integer`) : set `INTERVAL` option
-- `setCount` (`integer`) : set `COUNT` option
+Parameters:
+- `$frequency` (`Frequency`): Determine the recurrence period (daily, weekly, ...).
+- `$interval` (`integer`): Interval base on the frequency (a monthly frequency with an interval of `2` mean every 2 months).
+- `$periodStartAt` (`DateTime`): Recurrence period start at.
+- `$periodEndAt` (`DateTime`, nullable): Recurrence period end at.
+- `$count` (`integer`, nullable): Limit the number of recurrence.
+- `$constraints` (`RecurrenceConstraintInterface[]`): Some additional constraints that help you to manage some useful cases.
 
 ### Create recurrences from RRULE standard expression
 
@@ -59,10 +72,6 @@ Supported rules :
 
 You can add some constraint to `Recurrence` in order to manage more precisely generated datetimes.  
 For example, if you do not want to generate datetime on wednesday (day `3` according to date format in PHP), add this constraint : 
-
-```php
-$recurrence->addConstraint(new ExcludeDaysOfWeekConstraint([3]));
-```
 
 * `EndOfMonthConstraint` : if recurrence has `MONTHLY` frequency and start date is last day of current month, force last day of month for all datetimes
 * `ExcludeDaysOfWeekConstraint` : if datetime is concerned, `DatetimeProvider` will return next valid date
@@ -106,5 +115,3 @@ Or even better, compare the 2 benchmarks and see if you don't degrade performanc
 ```
 ./vendor/bin/phpbench run --report=aggregate --ref=initial
 ```
-
-

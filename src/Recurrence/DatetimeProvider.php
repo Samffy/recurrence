@@ -35,7 +35,7 @@ class DatetimeProvider
             // Avoid duplicate datetime due to constraint updates
             if (empty($filteredDatetimes) || $previousDatetime != $filteredDatetime) {
                 $filteredDatetimes[] = $filteredDatetime;
-                $previousDatetime    = $filteredDatetime;
+                $previousDatetime = $filteredDatetime;
             }
         }
 

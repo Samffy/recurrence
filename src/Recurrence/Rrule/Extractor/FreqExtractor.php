@@ -2,8 +2,6 @@
 
 namespace Recurrence\Rrule\Extractor;
 
-use Recurrence\Rrule\Extractor\AbstractExtractor;
-
 class FreqExtractor extends AbstractExtractor
 {
     public const RRULE_PARAMETER = 'FREQ';

@@ -2,13 +2,11 @@
 
 namespace Recurrence\tests\units\Provider;
 
-use atoum;
-
 use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
 use Recurrence\Provider\OptimizedProvider as TestedOptimizedProvider;
 
-class OptimizedProvider extends atoum
+class OptimizedProvider extends \atoum
 {
     /**
      * @dataProvider datetimesWithoutIntervalProvider
@@ -23,18 +21,19 @@ class OptimizedProvider extends atoum
             $countOption,
         );
 
-        $provider  = new TestedOptimizedProvider();
+        $provider = new TestedOptimizedProvider();
         $datetimes = $provider->provide($recurrence);
 
         $this->assert
             ->integer(count($datetimes))
-            ->isEqualTo($countOption);
+            ->isEqualTo($countOption)
+        ;
 
         $this->assert
             ->object($datetimes[$position])
-            ->isEqualTo($expected);
+            ->isEqualTo($expected)
+        ;
     }
-
 
     /**
      * @dataProvider datetimesWithoutIntervalProvider
@@ -51,16 +50,18 @@ class OptimizedProvider extends atoum
             $periodEndAt,
         );
 
-        $provider  = new TestedOptimizedProvider();
+        $provider = new TestedOptimizedProvider();
         $datetimes = $provider->provide($recurrence);
 
         $this->assert
             ->integer(count($datetimes))
-            ->isEqualTo($countOption);
+            ->isEqualTo($countOption)
+        ;
 
         $this->assert
             ->object($datetimes[$position])
-            ->isEqualTo($expected);
+            ->isEqualTo($expected)
+        ;
     }
 
     public function datetimesWithoutIntervalProvider(): array
@@ -68,49 +69,48 @@ class OptimizedProvider extends atoum
         return [
             [
                 0,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 10,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
             ],
             [
                 1,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 10,
-                new \Datetime('2017-02-01'),
+                new \DateTime('2017-02-01'),
             ],
             [
                 2,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 10,
-                new \Datetime('2017-03-01'),
+                new \DateTime('2017-03-01'),
             ],
             [
                 3,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 10,
-                new \Datetime('2017-04-01'),
+                new \DateTime('2017-04-01'),
             ],
             [
                 4,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 10,
-                new \Datetime('2017-05-01'),
+                new \DateTime('2017-05-01'),
             ],
             [
                 5,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 10,
-                new \Datetime('2017-06-01'),
+                new \DateTime('2017-06-01'),
             ],
             [
                 6,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 10,
-                new \Datetime('2017-07-01'),
+                new \DateTime('2017-07-01'),
             ],
         ];
     }
-
 
     /**
      * @dataProvider datetimesWithIntervalProvider
@@ -125,16 +125,18 @@ class OptimizedProvider extends atoum
             $countOption,
         );
 
-        $provider  = new TestedOptimizedProvider();
+        $provider = new TestedOptimizedProvider();
         $datetimes = $provider->provide($recurrence);
 
         $this->assert
             ->integer(count($datetimes))
-            ->isEqualTo($countOption);
+            ->isEqualTo($countOption)
+        ;
 
         $this->assert
             ->object($datetimes[$position])
-            ->isEqualTo($expected);
+            ->isEqualTo($expected)
+        ;
     }
 
     public function datetimesWithIntervalProvider(): array
@@ -142,27 +144,27 @@ class OptimizedProvider extends atoum
         return [
             [
                 0,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 4,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
             ],
             [
                 1,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 4,
-                new \Datetime('2017-03-01'),
+                new \DateTime('2017-03-01'),
             ],
             [
                 2,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 4,
-                new \Datetime('2017-05-01'),
+                new \DateTime('2017-05-01'),
             ],
             [
                 3,
-                new \Datetime('2017-01-01'),
+                new \DateTime('2017-01-01'),
                 4,
-                new \Datetime('2017-07-01'),
+                new \DateTime('2017-07-01'),
             ],
         ];
     }

@@ -2,18 +2,17 @@
 
 namespace Recurrence\tests\units\Rrule\Transformer;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-class UntilTimezonedTransformer extends atoum
+class UntilTimezonedTransformer extends \atoum
 {
     /**
-     * Failed : Use an invalid UNTIL;TZID value
+     * Failed : Use an invalid UNTIL;TZID value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\UntilTimezonedTransformer())->transform(['A']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -21,7 +20,7 @@ class UntilTimezonedTransformer extends atoum
         ;
 
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\UntilTimezonedTransformer())->transform(['Miami\Vice', 'B']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -29,7 +28,7 @@ class UntilTimezonedTransformer extends atoum
         ;
 
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\UntilTimezonedTransformer())->transform(['A', 'B']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -38,12 +37,12 @@ class UntilTimezonedTransformer extends atoum
     }
 
     /**
-     * Success : No UNTIL;TZID option
+     * Success : No UNTIL;TZID option.
      */
     public function testNoValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\UntilTimezonedTransformer())->transform([]);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -52,7 +51,7 @@ class UntilTimezonedTransformer extends atoum
     }
 
     /**
-     * Success : Use a valid UNTIL;TZID value
+     * Success : Use a valid UNTIL;TZID value.
      */
     public function testValidValue(): void
     {

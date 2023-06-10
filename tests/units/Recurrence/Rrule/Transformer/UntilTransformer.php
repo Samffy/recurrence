@@ -2,18 +2,17 @@
 
 namespace Recurrence\tests\units\Rrule\Transformer;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-class UntilTransformer extends atoum
+class UntilTransformer extends \atoum
 {
     /**
-     * Failed : Use an invalid UNTIL value
+     * Failed : Use an invalid UNTIL value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\UntilTransformer())->transform(['A']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -22,12 +21,12 @@ class UntilTransformer extends atoum
     }
 
     /**
-     * Success : No UNTIL option
+     * Success : No UNTIL option.
      */
     public function testNoValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\UntilTransformer())->transform([]);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -36,7 +35,7 @@ class UntilTransformer extends atoum
     }
 
     /**
-     * Success : Use a valid UNTIL value
+     * Success : Use a valid UNTIL value.
      */
     public function testValidValue(): void
     {

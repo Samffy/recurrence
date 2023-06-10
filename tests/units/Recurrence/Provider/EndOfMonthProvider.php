@@ -2,23 +2,21 @@
 
 namespace Recurrence\tests\units\Provider;
 
-use atoum;
-
 use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
 use Recurrence\Provider\EndOfMonthProvider as TestedEndOfMonthProvider;
 
-class EndOfMonthProvider extends atoum
+class EndOfMonthProvider extends \atoum
 {
     public function testProvideWithCount(): void
     {
-        $perioStartAt = new \Datetime('2017-01-01');
+        $perioStartAt = new \DateTime('2017-01-01');
 
         $recurrence = new Recurrence(
             new Frequency(Frequency::FREQUENCY_MONTHLY),
             1,
             $perioStartAt,
-            null, 
+            null,
             10,
         );
 
@@ -27,12 +25,14 @@ class EndOfMonthProvider extends atoum
 
         $this->assert
             ->integer(count($datetimes))
-            ->isEqualTo(10);
+            ->isEqualTo(10)
+        ;
 
         foreach ($datetimes as $datetime) {
             $this->assert
                 ->object($datetime)
-                ->isEqualTo($perioStartAt);
+                ->isEqualTo($perioStartAt)
+            ;
 
             $perioStartAt->modify('last day of next month');
         }
@@ -40,8 +40,8 @@ class EndOfMonthProvider extends atoum
 
     public function testProvideWithEndPeriod(): void
     {
-        $perioStartAt = new \Datetime('2017-01-01');
-        $periodEndAt  = new \Datetime('2017-10-01');
+        $perioStartAt = new \DateTime('2017-01-01');
+        $periodEndAt = new \DateTime('2017-10-01');
 
         $recurrence = new Recurrence(
             new Frequency(Frequency::FREQUENCY_MONTHLY),
@@ -55,12 +55,14 @@ class EndOfMonthProvider extends atoum
 
         $this->assert
             ->integer(count($datetimes))
-            ->isEqualTo(9);
+            ->isEqualTo(9)
+        ;
 
         foreach ($datetimes as $datetime) {
             $this->assert
                 ->object($datetime)
-                ->isEqualTo($perioStartAt);
+                ->isEqualTo($perioStartAt)
+            ;
 
             $perioStartAt->modify('last day of next month');
         }

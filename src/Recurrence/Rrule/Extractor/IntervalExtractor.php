@@ -2,8 +2,6 @@
 
 namespace Recurrence\Rrule\Extractor;
 
-use Recurrence\Rrule\Extractor\AbstractExtractor;
-
 class IntervalExtractor extends AbstractExtractor
 {
     public const RRULE_PARAMETER = 'INTERVAL';

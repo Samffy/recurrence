@@ -13,12 +13,12 @@ class Recurrence
     public function __construct(
         private Frequency $frequency,
         private int $interval,
-        private \Datetime $periodStartAt,
-        private ?\Datetime $periodEndAt = null,
+        private \DateTime $periodStartAt,
+        private ?\DateTime $periodEndAt = null,
         private ?int $count = null,
-        private array $constraints = []
+        private array $constraints = [],
     ) {
-        if ($count && $periodEndAt) {
+        if (null !== $count && $periodEndAt) {
             throw new InvalidRecurrenceException('Recurrence cannot have [COUNT] and [UNTIL] option at the same time');
         }
 
@@ -26,7 +26,7 @@ class Recurrence
             throw new InvalidRecurrenceException('Recurrence required [COUNT] or [UNTIL] option');
         }
 
-        $constraintNames = array_map(function ($constraint) { return $constraint::class; }, $constraints);
+        $constraintNames = array_map(static function ($constraint) { return $constraint::class; }, $constraints);
         $duplicateConstraints = array_diff_key($constraintNames, array_unique($constraintNames));
 
         if (!empty($duplicateConstraints)) {
@@ -44,19 +44,19 @@ class Recurrence
         return $this->interval;
     }
 
-    public function getPeriodStartAt(): \Datetime
+    public function getPeriodStartAt(): \DateTime
     {
         return $this->periodStartAt;
     }
 
-    public function getPeriodEndAt(): ?\Datetime
+    public function getPeriodEndAt(): ?\DateTime
     {
         return $this->periodEndAt;
     }
 
     public function hasPeriodEndAt(): bool
     {
-        return $this->periodEndAt !== null;
+        return null !== $this->periodEndAt;
     }
 
     public function getCount(): ?int
@@ -66,7 +66,7 @@ class Recurrence
 
     public function hasCount(): bool
     {
-        return $this->count !== null;
+        return null !== $this->count;
     }
 
     public function getConstraints(): array
@@ -96,7 +96,7 @@ class Recurrence
             throw new \InvalidArgumentException(sprintf('Duplicate constraint [%s]', get_class($constraint)));
         }
 
-        if ($constraint instanceof EndOfMonthConstraint && $this->frequency->__toString() !== Frequency::FREQUENCY_MONTHLY) {
+        if ($constraint instanceof EndOfMonthConstraint && Frequency::FREQUENCY_MONTHLY !== $this->frequency->__toString()) {
             throw new InvalidRecurrenceException('End of month constraint can be applied only with monthly frequency');
         }
 

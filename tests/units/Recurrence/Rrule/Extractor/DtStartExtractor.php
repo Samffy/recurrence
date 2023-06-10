@@ -2,18 +2,17 @@
 
 namespace Recurrence\tests\units\Rrule\Extractor;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-class DtStartExtractor extends atoum
+class DtStartExtractor extends \atoum
 {
     /**
-     * Failed : Use an invalid DTSTART value
+     * Failed : Use an invalid DTSTART value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Extractor\DtStartExtractor())->extract('FREQ=MONTHLY;DTSTART=20ERROR12;COUNT=1');
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -22,7 +21,7 @@ class DtStartExtractor extends atoum
     }
 
     /**
-     * Success : No DTSTART option
+     * Success : No DTSTART option.
      */
     public function testNoValue(): void
     {
@@ -35,7 +34,7 @@ class DtStartExtractor extends atoum
     }
 
     /**
-     * Success : Use a valid DTSTART value
+     * Success : Use a valid DTSTART value.
      */
     public function testValidValue(): void
     {

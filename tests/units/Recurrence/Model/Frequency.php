@@ -2,17 +2,15 @@
 
 namespace Recurrence\tests\units\Model;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidFrequencyOptionException;
 
-class Frequency extends atoum
+class Frequency extends \atoum
 {
-
     public function testContructor(): void
     {
         $this->assert
-            ->exception(function () {
-                (new \Recurrence\Model\Frequency('RANDOMLY'));
+            ->exception(static function () {
+                new \Recurrence\Model\Frequency('RANDOMLY');
             })
             ->isInstanceOf(InvalidFrequencyOptionException::class)
             ->hasMessage('Invalid frequency name. Supported values are : YEARLY, MONTHLY, WEEKLY, DAILY, HOURLY, MINUTELY, SECONDLY')
@@ -28,7 +26,34 @@ class Frequency extends atoum
 
         $this->assert
             ->string((string) $frequency->convertToDateIntervalFormat())
-            ->isEqualTo($expected);
+            ->isEqualTo($expected)
+        ;
+    }
+
+    /**
+     * @dataProvider convertToDateTimeProvider
+     */
+    public function testConvertToDateTimeFormat(string $frequencyName, string $expected): void
+    {
+        $frequency = (new \Recurrence\Model\Frequency($frequencyName));
+
+        $this->assert
+            ->string((string) $frequency->convertToDateTimeFormat())
+            ->isEqualTo($expected)
+        ;
+    }
+
+    /**
+     * @dataProvider toStringProvider
+     */
+    public function testToString(string $frequencyName, string $expected): void
+    {
+        $frequency = (new \Recurrence\Model\Frequency($frequencyName));
+
+        $this->assert
+            ->string((string) $frequency)
+            ->isEqualTo($expected)
+        ;
     }
 
     protected function convertToDateIntervalProvider(): array
@@ -44,18 +69,6 @@ class Frequency extends atoum
         ];
     }
 
-    /**
-     * @dataProvider convertToDateTimeProvider
-     */
-    public function testConvertToDateTimeFormat(string $frequencyName, string $expected): void
-    {
-        $frequency = (new \Recurrence\Model\Frequency($frequencyName));
-
-        $this->assert
-            ->string((string) $frequency->convertToDateTimeFormat())
-            ->isEqualTo($expected);
-    }
-
     protected function convertToDateTimeProvider(): array
     {
         return [
@@ -67,18 +80,6 @@ class Frequency extends atoum
             ['MINUTELY', '+1 minutes'],
             ['SECONDLY', '+1 seconds'],
         ];
-    }
-
-    /**
-     * @dataProvider toStringProvider
-     */
-    public function testToString(string $frequencyName, string $expected): void
-    {
-        $frequency = (new \Recurrence\Model\Frequency($frequencyName));
-
-        $this->assert
-            ->string((string) $frequency)
-            ->isEqualTo($expected);
     }
 
     protected function toStringProvider(): array

@@ -2,14 +2,14 @@
 
 namespace Recurrence\Rrule;
 
-use Recurrence\Model\Recurrence;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Model\Exception\InvalidRruleExpressionException;
+use Recurrence\Model\Recurrence;
 
 class RecurrenceProvider
 {
     /**
-     * Map extractor/transformer names with Recurrence parameters
+     * Map extractor/transformer names with Recurrence parameters.
      */
     private array $options = [
         'Count',
@@ -22,7 +22,6 @@ class RecurrenceProvider
     ];
 
     /**
-     * @return Recurrence
      * @throws InvalidRruleException
      */
     public function create(string $rRule): Recurrence
@@ -46,6 +45,19 @@ class RecurrenceProvider
             }
         }
 
+        $this->validate($parameters);
+
+        return new Recurrence(
+            $parameters['Freq'],
+            $parameters['Interval'],
+            $parameters['DtStartTimezoned'] ?? $parameters['DtStart'],
+            $parameters['UntilTimezoned'] ?? $parameters['Until'],
+            $parameters['Count'],
+        );
+    }
+
+    private function validate(array $parameters): void
+    {
         if (empty($parameters['Freq'])) {
             throw new InvalidRruleExpressionException(sprintf('Missing [Freq] option.'));
         }
@@ -65,13 +77,5 @@ class RecurrenceProvider
         if ((!empty($parameters['UntilTimezoned']) || !empty($parameters['Until'])) && !empty($parameters['Count'])) {
             throw new InvalidRruleExpressionException(sprintf('Recurrence cannot have [COUNT] and [UNTIL] option at the same time.'));
         }
-
-        return new Recurrence(
-            $parameters['Freq'],
-            $parameters['Interval'],
-            $parameters['DtStartTimezoned'] ?? $parameters['DtStart'],
-            $parameters['UntilTimezoned'] ?? $parameters['Until'],
-            $parameters['Count']
-        );
     }
 }

@@ -2,21 +2,19 @@
 
 namespace Recurrence\tests\units\Rrule;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Model\Exception\InvalidRruleExpressionException;
 
-class RecurrenceProvider extends atoum
+class RecurrenceProvider extends \atoum
 {
-
     /**
-     * Failed : Empty RRULE
+     * Failed : Empty RRULE.
      */
     public function testEmptyRrule(): void
     {
         // Empty RRULE
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('');
             })
             ->isInstanceOf(InvalidRruleExpressionException::class)
@@ -24,13 +22,13 @@ class RecurrenceProvider extends atoum
     }
 
     /**
-     * Failed : Bad RRULE syntax
+     * Failed : Bad RRULE syntax.
      */
     public function tesBadRruleSyntax(): void
     {
         // Wrong option syntax in RRULE
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ:MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL');
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -38,13 +36,13 @@ class RecurrenceProvider extends atoum
     }
 
     /**
-     * Failed : Missing required value for RRULE option
+     * Failed : Missing required value for RRULE option.
      */
     public function tesMissingRruleValue(): void
     {
         // Missing INTERVAL value in RRULE
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL');
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -52,7 +50,7 @@ class RecurrenceProvider extends atoum
     }
 
     /**
-     * Check FREQ support
+     * Check FREQ support.
      */
     public function testRruleFreqSupport(): void
     {
@@ -66,7 +64,7 @@ class RecurrenceProvider extends atoum
 
         // Wrong frequency name in RRULE
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQUENCY=MONTHLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
             })
             ->isInstanceOf(InvalidRruleExpressionException::class)
@@ -75,7 +73,7 @@ class RecurrenceProvider extends atoum
 
         // Wrong frequency option in RRULE
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=BADLY;UNTIL=20170520;BYMONTHDAY=1;INTERVAL=2');
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -84,7 +82,7 @@ class RecurrenceProvider extends atoum
     }
 
     /**
-     * Test DTSTART support
+     * Test DTSTART support.
      */
     public function testRruleDstartSupport(): void
     {
@@ -134,7 +132,7 @@ class RecurrenceProvider extends atoum
 
         // Invalid datetime
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART;TZID=Disneyland/Paris:20170520T161322;UNTIL=20170520;INTERVAL=1');
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -143,7 +141,7 @@ class RecurrenceProvider extends atoum
     }
 
     /**
-     * Test UNTIL support
+     * Test UNTIL support.
      */
     public function testRruleUntilSupport(): void
     {
@@ -193,7 +191,7 @@ class RecurrenceProvider extends atoum
 
         // Invalid datetime
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;UNTIL;TZID=Disneyland/Paris:20170520T161322');
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -202,7 +200,7 @@ class RecurrenceProvider extends atoum
     }
 
     /**
-     * Check INTERVAL support
+     * Check INTERVAL support.
      */
     public function testRruleIntervalSupport(): void
     {
@@ -211,11 +209,12 @@ class RecurrenceProvider extends atoum
 
         $this->assert
             ->integer($recurrence->getInterval())
-            ->isEqualTo(2);
+            ->isEqualTo(2)
+        ;
     }
 
     /**
-     * Check COUNT support
+     * Check COUNT support.
      */
     public function testRruleCountSupport(): void
     {
@@ -224,11 +223,12 @@ class RecurrenceProvider extends atoum
 
         $this->assert
             ->integer($recurrence->getCount())
-            ->isEqualTo(2);
+            ->isEqualTo(2)
+        ;
 
         // You can not create Recurrence with both COUNT and UNTIL option
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170120;UNTIL=20170520;COUNT=2;INTERVAL=1');
             })
             ->isInstanceOf(InvalidRruleExpressionException::class)
@@ -237,7 +237,7 @@ class RecurrenceProvider extends atoum
 
         // You have to set Recurrence with at least COUNT or UNTIL option
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\RecurrenceProvider())->create('FREQ=MONTHLY;DTSTART=20170120;INTERVAL=1');
             })
             ->isInstanceOf(InvalidRruleExpressionException::class)

@@ -2,18 +2,17 @@
 
 namespace Recurrence\tests\units\Rrule\Transformer;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-class IntervalTransformer extends atoum
+class IntervalTransformer extends \atoum
 {
     /**
-     * Failed : Use an invalid INTERVAL value
+     * Failed : Use an invalid INTERVAL value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\IntervalTransformer())->transform(['A']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -22,12 +21,12 @@ class IntervalTransformer extends atoum
     }
 
     /**
-     * Success : No INTERVAL option
+     * Success : No INTERVAL option.
      */
     public function testNoValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\IntervalTransformer())->transform([]);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -36,7 +35,7 @@ class IntervalTransformer extends atoum
     }
 
     /**
-     * Success : Use a valid INTERVAL value
+     * Success : Use a valid INTERVAL value.
      */
     public function testValidValue(): void
     {

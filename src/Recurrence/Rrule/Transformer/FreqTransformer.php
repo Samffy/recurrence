@@ -2,10 +2,10 @@
 
 namespace Recurrence\Rrule\Transformer;
 
+use Recurrence\Model\Exception\InvalidFrequencyOptionException;
+use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Model\Frequency;
 use Recurrence\Rrule\Extractor\FreqExtractor;
-use Recurrence\Model\Exception\InvalidRruleException;
-use Recurrence\Model\Exception\InvalidFrequencyOptionException;
 
 class FreqTransformer implements RruleTransformerInterface
 {

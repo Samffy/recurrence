@@ -16,7 +16,7 @@ class OptimizedProvider extends AbstractDatetimeProvider
         $periodEndAt = ($recurrence->hasPeriodEndAt()) ? $recurrence->getPeriodEndAt() : $this->estimatePeriodEndAt($recurrence);
 
         // Transform interval in Datetime interval expression
-        if ($recurrence->getInterval() !== 1) {
+        if (1 !== $recurrence->getInterval()) {
             $interval = str_replace('1', $recurrence->getInterval(), $interval);
         }
 
@@ -25,7 +25,7 @@ class OptimizedProvider extends AbstractDatetimeProvider
         $recurrences = iterator_to_array(new \DatePeriod(
             $recurrence->getPeriodStartAt(),
             $dateInterval,
-            $periodEndAt
+            $periodEndAt,
         ));
 
         // When having count option, return only amount of recurrences requested
