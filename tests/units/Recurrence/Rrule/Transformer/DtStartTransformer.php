@@ -2,18 +2,17 @@
 
 namespace Recurrence\tests\units\Rrule\Transformer;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-class DtStartTransformer extends atoum
+class DtStartTransformer extends \atoum
 {
     /**
-     * Failed : Use an invalid DTSTART value
+     * Failed : Use an invalid DTSTART value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\DtStartTransformer())->transform(['A']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -22,12 +21,12 @@ class DtStartTransformer extends atoum
     }
 
     /**
-     * Success : No DTSTART option
+     * Success : No DTSTART option.
      */
     public function testNoValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\DtStartTransformer())->transform([]);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -36,7 +35,7 @@ class DtStartTransformer extends atoum
     }
 
     /**
-     * Success : Use a valid DTSTART value
+     * Success : Use a valid DTSTART value.
      */
     public function testValidValue(): void
     {

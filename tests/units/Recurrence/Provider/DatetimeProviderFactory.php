@@ -2,8 +2,6 @@
 
 namespace Recurrence\tests\units\Provider;
 
-use atoum;
-
 use Recurrence\Constraint\ProviderConstraint\EndOfMonthConstraint;
 use Recurrence\Model\Frequency;
 use Recurrence\Model\Recurrence;
@@ -11,15 +9,17 @@ use Recurrence\Provider\DatetimeProviderFactory as TestedDatetimeProviderFactory
 use Recurrence\Provider\EndOfMonthProvider;
 use Recurrence\Provider\OptimizedProvider;
 
-class DatetimeProviderFactory extends atoum
+class DatetimeProviderFactory extends \atoum
 {
     public function testStandardRecurrence(): void
     {
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency(Frequency::FREQUENCY_MONTHLY))
-            ->setCount(2)
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            new \DateTime(),
+            null,
+            2,
+        );
 
         $this->assert
             ->object(TestedDatetimeProviderFactory::create($recurrence))
@@ -29,51 +29,55 @@ class DatetimeProviderFactory extends atoum
 
     public function testRecurrenceWithEndOfMonthConstraint(): void
     {
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency(Frequency::FREQUENCY_MONTHLY))
-            ->setPeriodStartAt(new \DateTime('2017-01-31'))
-            ->setCount(2)
-            ->addConstraint(new EndOfMonthConstraint())
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            new \DateTime('2017-01-31'),
+            null,
+            2,
+            [new EndOfMonthConstraint()],
+        );
 
         $this->assert
             ->object(TestedDatetimeProviderFactory::create($recurrence))
             ->isInstanceOf(EndOfMonthProvider::class)
         ;
 
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency(Frequency::FREQUENCY_MONTHLY))
-            ->setPeriodStartAt(new \DateTime('2017-01-28'))
-            ->setCount(2)
-            ->addConstraint(new EndOfMonthConstraint())
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            new \DateTime('2017-01-28'),
+            null,
+            2,
+            [new EndOfMonthConstraint()],
+        );
 
         $this->assert
             ->object(TestedDatetimeProviderFactory::create($recurrence))
             ->isInstanceOf(OptimizedProvider::class)
         ;
 
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency(Frequency::FREQUENCY_DAILY))
-            ->setPeriodStartAt(new \DateTime('2017-01-31'))
-            ->setCount(2)
-            ->addConstraint(new EndOfMonthConstraint())
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_DAILY),
+            1,
+            new \DateTime('2017-01-31'),
+            null,
+            2,
+            [new EndOfMonthConstraint()],
+        );
 
         $this->assert
             ->object(TestedDatetimeProviderFactory::create($recurrence))
             ->isInstanceOf(OptimizedProvider::class)
         ;
 
-        $recurrence = new Recurrence();
-        $recurrence
-            ->setFrequency(new Frequency(Frequency::FREQUENCY_MONTHLY))
-            ->setPeriodStartAt(new \DateTime('2017-01-31'))
-            ->setCount(2)
-        ;
+        $recurrence = new Recurrence(
+            new Frequency(Frequency::FREQUENCY_MONTHLY),
+            1,
+            new \DateTime('2017-01-31'),
+            null,
+            2,
+        );
 
         $this->assert
             ->object(TestedDatetimeProviderFactory::create($recurrence))

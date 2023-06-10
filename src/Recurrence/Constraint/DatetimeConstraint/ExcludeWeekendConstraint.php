@@ -7,7 +7,7 @@ use Recurrence\Model\Recurrence;
 
 class ExcludeWeekendConstraint implements DatetimeConstraintInterface, RecurrenceConstraintInterface
 {
-    public function apply(Recurrence $recurrence, \Datetime $datetime): \Datetime
+    public function apply(Recurrence $recurrence, \DateTime $datetime): \DateTime
     {
         if ($this->isWeekend($datetime)) {
             // Add 1 or 2 days to skip weekend (we didn't use `next monday` pattern of \Datetime::format cause it remove time)
@@ -18,8 +18,8 @@ class ExcludeWeekendConstraint implements DatetimeConstraintInterface, Recurrenc
         return $datetime;
     }
 
-    private function isWeekend(\Datetime$datetime): bool
+    private function isWeekend(\DateTime $datetime): bool
     {
-        return ((int) $datetime->format('N') >= 6);
+        return (int) $datetime->format('N') >= 6;
     }
 }

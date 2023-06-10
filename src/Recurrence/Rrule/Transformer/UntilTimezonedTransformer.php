@@ -2,8 +2,8 @@
 
 namespace Recurrence\Rrule\Transformer;
 
-use Recurrence\Rrule\Extractor\UntilTimezonedExtractor;
 use Recurrence\Model\Exception\InvalidRruleException;
+use Recurrence\Rrule\Extractor\UntilTimezonedExtractor;
 
 class UntilTimezonedTransformer extends DtStartTimezonedTransformer
 {

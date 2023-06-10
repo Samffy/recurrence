@@ -2,12 +2,11 @@
 
 namespace Recurrence\Rrule\Transformer;
 
-use Recurrence\Rrule\Extractor\DtStartTimezonedExtractor;
 use Recurrence\Model\Exception\InvalidRruleException;
+use Recurrence\Rrule\Extractor\DtStartTimezonedExtractor;
 
 /**
- * Class DtStartTimezonedTransformer
- * @package Recurrence\Rrule\Transformer
+ * Class DtStartTimezonedTransformer.
  */
 class DtStartTimezonedTransformer implements RruleTransformerInterface
 {

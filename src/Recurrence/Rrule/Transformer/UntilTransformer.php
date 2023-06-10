@@ -2,8 +2,8 @@
 
 namespace Recurrence\Rrule\Transformer;
 
-use Recurrence\Rrule\Extractor\UntilExtractor;
 use Recurrence\Model\Exception\InvalidRruleException;
+use Recurrence\Rrule\Extractor\UntilExtractor;
 
 class UntilTransformer extends DtStartTransformer
 {

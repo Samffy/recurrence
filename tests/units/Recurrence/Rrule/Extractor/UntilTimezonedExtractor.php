@@ -2,18 +2,17 @@
 
 namespace Recurrence\tests\units\Rrule\Extractor;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-class UntilTimezonedExtractor extends atoum
+class UntilTimezonedExtractor extends \atoum
 {
     /**
-     * Failed : Use an invalid UNTIL;TZID value
+     * Failed : Use an invalid UNTIL;TZID value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Extractor\UntilTimezonedExtractor())->extract('FREQ=MONTHLY;UNTIL;TZID=20ERROR12;COUNT=1');
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -22,7 +21,7 @@ class UntilTimezonedExtractor extends atoum
     }
 
     /**
-     * Success : No UNTIL;TZID option
+     * Success : No UNTIL;TZID option.
      */
     public function testNoValue(): void
     {
@@ -35,7 +34,7 @@ class UntilTimezonedExtractor extends atoum
     }
 
     /**
-     * Success : Use a valid UNTIL;TZID value
+     * Success : Use a valid UNTIL;TZID value.
      */
     public function testValidValue(): void
     {

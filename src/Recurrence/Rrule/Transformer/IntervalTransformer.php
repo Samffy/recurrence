@@ -13,7 +13,7 @@ class IntervalTransformer extends CountTransformer
     protected function validate(array $values): void
     {
         if (!isset($values[0]) || !is_numeric($values[0])) {
-            throw new InvalidRruleException(IntervalExtractor::RRULE_PARAMETER, ((isset($values[0])) ? (string) $values[0] : ''));
+            throw new InvalidRruleException(IntervalExtractor::RRULE_PARAMETER, (isset($values[0])) ? (string) $values[0] : '');
         }
     }
 }

@@ -2,18 +2,17 @@
 
 namespace Recurrence\tests\units\Rrule\Transformer;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 
-class DtStartTimezonedTransformer extends atoum
+class DtStartTimezonedTransformer extends \atoum
 {
     /**
-     * Failed : Use an invalid DTSTART;TZID value
+     * Failed : Use an invalid DTSTART;TZID value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\DtStartTimezonedTransformer())->transform(['A']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -21,7 +20,7 @@ class DtStartTimezonedTransformer extends atoum
         ;
 
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\DtStartTimezonedTransformer())->transform(['Miami\Vice', 'B']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -29,7 +28,7 @@ class DtStartTimezonedTransformer extends atoum
         ;
 
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\DtStartTimezonedTransformer())->transform(['A', 'B']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -38,12 +37,12 @@ class DtStartTimezonedTransformer extends atoum
     }
 
     /**
-     * Success : No DTSTART;TZID option
+     * Success : No DTSTART;TZID option.
      */
     public function testNoValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\DtStartTimezonedTransformer())->transform([]);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -52,7 +51,7 @@ class DtStartTimezonedTransformer extends atoum
     }
 
     /**
-     * Success : Use a valid DTSTART;TZID value
+     * Success : Use a valid DTSTART;TZID value.
      */
     public function testValidValue(): void
     {

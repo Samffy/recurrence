@@ -20,7 +20,7 @@ class ExcludeDaysOfWeekConstraint implements DatetimeConstraintInterface, Recurr
         }
 
         foreach ($excludedDays as $excludedDay) {
-            $excludedDay = filter_var($excludedDay, FILTER_VALIDATE_INT);
+            $excludedDay = filter_var($excludedDay, \FILTER_VALIDATE_INT);
 
             if (!$excludedDay || $excludedDay < 1 || $excludedDay > 7) {
                 throw new \InvalidArgumentException('Exclude day must be an integer between 1 and 7');
@@ -30,9 +30,9 @@ class ExcludeDaysOfWeekConstraint implements DatetimeConstraintInterface, Recurr
         }
     }
 
-    public function apply(Recurrence $recurrence, \Datetime $datetime): \Datetime
+    public function apply(Recurrence $recurrence, \DateTime $datetime): \DateTime
     {
-        while (in_array((int) $datetime->format('N'), $this->excludedDays)) {
+        while (in_array((int) $datetime->format('N'), $this->excludedDays, true)) {
             $datetime->modify('+1 day');
         }
 

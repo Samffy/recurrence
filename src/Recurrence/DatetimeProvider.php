@@ -5,7 +5,6 @@ namespace Recurrence;
 use Recurrence\Constraint\DatetimeConstraint\DatetimeConstraintInterface;
 use Recurrence\Model\Recurrence;
 use Recurrence\Provider\DatetimeProviderFactory;
-use Recurrence\Validator\RecurrenceValidator;
 
 class DatetimeProvider
 {
@@ -14,8 +13,6 @@ class DatetimeProvider
      */
     public function provide(Recurrence $recurrence): array
     {
-        RecurrenceValidator::validate($recurrence);
-
         $provider = DatetimeProviderFactory::create($recurrence);
 
         $datetimes = $provider->provide($recurrence);
@@ -38,7 +35,7 @@ class DatetimeProvider
             // Avoid duplicate datetime due to constraint updates
             if (empty($filteredDatetimes) || $previousDatetime != $filteredDatetime) {
                 $filteredDatetimes[] = $filteredDatetime;
-                $previousDatetime    = $filteredDatetime;
+                $previousDatetime = $filteredDatetime;
             }
         }
 

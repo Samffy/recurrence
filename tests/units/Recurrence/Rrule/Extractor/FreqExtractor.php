@@ -2,19 +2,18 @@
 
 namespace Recurrence\tests\units\Rrule\Extractor;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Rrule\RecurrenceProvider;
 
-class FreqExtractor extends atoum
+class FreqExtractor extends \atoum
 {
     /**
-     * Failed : Use an invalid FREQ value
+     * Failed : Use an invalid FREQ value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Extractor\FreqExtractor())->extract('FREQ=1337;DTSTART=20170520;COUNT=1');
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -23,7 +22,7 @@ class FreqExtractor extends atoum
     }
 
     /**
-     * Success : No FREQ option
+     * Success : No FREQ option.
      */
     public function testNoValue(): void
     {
@@ -36,7 +35,7 @@ class FreqExtractor extends atoum
     }
 
     /**
-     * Success : Use a valid FREQ value
+     * Success : Use a valid FREQ value.
      */
     public function testValidValue(): void
     {
@@ -56,13 +55,13 @@ class FreqExtractor extends atoum
     }
 
     /**
-     * Failed : Missing value for RRULE option
+     * Failed : Missing value for RRULE option.
      */
     public function tesMissingRruleValue(): void
     {
         // Missing COUNT value in RRULE
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new RecurrenceProvider())->create('BYMONTHDAY=1;COUNT');
             })
             ->isInstanceOf(InvalidRruleException::class)

@@ -2,19 +2,18 @@
 
 namespace Recurrence\tests\units\Rrule\Transformer;
 
-use atoum;
 use Recurrence\Model\Exception\InvalidRruleException;
 use Recurrence\Model\Frequency;
 
-class FreqTransformer extends atoum
+class FreqTransformer extends \atoum
 {
     /**
-     * Failed : Use an invalid FREQ value
+     * Failed : Use an invalid FREQ value.
      */
     public function testInvalidValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\FreqTransformer())->transform(['A']);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -23,12 +22,12 @@ class FreqTransformer extends atoum
     }
 
     /**
-     * Success : No FREQ option
+     * Success : No FREQ option.
      */
     public function testNoValue(): void
     {
         $this->assert
-            ->exception(function () {
+            ->exception(static function () {
                 (new \Recurrence\Rrule\Transformer\FreqTransformer())->transform([]);
             })
             ->isInstanceOf(InvalidRruleException::class)
@@ -37,7 +36,7 @@ class FreqTransformer extends atoum
     }
 
     /**
-     * Success : Use a valid FREQ value
+     * Success : Use a valid FREQ value.
      */
     public function testValidValue(): void
     {
